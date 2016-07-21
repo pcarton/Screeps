@@ -1,8 +1,17 @@
+var roleBuilder = require('role.builder');
+
 var roleHarvester = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
-      if(creep.carry.energy < creep.carryCapacity) {
+    if(creep.memory.working && creep.carry.energy == 0) {
+        creep.memory.working = false;
+    }
+    if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
+        creep.memory.working = true;
+    }
+
+      if(!creep.memory.working) {
           var sources = creep.room.find(FIND_SOURCES);
           if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
               creep.moveTo(sources[0]);
@@ -21,8 +30,8 @@ var roleHarvester = {
                   creep.moveTo(targets[0]);
               }
           }else{
-            //If storage is full, upgrade to not waste time
-            roleUpgrader.run(creep);
+            //If storage is full, Build to not waste time
+            roleBuilder.run(creep);
           }
       }
   }
