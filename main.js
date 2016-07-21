@@ -62,7 +62,7 @@ module.exports.loop = function () {
                var c = Game.spawns[spawn].createCreep(hBody, undefined,{role: 'harvester'});
                console.log("Spawned: " + c);
             }
-            if(Memory.roles.numUpgraders < maxUpgraders){
+            else if(Memory.roles.numUpgraders < maxUpgraders){
                var c = Game.spawns[spawn].createCreep(uBody, undefined,{role: 'upgrader'});
                console.log("Spawned: " + c);
             }
