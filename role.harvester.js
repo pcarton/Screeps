@@ -1,4 +1,5 @@
 var roleBuilder = require('role.builder');
+var modCommon = require('module.common');
 
 var roleHarvester = {
 
@@ -20,9 +21,9 @@ var roleHarvester = {
       else {
           var targets = creep.room.find(FIND_STRUCTURES, {
                   filter: (structure) => {
-                      return (structure.structureType == STRUCTURE_EXTENSION ||
+                      return ((structure.structureType == STRUCTURE_EXTENSION ||
                               structure.structureType == STRUCTURE_SPAWN ||
-                              structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
+                              structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity) || (structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
                   }
           });
           if(targets.length > 0) {
