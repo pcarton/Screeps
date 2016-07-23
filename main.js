@@ -12,13 +12,13 @@ var initialRolesMem = {
 };
 
 //variables for the different creeps that auto spawn
-var hBody = [WORK, CARRY, CARRY, CARRY, MOVE];
-var uBody = [WORK, CARRY, CARRY, MOVE, MOVE];
-var bBody = [WORK, CARRY, CARRY, MOVE, MOVE];
+var hBody = [WORK, CARRY, CARRY, MOVE, MOVE];
+var uBody = [WORK, CARRY, CARRY, CARRY, MOVE];
+var bBody = [WORK, CARRY, WORK, MOVE];
 var rBody = [WORK, CARRY, MOVE, MOVE, MOVE];
 
 //variables for the number of creeps of each type to auto spawn
-var maxHarvesters = 2;
+var maxHarvesters = 3;
 var maxUpgraders = 0;
 var maxBuilders = 0;
 var maxRepair = 1;
@@ -115,7 +115,7 @@ module.exports.loop = function () {
                var hc = Game.spawns[spawn].createCreep(hBody, undefined,{role: 'harvester',selfHarvest:true});
                console.log("Spawned: " + hc);
             }
-            else if(Memory.roles.numBuilders < (maxBuilders + controllerLvlMod)){
+            else if(Game.spawns[spawn].room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (maxBuilders + controllerLvlMod - 2))){
                var bc = Game.spawns[spawn].createCreep(bBody, undefined,{role: 'builder',selfHarvest:false});
                console.log("Spawned: " + bc);
             }
