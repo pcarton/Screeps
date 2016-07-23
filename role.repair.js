@@ -1,3 +1,6 @@
+var roleBuilder = require('role.builder');
+var modCommon = require('module.common');
+
 var roleRepair = {
   run: function(creep) {
 
@@ -15,12 +18,19 @@ var roleRepair = {
         var fixe = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: function(object){
           var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
           var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < 5000);
-          return brokenRoad || brokenWall;
+          var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < 5000);
+          var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 100000);
+          return brokenRoad || brokenWall || brokenRamp || brokenCont;
         }
       });
-          creep.memory.toFix = fixe.id;
-          if(creep.repair(fixe) == ERR_NOT_IN_RANGE) {
-              creep.moveTo(fixe);
+          if(fixe!==null){
+            creep.memory.toFix = fixe.id;
+            if(creep.repair(fixe) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(fixe);
+            }
+          }else{
+            //If repairing is done, build to not waste time
+            roleBuilder.run(creep);
           }
       }else{
         var oldFixe = Game.getObjectById(creep.memory.toFix);
@@ -28,13 +38,10 @@ var roleRepair = {
             creep.moveTo(oldFixe);
         }
       }
-    }else {
-      var sources = creep.room.find(FIND_SOURCES);
-      if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(sources[0]);
+    }else{
+        modCommon.getEn(creep);
       }
     }
-  }
 };
 
 module.exports = roleRepair;
