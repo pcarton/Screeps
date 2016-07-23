@@ -2,21 +2,34 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
+var initialRolesMem = {
+    "numCreeps":0,
+    "numHarvesters":0,
+    "numUpgraders":0,
+    "numBuilders":0,
+    "numRepair":0
+
+};
 
 //variables for the different creeps that auto spawn
-var hBody = [WORK, CARRY, MOVE];
-var uBody = [WORK, CARRY, MOVE];
-var bBody = [WORK, CARRY, MOVE];
-var rBody = [WORK, CARRY, MOVE];
+var hBody = [WORK, CARRY, CARRY, CARRY, MOVE];
+var uBody = [WORK, CARRY, CARRY, MOVE, MOVE];
+var bBody = [WORK, CARRY, CARRY, MOVE, MOVE];
+var rBody = [WORK, CARRY, MOVE, MOVE, MOVE];
 
 //variables for the number of creeps of each type to auto spawn
-var maxHarvesters = 3;
-var maxUpgraders = 2;
-var maxBuilders = 2;
+var maxHarvesters = 2;
+var maxUpgraders = 0;
+var maxBuilders = 0;
 var maxRepair = 1;
 
-var maxCreeps = maxHarvesters + maxUpgraders + maxBuilders + maxRepair;
+var maxCreeps = 20;
 
+
+function initialize(){
+  Memory.roles = initialRolesMem;
+  Memory.initialized = true;
+}
 
 //Gets the number of living harvester Creeps
 function getNumHarvesters(){
@@ -64,6 +77,11 @@ function getNumRepair(){
 //main loop
 module.exports.loop = function () {
 
+  var initialized = Memory.initialized;
+  if(!initialized){
+    initialize();
+  }
+
   //calculates the breakdown of creeps
   var h  = getNumHarvesters();
   var u = getNumUpgraders();
@@ -88,25 +106,25 @@ module.exports.loop = function () {
       }
   }
 
-
   //determin if new creeps need to be spawned and pick an appropriate spawner
   if(Memory.roles.numCreeps < maxCreeps){
       for(var spawn in Game.spawns){
-        if((!Game.spawns[spawn].spawning) && (Game.spawns[spawn].room.energyAvailable>=200)){
-            if(Memory.roles.numHarvesters < maxHarvesters){
-               var hc = Game.spawns[spawn].createCreep(hBody, undefined,{role: 'harvester'});
+        var controllerLvlMod = Game.spawns[spawn].room.controller.level - 1;
+        if((!Game.spawns[spawn].spawning) && (Game.spawns[spawn].room.energyAvailable>=300)){
+            if(Memory.roles.numHarvesters < (maxHarvesters + controllerLvlMod)){
+               var hc = Game.spawns[spawn].createCreep(hBody, undefined,{role: 'harvester',selfHarvest:true});
                console.log("Spawned: " + hc);
             }
-            else if(Memory.roles.numUpgraders < maxUpgraders){
-               var uc = Game.spawns[spawn].createCreep(uBody, undefined,{role: 'upgrader'});
-               console.log("Spawned: " + uc);
-            }
-            else if(Memory.roles.numBuilders < maxBuilders){
-               var bc = Game.spawns[spawn].createCreep(bBody, undefined,{role: 'builder'});
+            else if(Memory.roles.numBuilders < (maxBuilders + controllerLvlMod)){
+               var bc = Game.spawns[spawn].createCreep(bBody, undefined,{role: 'builder',selfHarvest:false});
                console.log("Spawned: " + bc);
             }
-            else if(Memory.roles.numRepair< maxRepair){
-               var rc = Game.spawns[spawn].createCreep(rBody, undefined,{role: 'repair', toFix:''});
+            else if(Memory.roles.numUpgraders < (maxUpgraders + controllerLvlMod)){
+               var uc = Game.spawns[spawn].createCreep(uBody, undefined,{role: 'upgrader', selfHarvest:false});
+               console.log("Spawned: " + uc);
+            }
+            else if(Memory.roles.numRepair< (maxRepair + controllerLvlMod)){
+               var rc = Game.spawns[spawn].createCreep(rBody, undefined,{role: 'repair', toFix:'', selfHarvest:true});
                console.log("Spawned: " + rc);
             }
         }
