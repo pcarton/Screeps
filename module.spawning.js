@@ -15,8 +15,8 @@ var modSpawning = {
   spawn:function(spawner,energyCapacity,controllerLvl){
     var betterHarvesters1 = Memory.roles.betterHarvesters1; // number of tier2 harvesters spawned, to track shift
     var controllerLvlMod = controllerLvl - 1;  //modifier to the max amount of each creep
-    var notEnoughHarvest = (Memory.roles.numHarvesters < (this.maxHarvesters + controllerLvlMod));  //if there are enough harvesters, to stop other higher tier spawns
-    var spawnTier1 = (betterHarvesters1<1 &&energyCapacity<550 || (spawner.room.energyAvailable<550 && notEnoughHarvest)); //boolean for tier 1 spawning
+    var notEnoughHarvest = (Memory.roles.numHarvesters < (this.maxHarvesters));  //if there are enough harvesters, to stop other higher tier spawns
+    var spawnTier1 = (betterHarvesters1<1 && (energyCapacity<550 || (spawner.room.energyAvailable<550 && notEnoughHarvest))); //boolean for tier 1 spawning
     var spawnTier2 = (energyCapacity<800 || (spawner.room.energyAvailable<800 && notEnoughHarvest));  //boolean for tier2 spawning
     if(spawnTier1){
         //make sure there is energy and the spawner isnt already working, then spawn harvesters, upgrader, and repair in that priority
@@ -38,7 +38,7 @@ var modSpawning = {
       //make sure there is energy and the spawner isnt already working, then spawn harvesters, builders, upgrader, and repair in that priority
       var moveOn = (betterHarvesters1>=(this.maxHarvesters));
       if((!spawner.spawning) && (spawner.room.energyAvailable>=550)){
-          if(Memory.roles.numHarvesters < (this.maxHarvester)){
+          if(Memory.roles.numHarvesters < (this.maxHarvesters)){
              var h2c = spawner.createCreep(h2Body, undefined,{role: 'harvester',selfHarvest:true});
              console.log("Spawned: " + h2c);
              betterHarvesters1++;
