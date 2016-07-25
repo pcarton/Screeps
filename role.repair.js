@@ -4,15 +4,15 @@ var modCommon = require('module.common');
 var roleRepair = {
   run: function(creep) {
 
-    if(creep.memory.building && creep.carry.energy === 0) {
-        creep.memory.building = false;
+    if(creep.memory.working && creep.carry.energy === 0) {
+        creep.memory.working = false;
         creep.memory.toFix = "";
     }
-    if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
-        creep.memory.building = true;
+    if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
+        creep.memory.working = true;
     }
 
-    if(creep.memory.building){
+    if(creep.memory.working){
       if(creep.memory.toFix=== ""){
         //This finds the closest structure and checks if it needs repair
         var fixe = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: function(object){
