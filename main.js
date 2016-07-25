@@ -2,6 +2,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
+var roleArchitect = require('role.architect');
 var modSpawning = require('module.spawning');
 var modCommon = require('module.common');
 
@@ -95,6 +96,9 @@ module.exports.loop = function () {
       }
       if(creep.memory.role == 'repair'){
         roleRepair.run(creep);
+      }
+      if(creep.memory.role == 'architect'){
+        roleArchitect.run(creep);
       }
   }
 

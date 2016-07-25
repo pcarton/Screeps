@@ -1,3 +1,4 @@
+var roleArchitect = require('role.architect');
 //variables for the different creeps that auto spawn
 //Tier 1
 var hBody = [WORK, CARRY, CARRY, MOVE, MOVE];
@@ -16,8 +17,9 @@ var modSpawning = {
     var betterHarvesters1 = Memory.roles.betterHarvesters1; // number of tier2 harvesters spawned, to track shift
     var controllerLvlMod = controllerLvl - 1;  //modifier to the max amount of each creep
     var notEnoughHarvest = (Memory.roles.numHarvesters < (this.maxHarvesters));  //if there are enough harvesters, to stop other higher tier spawns
-    var spawnTier1 = (betterHarvesters1<1 && (energyCapacity<550 || (spawner.room.energyAvailable<550 && notEnoughHarvest))); //boolean for tier 1 spawning
+    var spawnTier1 = (betterHarvesters1<1&& (energyCapacity<550 || (spawner.room.energyAvailable<550 && notEnoughHarvest))); //boolean for tier 1 spawning
     var spawnTier2 = (energyCapacity<800 || (spawner.room.energyAvailable<800 && notEnoughHarvest));  //boolean for tier2 spawning
+    var flags = _.filter(spawner.room.find(FIND_FLAGS), (flag) => roleArchitect.ableToBuild(controllerLvl, flag.name));
     if(spawnTier1){
         //make sure there is energy and the spawner isnt already working, then spawn harvesters, upgrader, and repair in that priority
         if((!spawner.spawning) && (spawner.room.energyAvailable>=300)){
@@ -33,6 +35,10 @@ var modSpawning = {
                var rc = spawner.createCreep(rBody, undefined,{role: 'repair', toFix:'', selfHarvest:true});
                console.log("Spawned: " + rc);
             }
+            else if(flags.length){
+              var ac = spawner.createCreep(bBody, undefined,{role: 'architect', toFix:'', selfHarvest:false});
+              console.log("Spawned: " + ac);
+            }
         }
     }else if(spawnTier2){
       //make sure there is energy and the spawner isnt already working, then spawn harvesters, builders, upgrader, and repair in that priority
@@ -43,7 +49,7 @@ var modSpawning = {
              console.log("Spawned: " + h2c);
              betterHarvesters1++;
           }
-          else if(moveOn && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (this.maxBuilders))){
+          else if(moveOn && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (this.maxBuilders)) && Memory.roles.numArchitect === 0){
              var b2c = spawner.createCreep(b2Body, undefined,{role: 'builder',selfHarvest:false});
              console.log("Spawned: " + b2c);
           }
@@ -54,6 +60,10 @@ var modSpawning = {
           else if(moveOn && Memory.roles.numRepair< (this.maxRepair)){
              var r2c = spawner.createCreep(r2Body, undefined,{role: 'repair', toFix:'', selfHarvest:true});
              console.log("Spawned: " + r2c);
+          }
+          else if(moveOn && flags.length){
+            var a2c = spawner.createCreep(bBody, undefined,{role: 'architect', toFix:'', selfHarvest:false});
+            console.log("Spawned: " + a2c);
           }
       }
     }
