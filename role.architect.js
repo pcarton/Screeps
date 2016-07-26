@@ -5,9 +5,9 @@ var roleArchitect = {
       case 1:
         return (structureType==="Container");
       case 2:
-        return (structureType === "Extensions" || structureType==="Container");
+        return (structureType === "Extensions1" || structureType==="Container");
       case 3:
-        return (structureType === "Extensions" || structureType==="Container" || structureType === "Tower");
+        return (structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1");
       default:
         return false;
     }
@@ -60,10 +60,10 @@ var roleArchitect = {
         if(flag.name === "Container"){
           this.markContainer(creep);
           flag.remove();
-        }else if(flag.name === "Extensions"){
+        }else if(flag.name === "Extensions1" || flage.name ==="Extensions2"){
             this.markExtensions1(creep);
             flag.remove();
-        }else if(flag.name === "Tower"){
+        }else if(flag.name === "Tower1"){
             this.markTower(creep);
             flag.remove();
         }
