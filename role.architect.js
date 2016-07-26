@@ -60,11 +60,11 @@ var roleArchitect = {
         if(flag.name === "Container"){
           this.markContainer(creep);
           flag.remove();
-        }else if(flag.name === "Extensions1" || flage.name ==="Extensions2"){
-            this.markExtensions1(creep);
-            flag.remove();
         }else if(flag.name === "Tower1"){
             this.markTower(creep);
+            flag.remove();
+        }else if(flag.name === "Extensions1" || flag.name ==="Extensions2"){
+            this.markExtensions1(creep);
             flag.remove();
         }
       }
