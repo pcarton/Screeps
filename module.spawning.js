@@ -35,7 +35,7 @@ var modSpawning = {
                var rc = spawner.createCreep(rBody, undefined,{role: 'repair', toFix:'', selfHarvest:true});
                console.log("Spawned: " + rc);
             }
-            else if(flags.length){
+            else if(flags.length && Memory.roles.numArchitect < 1){
               var ac = spawner.createCreep(bBody, undefined,{role: 'architect', toFix:'', selfHarvest:false});
               console.log("Spawned: " + ac);
             }
@@ -61,7 +61,7 @@ var modSpawning = {
              var r2c = spawner.createCreep(r2Body, undefined,{role: 'repair', toFix:'', selfHarvest:true});
              console.log("Spawned: " + r2c);
           }
-          else if(moveOn && flags.length){
+          else if(moveOn && flags.length && Memory.roles.numArchitect < 1){
             var a2c = spawner.createCreep(bBody, undefined,{role: 'architect', toFix:'', selfHarvest:false});
             console.log("Spawned: " + a2c);
           }

@@ -12,6 +12,7 @@ var initialRolesMem = {
     "numUpgraders":0,
     "numBuilders":0,
     "numRepair":0,
+    "numArchitect":0,
     "betterHarvesters1":0
 
 };
@@ -62,6 +63,17 @@ function getNumRepair(){
     console.log('Repair: ' + rL);
   }
   return rL;
+}
+
+//Gets the number of living harvester Creeps
+function getNumHarvesters(){
+  var architects = _.filter(Game.creeps, (creep) => creep.memory.role == 'architect');
+  var aL = architects.length;
+  if(Memory.roles.numArchitect != aL){
+    Memory.roles.numArchitects = aL;
+    console.log('Architects: ' + aL);
+  }
+  return aL;
 }
 
 //main loop

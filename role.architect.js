@@ -1,13 +1,14 @@
 var roleArchitect = {
 
   ableToBuild:function(controllerLvl, structureType){
+    var wallBool = (structureType.substring(0,4)==="Wall");
     switch(controllerLvl){
       case 1:
         return (structureType==="Container");
       case 2:
-        return (structureType === "Extensions1" || structureType==="Container");
+        return (wallBool || structureType === "Extensions1" || structureType==="Container");
       case 3:
-        return (structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1");
       default:
         return false;
     }
@@ -32,8 +33,28 @@ var roleArchitect = {
   },
 
   //TODO
-  markWall:function(creep){
-
+  markWall:function(creep, flagName){
+    var len = parseInt(flagName.substring(5));
+    var direction = flagName.substring(4,5);
+    var x = creep.pos.x;
+    var y = creep.pos.y;
+    if(direction === "U"){
+        for(i=0; i<=len; i++){
+          creep.room.createConstructionSite(x, y-i, STRUCTURE_WALL);
+        }
+    }else if(direction === "D"){
+      for(i=0; i<=len; i++){
+        creep.room.createConstructionSite(x,y+i, STRUCTURE_WALL);
+      }
+    }else if(direction === "R"){
+      for(i=0; i<=len; i++){
+        creep.room.createConstructionSite(x+i,y, STRUCTURE_WALL);
+      }
+    }else if(direction === "L"){
+      for(i=0; i<=len; i++){
+        creep.room.createConstructionSite(x-i,+y, STRUCTURE_WALL);
+      }
+    }
   },
 
   /** @param {Creep} creep **/
@@ -65,6 +86,9 @@ var roleArchitect = {
             flag.remove();
         }else if(flag.name === "Extensions1" || flag.name ==="Extensions2"){
             this.markExtensions1(creep);
+            flag.remove();
+        }else if(flag.name.substring(0,4)==="Wall"){
+            this.markWall(creep, flag.name);
             flag.remove();
         }
       }
