@@ -66,10 +66,10 @@ function getNumRepair(){
 }
 
 //Gets the number of living harvester Creeps
-function getNumHarvesters(){
+function getNumArchitects(){
   var architects = _.filter(Game.creeps, (creep) => creep.memory.role == 'architect');
   var aL = architects.length;
-  if(Memory.roles.numArchitect != aL){
+  if(Memory.roles.numArchitects != aL){
     Memory.roles.numArchitects = aL;
     console.log('Architects: ' + aL);
   }
@@ -89,7 +89,8 @@ module.exports.loop = function () {
   var u = getNumUpgraders();
   var b = getNumBuilders();
   var r = getNumRepair();
-  Memory.roles.numCreeps = h + u + b + r;
+  var a = getNumArchitects();
+  Memory.roles.numCreeps = h + u + b + r + a;
 
   //Clear dead creeps from memory
   modCommon.clearDead();
