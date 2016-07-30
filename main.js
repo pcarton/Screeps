@@ -9,9 +9,13 @@ var modCommon = require('module.common');
 var initialRolesMem = {
     "numCreeps":0,
     "numHarvesters":0,
+    "maxHarvesters":1,
     "numUpgraders":0,
+    "maxUpgraders":0,
     "numBuilders":0,
+    "maxBuilders":1,
     "numRepair":0,
+    "maxRepair":1,
     "numArchitect":0,
     "betterHarvesters1":0
 

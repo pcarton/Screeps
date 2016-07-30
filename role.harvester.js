@@ -3,6 +3,27 @@ var modCommon = require('module.common');
 
 var roleHarvester = {
 
+  assignSource:function(creep){
+    var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => flag.name.substring(0,1)==="S");
+    var maxHarvesters = 0;
+    for(var fName in flags){
+      var f = flags[fName];
+      var gID = creep.room.lookForAt(LOOK_SOURCES,f)[0].id;
+      var numberToHarvest = parseInt(f.name.substring(1));
+      maxHarvesters = maxHarvesters + numberToHarvest;
+      for(var cName in Game.creeps){
+          var c = Game.creeps[cName];
+          if(c.memory.source === gID){
+            numberToHarvest = numberToHarvest-1;
+          }
+      }
+      if(numberToHarvest>0 && creep.memory.source === ""){
+        creep.memory.source = gID;
+      }
+    }
+    Memory.roles.maxHarvesters = maxHarvesters;
+  },
+
   /** @param {Creep} creep **/
   run: function(creep) {
     if(creep.memory.working && creep.carry.energy === 0) {
@@ -13,9 +34,21 @@ var roleHarvester = {
     }
 
       if(!creep.memory.working) {
-          var sources = creep.room.find(FIND_SOURCES);
-          if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-              creep.moveTo(sources[0]);
+          var dropped = creep.room.find(FIND_DROPPED_ENERGY);
+          if(dropped.length){
+            if(creep.pickup(dropped[0])== ERR_NOT_IN_RANGE){
+              creep.moveTo(dropped[0]);
+            }
+          }else{
+            var sourceID = creep.memory.source;
+            if(sourceID){
+              var source = Game.getObjectById(sourceID);
+              if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                  creep.moveTo(source);
+              }
+            }else{
+              this.assignSource(creep);
+            }
           }
       }
       else {
