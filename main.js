@@ -16,7 +16,7 @@ var initialRolesMem = {
     "maxBuilders":1,
     "numRepair":0,
     "maxRepair":1,
-    "numArchitect":0,
+    "numArchitects":0,
     "betterHarvesters1":0,
     "betterHarvesters2":0
 
@@ -84,8 +84,7 @@ function getNumArchitects(){
 //main loop
 module.exports.loop = function () {
 
-  var initialized = Memory.initialized;
-  if(!initialized){
+  if(Memory.initialized!==true){
     initialize();
   }
 
