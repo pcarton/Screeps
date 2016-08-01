@@ -26,7 +26,7 @@ var modSpawning = {
 
     var controllerLvlMod = controllerLvl - 1;  //modifier to the max amount of each creep
 
-    var notEnoughHarvest = (Memory.roles.numHarvesters < (this.maxHarvesters));  //if there are enough harvesters, to stop other higher tier spawns
+    var notEnoughHarvest = (Memory.roles.numHarvesters < (Memory.roles.maxHarvesters));  //if there are enough harvesters, to stop other higher tier spawns
 
     var spawnTier1 = (betterHarvesters1<1&& (energyCapacity<550 || (spawner.room.energyAvailable<550 && notEnoughHarvest))); //boolean for tier 1 spawning
 
@@ -38,15 +38,15 @@ var modSpawning = {
     if(spawnTier1){
         //make sure there is energy and the spawner isnt already working, then spawn harvesters, upgrader, and repair in that priority
         if((!spawner.spawning) && (spawner.room.energyAvailable>=300)){
-            if(Memory.roles.numHarvesters < (this.maxHarvesters)){
+            if(Memory.roles.numHarvesters < (Memory.roles.maxHarvesters)){
                var hc = spawner.createCreep(hBody, undefined,{role: 'harvester',selfHarvest:true, source:""});
                console.log("Spawned: " + hc);
             }
-            else if(Memory.roles.numUpgraders < (this.maxUpgraders + controllerLvlMod)){
+            else if(Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
                var uc = spawner.createCreep(uBody, undefined,{role: 'upgrader', selfHarvest:false});
                console.log("Spawned: " + uc);
             }
-            else if(Memory.roles.numRepair< (this.maxRepair)){
+            else if(Memory.roles.numRepair< (Memory.roles.maxRepair)){
                var rc = spawner.createCreep(rBody, undefined,{role: 'repair', toFix:'', selfHarvest:true});
                console.log("Spawned: " + rc);
             }
@@ -57,22 +57,22 @@ var modSpawning = {
         }
     }else if(spawnTier2){
       //make sure there is energy and the spawner isnt already working, then spawn harvesters, builders, upgrader, and repair in that priority
-      var moveOn = (betterHarvesters1>=(this.maxHarvesters));
+      var moveOn = (betterHarvesters1>=(Memory.roles.maxHarvesters));
       if((!spawner.spawning) && (spawner.room.energyAvailable>=550)){
-          if(Memory.roles.numHarvesters < (this.maxHarvesters)){
+          if(Memory.roles.numHarvesters < (Memory.roles.maxHarvesters)){
              var h2c = spawner.createCreep(h2Body, undefined,{role: 'harvester',selfHarvest:true, source:""});
              console.log("Spawned: " + h2c);
              betterHarvesters1++;
           }
-          else if(moveOn && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (this.maxBuilders)) && Memory.roles.numArchitect === 0){
+          else if(moveOn && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitect === 0){
              var b2c = spawner.createCreep(b2Body, undefined,{role: 'builder',selfHarvest:false});
              console.log("Spawned: " + b2c);
           }
-          else if(moveOn && Memory.roles.numUpgraders < (this.maxUpgraders + controllerLvlMod)){
+          else if(moveOn && Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
              var u2c = spawner.createCreep(u2Body, undefined,{role: 'upgrader', selfHarvest:false});
              console.log("Spawned: " + u2c);
           }
-          else if(moveOn && Memory.roles.numRepair< (this.maxRepair)){
+          else if(moveOn && Memory.roles.numRepair< (Memory.roles.maxRepair)){
              var r2c = spawner.createCreep(r2Body, undefined,{role: 'repair', toFix:'', selfHarvest:true});
              console.log("Spawned: " + r2c);
           }
@@ -82,22 +82,22 @@ var modSpawning = {
           }
       }
     }else if(spawnTier3){
-      var moveOn2 = (betterHarvesters2>=(this.maxHarvesters));
+      var moveOn2 = (betterHarvesters2>=(Memory.roles.maxHarvesters));
       if((!spawner.spawning) && (spawner.room.energyAvailable>=800)){
-        if(Memory.roles.numHarvesters < (this.maxHarvesters)){
+        if(Memory.roles.numHarvesters < (Memory.roles.maxHarvesters)){
            var h3c = spawner.createCreep(h3Body, undefined,{role: 'harvester',selfHarvest:true, source:""});
            console.log("Spawned: " + h3c);
            betterHarvesters2++;
         }
-        else if(moveOn2 && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (this.maxBuilders)) && Memory.roles.numArchitect === 0){
+        else if(moveOn2 && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitect === 0){
            var b3c = spawner.createCreep(b3Body, undefined,{role: 'builder',selfHarvest:false});
            console.log("Spawned: " + b3c);
         }
-        else if(moveOn2 && Memory.roles.numUpgraders < (this.maxUpgraders + controllerLvlMod)){
+        else if(moveOn2 && Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
            var u3c = spawner.createCreep(u3Body, undefined,{role: 'upgrader', selfHarvest:false});
            console.log("Spawned: " + u3c);
         }
-        else if(moveOn2 && Memory.roles.numRepair< (this.maxRepair)){
+        else if(moveOn2 && Memory.roles.numRepair< (Memory.roles.maxRepair)){
            var r3c = spawner.createCreep(r3Body, undefined,{role: 'repair', toFix:'', selfHarvest:true});
            console.log("Spawned: " + r3c);
         }
@@ -112,12 +112,6 @@ var modSpawning = {
 
   }
 };
-//variables for the number of creeps of each type to auto spawn
-modSpawning.maxHarvesters = Memory.roles.maxHarvesters;
-modSpawning.maxUpgraders = Memory.roles.maxUpgraders ;//0
-modSpawning.maxBuilders = Memory.roles.maxBuilders;//1
-modSpawning.maxRepair = Memory.roles.maxRepair;//1
-
 modSpawning.maxCreeps = 20;
 
 module.exports = modSpawning;
