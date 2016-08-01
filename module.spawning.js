@@ -50,7 +50,7 @@ var modSpawning = {
                var rc = spawner.createCreep(rBody, undefined,{role: 'repair', toFix:'', selfHarvest:true});
                console.log("Spawned: " + rc);
             }
-            else if(flags.length && Memory.roles.numArchitect < 1){
+            else if(flags.length && Memory.roles.numArchitects < 1){
               var ac = spawner.createCreep(bBody, undefined,{role: 'architect', toFix:'', selfHarvest:false});
               console.log("Spawned: " + ac);
             }
@@ -64,7 +64,7 @@ var modSpawning = {
              console.log("Spawned: " + h2c);
              betterHarvesters1++;
           }
-          else if(moveOn && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitect === 0){
+          else if(moveOn && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitects === 0){
              var b2c = spawner.createCreep(b2Body, undefined,{role: 'builder',selfHarvest:false});
              console.log("Spawned: " + b2c);
           }
@@ -76,7 +76,7 @@ var modSpawning = {
              var r2c = spawner.createCreep(r2Body, undefined,{role: 'repair', toFix:'', selfHarvest:true});
              console.log("Spawned: " + r2c);
           }
-          else if(moveOn && flags.length && Memory.roles.numArchitect < 1){
+          else if(moveOn && flags.length && Memory.roles.numArchitects < 1){
             var a2c = spawner.createCreep(bBody, undefined,{role: 'architect', toFix:'', selfHarvest:false});
             console.log("Spawned: " + a2c);
           }
@@ -89,7 +89,7 @@ var modSpawning = {
            console.log("Spawned: " + h3c);
            betterHarvesters2++;
         }
-        else if(moveOn2 && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitect === 0){
+        else if(moveOn2 && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitects === 0){
            var b3c = spawner.createCreep(b3Body, undefined,{role: 'builder',selfHarvest:false});
            console.log("Spawned: " + b3c);
         }
@@ -101,7 +101,7 @@ var modSpawning = {
            var r3c = spawner.createCreep(r3Body, undefined,{role: 'repair', toFix:'', selfHarvest:true});
            console.log("Spawned: " + r3c);
         }
-        else if(moveOn2 && flags.length && Memory.roles.numArchitect < 1){
+        else if(moveOn2 && flags.length && Memory.roles.numArchitects < 1){
           var a3c = spawner.createCreep(bBody, undefined,{role: 'architect', toFix:'', selfHarvest:false});
           console.log("Spawned: " + a3c);
         }
