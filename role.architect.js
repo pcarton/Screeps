@@ -1,5 +1,7 @@
 var roleArchitect = {
 
+  //Function to determin if there are buildable structures that need to be
+  //assigned a construction site (marked by named flags)
   ableToBuild:function(controllerLvl, structureType){
     var wallBool = (structureType.substring(0,4)==="Wall");
     switch(controllerLvl){
@@ -14,6 +16,8 @@ var roleArchitect = {
     }
   },
 
+  //Function to mark the pattern of 5 extensions that are granted at
+  //controler level 2 and 3
   markExtensions1: function(creep){
     var x = creep.pos.x;
     var y = creep.pos.y;
@@ -24,15 +28,18 @@ var roleArchitect = {
     creep.room.createConstructionSite(x, y-1, STRUCTURE_EXTENSION);
   },
 
+  // marks a container site
   markContainer:function(creep){
       creep.room.createConstructionSite(creep.pos, STRUCTURE_CONTAINER);
   },
 
+  //marks a tower site
   markTower: function(creep){
       creep.room.createConstructionSite(creep.pos, STRUCTURE_TOWER);
   },
 
-  //TODO
+  //marks wall sites starting at the flag, going in the specified
+  //direction for the given amount of blocks
   markWall:function(creep, flagName){
     var len = parseInt(flagName.substring(5));
     var direction = flagName.substring(4,5);
@@ -86,7 +93,7 @@ var roleArchitect = {
         if(flag.name === "Container"){
           this.markContainer(creep);
           flag.remove();
-          creep.memory.path =null;
+          creep.memory.path = null;
         }else if(flag.name === "Tower1"){
             this.markTower(creep);
             flag.remove();

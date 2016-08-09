@@ -1,3 +1,4 @@
+//Requires for the other roles and modules
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -6,6 +7,8 @@ var roleArchitect = require('role.architect');
 var modSpawning = require('module.spawning');
 var modCommon = require('module.common');
 
+//Initial memory JSON for the roles
+//includes counters for roles and maxes
 var initialRolesMem = {
     "numCreeps":0,
     "numHarvesters":0,
@@ -22,6 +25,7 @@ var initialRolesMem = {
 
 };
 
+//Set all the above JSONs into memeory on first start
 function initialize(){
   Memory.roles = initialRolesMem;
   Memory.initialized = true;
@@ -60,6 +64,7 @@ function getNumBuilders(){
   return bL;
 }
 
+//Gets the number of living Repair Creeps
 function getNumRepair(){
   var repair = _.filter(Game.creeps, (creep) => creep.memory.role == 'repair');
   var rL = repair.length;
@@ -84,11 +89,11 @@ function getNumArchitects(){
 //main loop
 module.exports.loop = function () {
 
+  //Only initialize if it hasnt been done (or it was manually set to false)
   if(Memory.initialized!==true){
     initialize();
   }
 
-  
   //calculates the breakdown of creeps
   var h  = getNumHarvesters();
   var u = getNumUpgraders();
@@ -99,7 +104,6 @@ module.exports.loop = function () {
 
   //Clear dead creeps from memory
   modCommon.clearDead();
-
 
   //assign the right run method to each creep
   for(var name in Game.creeps) {

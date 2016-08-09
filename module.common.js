@@ -1,4 +1,6 @@
 var modCommon = {
+  //Gets energy from availible locations, including sources
+  //if it can self harvest but at a lower priority
   getEn: function(creep){
 
     var storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -17,6 +19,7 @@ var modCommon = {
     }
   },
 
+  //Function to remove 'dead' creeps from the memory to conserve space
   clearDead: function(){
     for(var i in Memory.creeps) {
       if(!Game.creeps[i]) {

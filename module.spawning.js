@@ -82,6 +82,7 @@ var modSpawning = {
           }
       }
     }else if(spawnTier3){
+      //make sure there is energy and the spawner isnt already working, then spawn harvesters, builders, upgrader, and repair in that priority
       var moveOn2 = (betterHarvesters2>=(Memory.roles.maxHarvesters));
       if((!spawner.spawning) && (spawner.room.energyAvailable>=800)){
         if(Memory.roles.numHarvesters < (Memory.roles.maxHarvesters)){
