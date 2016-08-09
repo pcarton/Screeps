@@ -1,6 +1,5 @@
 var roleBuilder = require('role.builder');
 var modCommon = require('module.common');
-var cacheSize = 1000;
 
 var roleHarvester = {
 
@@ -29,23 +28,33 @@ var roleHarvester = {
   run: function(creep) {
     if(creep.memory.working && creep.carry.energy === 0) {
         creep.memory.working = false;
+        creep.memory.path = null;
     }
     if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
         creep.memory.working = true;
+        creep.memory.path = null;
     }
 
       if(!creep.memory.working) {
           var dropped = creep.room.find(FIND_DROPPED_ENERGY);
           if(dropped.length){
             if(creep.pickup(dropped[0])== ERR_NOT_IN_RANGE){
-              creep.moveTo(dropped[0],cacheSize);
+              if(!creep.memory.path){
+                creep.memory.path = creep.pos.findPathTo(dropped[0]);
+              }
+              creep.moveByPath(creep.memory.path);
+            }else{
+              creep.memory.path = null;
             }
           }else{
             var sourceID = creep.memory.source;
             if(sourceID){
               var source = Game.getObjectById(sourceID);
               if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                  creep.moveTo(source,cacheSize);
+                if(!creep.memory.path){
+                  creep.memory.path = creep.pos.findPathTo(source);
+                }
+                creep.moveByPath(creep.memory.path);
               }
             }else{
               this.assignSource(creep);
@@ -53,7 +62,6 @@ var roleHarvester = {
           }
       }
       else {
-          creep.memory._move = null;
           var p1 = creep.room.find(FIND_STRUCTURES, {
                   filter: (structure) => {
                       return ((structure.structureType == STRUCTURE_EXTENSION ||
@@ -73,15 +81,30 @@ var roleHarvester = {
 
           if(p1.length > 0) {
               if(creep.transfer(p1[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                  creep.moveTo(p1[0],cacheSize);
+                if(!creep.memory.path){
+                  creep.memory.path = creep.pos.findPathTo(p1[0]);
+                }
+                creep.moveByPath(creep.memory.path);
+              }else{
+                creep.memory.path = null;
               }
           }else if(p2.length>0){
             if(creep.transfer(p2[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(p2[0],cacheSize);
+                if(!creep.memory.path){
+                  creep.memory.path = creep.pos.findPathTo(p2[]);
+                }
+                creep.moveByPath(creep.memory.path);
+            }else{
+              creep.memory.path = null;
             }
           }else if(p3.length>0){
             if(creep.transfer(p3[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(p3[0],cacheSize);
+              if(!creep.memory.path){
+                creep.memory.path = creep.pos.findPathTo(p3[0]);
+              }
+              creep.moveByPath(creep.memory.path);
+            }else{
+              creep.memory.path = null;
             }
           }else{
             //If storage is full, Build to not waste time
