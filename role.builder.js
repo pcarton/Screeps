@@ -27,6 +27,7 @@ var roleBuilder = {
           }else{
             //If building is done, upgrade to not waste time
             roleUpgrader.run(creep);
+            creep.memory.path = null;
             }
           }
         else {

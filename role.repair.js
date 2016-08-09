@@ -36,6 +36,7 @@ var roleRepair = {
           }else{
             //If repairing is done, build to not waste time
             roleBuilder.run(creep);
+            creep.memory.path = null;
           }
       }else{
         var oldFixe = Game.getObjectById(creep.memory.toFix);
