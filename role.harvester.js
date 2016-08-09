@@ -1,5 +1,6 @@
 var roleBuilder = require('role.builder');
 var modCommon = require('module.common');
+var cacheSize = 1000;
 
 var roleHarvester = {
 
@@ -37,14 +38,14 @@ var roleHarvester = {
           var dropped = creep.room.find(FIND_DROPPED_ENERGY);
           if(dropped.length){
             if(creep.pickup(dropped[0])== ERR_NOT_IN_RANGE){
-              creep.moveTo(dropped[0]);
+              creep.moveTo(dropped[0],cacheSize);
             }
           }else{
             var sourceID = creep.memory.source;
             if(sourceID){
               var source = Game.getObjectById(sourceID);
               if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                  creep.moveTo(source);
+                  creep.moveTo(source,cacheSize);
               }
             }else{
               this.assignSource(creep);
@@ -71,15 +72,15 @@ var roleHarvester = {
 
           if(p1.length > 0) {
               if(creep.transfer(p1[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                  creep.moveTo(p1[0]);
+                  creep.moveTo(p1[0],cacheSize);
               }
           }else if(p2.length>0){
             if(creep.transfer(p2[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(p2[0]);
+                creep.moveTo(p2[0],cacheSize);
             }
           }else if(p3.length>0){
             if(creep.transfer(p3[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(p3[0]);
+                creep.moveTo(p3[0],cacheSize);
             }
           }else{
             //If storage is full, Build to not waste time
