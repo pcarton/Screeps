@@ -87,17 +87,20 @@ module.exports.loop = function () {
   if(Memory.initialized!==true){
     initialize();
   }
+  
+  //Only check this periodically
+  if(Game.tick%10===1){
+    //calculates the breakdown of creeps
+    var h  = getNumHarvesters();
+    var u = getNumUpgraders();
+    var b = getNumBuilders();
+    var r = getNumRepair();
+    var a = getNumArchitects();
+    Memory.roles.numCreeps = h + u + b + r + a;
 
-  //calculates the breakdown of creeps
-  var h  = getNumHarvesters();
-  var u = getNumUpgraders();
-  var b = getNumBuilders();
-  var r = getNumRepair();
-  var a = getNumArchitects();
-  Memory.roles.numCreeps = h + u + b + r + a;
-
-  //Clear dead creeps from memory
-  modCommon.clearDead();
+    //Clear dead creeps from memory
+    modCommon.clearDead();
+  }
 
   //assign the right run method to each creep
   for(var name in Game.creeps) {
