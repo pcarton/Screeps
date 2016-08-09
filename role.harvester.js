@@ -29,10 +29,12 @@ var roleHarvester = {
     if(creep.memory.working && creep.carry.energy === 0) {
         creep.memory.working = false;
         creep.memory.path = null;
+        creep.memory.currentlyHarvester = true;
     }
     if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
         creep.memory.working = true;
         creep.memory.path = null;
+        creep.memory.currentlyHarvester = true;
     }
 
       if(!creep.memory.working) {
@@ -78,8 +80,8 @@ var roleHarvester = {
               return (structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
             }
           });
-
-          if(p1.length > 0) {
+          var cH = creep.memory.currentlyHarvester;
+          if(cH && p1.length > 0) {
               if(creep.transfer(p1[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 if(!creep.memory.path){
                   creep.memory.path = creep.pos.findPathTo(p1[0]);
@@ -88,7 +90,7 @@ var roleHarvester = {
               }else{
                 creep.memory.path = null;
               }
-          }else if(p2.length>0){
+          }else if(cH && p2.length>0){
             if(creep.transfer(p2[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 if(!creep.memory.path){
                   creep.memory.path = creep.pos.findPathTo(p2[0]);
@@ -97,7 +99,7 @@ var roleHarvester = {
             }else{
               creep.memory.path = null;
             }
-          }else if(p3.length>0){
+          }else if(cH && p3.length>0){
             if(creep.transfer(p3[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
               if(!creep.memory.path){
                 creep.memory.path = creep.pos.findPathTo(p3[0]);
@@ -109,6 +111,7 @@ var roleHarvester = {
           }else{
             //If storage is full, Build to not waste time
             roleBuilder.run(creep);
+            creep.memory.currentlyHarvester = false;
           }
       }
   }
