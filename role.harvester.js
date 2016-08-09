@@ -91,7 +91,7 @@ var roleHarvester = {
           }else if(p2.length>0){
             if(creep.transfer(p2[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 if(!creep.memory.path){
-                  creep.memory.path = creep.pos.findPathTo(p2[]);
+                  creep.memory.path = creep.pos.findPathTo(p2[0]);
                 }
                 creep.moveByPath(creep.memory.path);
             }else{
