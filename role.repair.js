@@ -26,7 +26,10 @@ var roleRepair = {
           if(fixe!==null){
             creep.memory.toFix = fixe.id;
             if(creep.repair(fixe) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(fixe);
+              if(!creep.memory.path){
+                creep.memory.path = creep.pos.findPathTo(fixe);
+              }
+              creep.moveByPath(creep.memory.path);
             }
           }else{
             //If repairing is done, build to not waste time
@@ -35,7 +38,10 @@ var roleRepair = {
       }else{
         var oldFixe = Game.getObjectById(creep.memory.toFix);
         if(creep.repair(oldFixe) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(oldFixe);
+          if(!creep.memory.path){
+            creep.memory.path = creep.pos.findPathTo(oldFixe);
+          }
+          creep.moveByPath(creep.memory.path);
         }
       }
     }else{

@@ -17,7 +17,10 @@ var roleBuilder = {
           var bTargets = creep.room.find(FIND_CONSTRUCTION_SITES);
           if(bTargets.length) {
               if(creep.build(bTargets[0]) == ERR_NOT_IN_RANGE) {
-                  creep.moveTo(bTargets[0]);
+                if(!creep.memory.path){
+                  creep.memory.path = creep.pos.findPathTo(bTargest[0]);
+                }
+                creep.moveByPath(creep.memory.path);
               }
           }else{
             //If building is done, upgrade to not waste time

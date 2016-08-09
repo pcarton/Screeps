@@ -76,20 +76,27 @@ var roleArchitect = {
     }else{
       var flag = flags[0];
       if(!creep.pos.isEqualTo(flag.pos)){
-        creep.moveTo(flag);
+        if(!creep.memory.path){
+          creep.memory.path = creep.pos.findPathTo(flag);
+        }
+        creep.moveByPath(creep.memory.path);
       }else{
         if(flag.name === "Container"){
           this.markContainer(creep);
           flag.remove();
+          creep.memory.path =null;
         }else if(flag.name === "Tower1"){
             this.markTower(creep);
             flag.remove();
+            creep.memory.path =null;
         }else if(flag.name === "Extensions1" || flag.name ==="Extensions2"){
             this.markExtensions1(creep);
             flag.remove();
+            creep.memory.path =null;
         }else if(flag.name.substring(0,4)==="Wall"){
             this.markWall(creep, flag.name);
             flag.remove();
+            creep.memory.path =null;
         }
       }
     }
