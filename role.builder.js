@@ -18,7 +18,7 @@ var roleBuilder = {
           if(bTargets.length) {
               if(creep.build(bTargets[0]) == ERR_NOT_IN_RANGE) {
                 if(!creep.memory.path){
-                  creep.memory.path = creep.pos.findPathTo(bTargest[0]);
+                  creep.memory.path = creep.pos.findPathTo(bTargets[0]);
                 }
                 creep.moveByPath(creep.memory.path);
               }
