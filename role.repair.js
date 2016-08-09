@@ -8,10 +8,12 @@ var roleRepair = {
         creep.memory.working = false;
         creep.memory.toFix = "";
         creep.memory.path = null;
+        creep.memory.currentlyRepair = true;
     }
     if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
         creep.memory.working = true;
         creep.memory.path = null;
+        creep.memory.currentlyRepair = true;
     }
 
     if(creep.memory.working){
@@ -36,7 +38,10 @@ var roleRepair = {
           }else{
             //If repairing is done, build to not waste time
             roleBuilder.run(creep);
-            creep.memory.path = null;
+            if(creep.memory.currentlyRepair){
+              creep.memory.currentlyRepair = false;
+              creep.memory.path = null;
+            }
           }
       }else{
         var oldFixe = Game.getObjectById(creep.memory.toFix);

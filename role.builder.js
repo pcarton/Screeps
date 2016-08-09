@@ -9,10 +9,12 @@ var roleBuilder = {
         if(creep.memory.working && creep.carry.energy === 0) {
             creep.memory.working = false;
             creep.memory.path = null;
+            creep.memory.currentlyBuilder = true;
         }
         if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
             creep.memory.working = true;
             creep.memory.path = null;
+            creep.memory.currentlyBuilder = true;
         }
 
         if(creep.memory.working) {
@@ -27,10 +29,12 @@ var roleBuilder = {
           }else{
             //If building is done, upgrade to not waste time
             roleUpgrader.run(creep);
-            creep.memory.path = null;
+            if(creep.memory.currentlyBuilder){
+              creep.memory.currentlyBuilder = false;
+              creep.memory.path = null;
             }
           }
-        else {
+        }else {
             modCommon.getEn(creep);
         }
     }
