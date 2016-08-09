@@ -7,9 +7,11 @@ var roleRepair = {
     if(creep.memory.working && creep.carry.energy === 0) {
         creep.memory.working = false;
         creep.memory.toFix = "";
+        creep.memory.path = null;
     }
     if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
         creep.memory.working = true;
+        creep.memory.path = null;
     }
 
     if(creep.memory.working){

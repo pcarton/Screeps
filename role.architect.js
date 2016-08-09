@@ -63,9 +63,11 @@ var roleArchitect = {
     var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => this.ableToBuild(controllerLvl, flag.name));
     if(creep.memory.working && flags.length<1) {
         creep.memory.working = false;
+        creep.memory.path = null;
     }
     if(!creep.memory.working && flags.length) {
         creep.memory.working = true;
+        creep.memory.path = null;
     }
 
     if(!creep.memory.working){
