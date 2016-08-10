@@ -21,8 +21,9 @@ var roleRepair = {
     var destX = -1;
     var destY = -1;
     var lastObj = null;
-    if(creepPath){
-      lastObj = creepPath[creepPath.length-1];
+    if(creepPath.length>0){
+     var index = creepPath.length-1;
+     lastObj = creepPath[index];
       destX = lastObj.x + lastObj.dx;
       destY = lastObj.y + lastObj.dy;
     }else{
