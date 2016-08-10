@@ -19,7 +19,7 @@ var roleUpgrader = {
         var destX = -1;
         var destY = -1;
         var lastObj = null;
-        if(creepPath.length>0){
+        if(creepPath && creepPath.length>0){
          var index = creepPath.length-1;
          lastObj = creepPath[index];
           destX = lastObj.x + lastObj.dx;
