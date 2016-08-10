@@ -1,6 +1,7 @@
 var modCommon = {
   //Gets energy from availible locations, including sources
   //if it can self harvest but at a lower priority
+  //TODO use new path saving logic
   getEn: function(creep){
 
     var storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
