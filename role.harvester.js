@@ -110,11 +110,11 @@ var roleHarvester = {
             }
           }else{
             //If storage is full, Build to not waste time
-            roleBuilder.run(creep);
             if(creep.memory.currentlyHarvester){
               creep.memory.currentlyHarvester = false;
               creep.memory.path = null;
             }
+            roleBuilder.run(creep);
           }
       }
   }

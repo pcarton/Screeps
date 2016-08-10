@@ -28,11 +28,11 @@ var roleBuilder = {
               }
           }else{
             //If building is done, upgrade to not waste time
-            roleUpgrader.run(creep);
             if(creep.memory.currentlyBuilder){
               creep.memory.currentlyBuilder = false;
               creep.memory.path = null;
             }
+            roleUpgrader.run(creep);
           }
         }else {
             modCommon.getEn(creep);
