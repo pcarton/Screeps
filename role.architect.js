@@ -77,6 +77,19 @@ var roleArchitect = {
         creep.memory.path = null;
     }
 
+    var emptyPath = false;
+    var creepPath = creep.memory.path;
+    var destX = -1;
+    var destY = -1;
+    var lastObj = null;
+    if(creepPath){
+      lastObj = creepPath[creepPath.length-1];
+      destX = lastObj.x + lastObj.dx;
+      destY = lastObj.y + lastObj.dy;
+    }else{
+      emptyPath = true;
+    }
+
     if(!creep.memory.working){
       creep.memory.role = 'builder';
       if(controllerLvl<=1){
@@ -85,7 +98,7 @@ var roleArchitect = {
     }else{
       var flag = flags[0];
       if(!creep.pos.isEqualTo(flag.pos)){
-        if(!creep.memory.path){
+        if(emptyPath || (lastObj && (flag.pos.x !== destX || flag.pos.y !== destY))){
           creep.memory.path = creep.pos.findPathTo(flag);
         }
         creep.moveByPath(creep.memory.path);

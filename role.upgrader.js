@@ -14,10 +14,24 @@ var roleUpgrader = {
             creep.memory.path = null;
         }
 
+        var emptyPath = false;
+        var creepPath = creep.memory.path;
+        var destX = -1;
+        var destY = -1;
+        var lastObj = null;
+        if(creepPath){
+          lastObj = creepPath[creepPath.length-1];
+          destX = lastObj.x + lastObj.dx;
+          destY = lastObj.y + lastObj.dy;
+        }else{
+          emptyPath = true;
+        }
+
         if(creep.memory.working) {
-            if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-              if(!creep.memory.path){
-                creep.memory.path = creep.pos.findPathTo(creep.room.controller);
+          var controller = creep.room.controller;
+            if(creep.upgradeController() == ERR_NOT_IN_RANGE) {
+              if(emptyPath || (lastObj && (controller.pos.x !== destX || controller.pos.y !== destY))){
+                creep.memory.path = creep.pos.findPathTo(controller);
               }
               creep.moveByPath(creep.memory.path);
             }

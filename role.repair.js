@@ -16,6 +16,19 @@ var roleRepair = {
         creep.memory.currentlyRepair = true;
     }
 
+    var emptyPath = false;
+    var creepPath = creep.memory.path;
+    var destX = -1;
+    var destY = -1;
+    var lastObj = null;
+    if(creepPath){
+      lastObj = creepPath[creepPath.length-1];
+      destX = lastObj.x + lastObj.dx;
+      destY = lastObj.y + lastObj.dy;
+    }else{
+      emptyPath = true;
+    }
+
     if(creep.memory.working){
       if(creep.memory.toFix=== ""){
         //This finds the closest structure and checks if it needs repair
@@ -30,7 +43,7 @@ var roleRepair = {
           if(fixe!==null){
             creep.memory.toFix = fixe.id;
             if(creep.repair(fixe) == ERR_NOT_IN_RANGE) {
-              if(!creep.memory.path){
+              if(emptyPath || (lastObj && (fixe.pos.x !== destX || fixe.pos.y !== destY))){
                 creep.memory.path = creep.pos.findPathTo(fixe);
               }
               creep.moveByPath(creep.memory.path);
@@ -41,12 +54,12 @@ var roleRepair = {
               creep.memory.currentlyRepair = false;
               creep.memory.path = null;
             }
-            roleBuilder.run(creep);            
+            roleBuilder.run(creep);
           }
       }else{
         var oldFixe = Game.getObjectById(creep.memory.toFix);
         if(creep.repair(oldFixe) == ERR_NOT_IN_RANGE) {
-          if(!creep.memory.path){
+          if(emptyPath || (lastObj && (oldFixe.pos.x !== destX || oldFixe.pos.y !== destY))){
             creep.memory.path = creep.pos.findPathTo(oldFixe);
           }
           creep.moveByPath(creep.memory.path);
