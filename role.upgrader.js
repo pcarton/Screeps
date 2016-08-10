@@ -30,8 +30,8 @@ var roleUpgrader = {
 
         if(creep.memory.working) {
           var controller = creep.room.controller;
-            if(creep.upgradeController() == ERR_NOT_IN_RANGE) {
-              if(emptyPath || (controller.pos.x !== destX || controller.pos.y !== destY)){
+            if(creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+              if(emptyPath || (lastObj && (controller.pos.x !== destX || controller.pos.y !== destY))){
                 creep.memory.path = creep.pos.findPathTo(controller);
               }
               creep.moveByPath(creep.memory.path);
