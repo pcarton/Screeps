@@ -81,6 +81,7 @@ var roleHarvester = {
             }
           });
           var cH = creep.memory.currentlyHarvester;
+          var emptyPath = false;
           var creepPath = creep.memory.path;
           var destX = -1;
           var destY = -1;
@@ -89,9 +90,12 @@ var roleHarvester = {
             lastObj = creepPath[creepPath.length-1];
             destX = lastObj.x + lastObj.dx;
             destY = lastObj.y + lastObj.dy;
+          }else{
+            emptyPath = true;
           }
           if(cH && p1.length > 0) {
               if(creep.transfer(p1[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                if(emptyPath || (lastObj && (p1[0].pos.x !== destX || p1[0].pos.y !== destY))){
                   creep.memory.path = creep.pos.findPathTo(p1[0]);
                 }
                 creep.moveByPath(creep.memory.path);
@@ -100,6 +104,7 @@ var roleHarvester = {
               }
           }else if(cH && p2.length>0){
             if(creep.transfer(p2[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                if(emptyPath || (lastObj && (p2[0].pos.x !== destX || p2[0].pos.y !== destY))){
                   creep.memory.path = creep.pos.findPathTo(p2[0]);
                 }
                 creep.moveByPath(creep.memory.path);
@@ -108,6 +113,7 @@ var roleHarvester = {
             }
           }else if(cH && p3.length>0){
             if(creep.transfer(p3[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+              if(emptyPath || (lastObj && (p3[0].pos.x !== destX || p3[0].pos.y !== destY))){
                 creep.memory.path = creep.pos.findPathTo(p3[0]);
               }
               creep.moveByPath(creep.memory.path);
