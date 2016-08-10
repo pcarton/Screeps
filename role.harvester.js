@@ -37,11 +37,26 @@ var roleHarvester = {
         creep.memory.currentlyHarvester = true;
     }
 
+    var cH = creep.memory.currentlyHarvester;
+    var emptyPath = false;
+    var creepPath = creep.memory.path;
+    var destX = -1;
+    var destY = -1;
+    var lastObj = null;
+    if(creepPath && creepPath.length>0){
+     var index = creepPath.length-1;
+     lastObj = creepPath[index];
+      destX = lastObj.x + lastObj.dx;
+      destY = lastObj.y + lastObj.dy;
+    }else{
+      emptyPath = true;
+    }
+
       if(!creep.memory.working) {
           var dropped = creep.room.find(FIND_DROPPED_ENERGY);
           if(dropped.length){
             if(creep.pickup(dropped[0])== ERR_NOT_IN_RANGE){
-              if(!creep.memory.path){
+              if(emptyPath || (lastObj && (dropped[0].pos.x !== destX || dropped[0].pos.y !== destY))){
                 creep.memory.path = creep.pos.findPathTo(dropped[0]);
               }
               creep.moveByPath(creep.memory.path);
@@ -53,7 +68,7 @@ var roleHarvester = {
             if(sourceID){
               var source = Game.getObjectById(sourceID);
               if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                if(!creep.memory.path){
+                if(emptyPath || (lastObj && (source.pos.x !== destX || source.pos.y !== destY))){
                   creep.memory.path = creep.pos.findPathTo(source);
                 }
                 creep.moveByPath(creep.memory.path);
@@ -80,20 +95,6 @@ var roleHarvester = {
               return (structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
             }
           });
-          var cH = creep.memory.currentlyHarvester;
-          var emptyPath = false;
-          var creepPath = creep.memory.path;
-          var destX = -1;
-          var destY = -1;
-          var lastObj = null;
-          if(creepPath && creepPath.length>0){
-           var index = creepPath.length-1;
-           lastObj = creepPath[index];
-            destX = lastObj.x + lastObj.dx;
-            destY = lastObj.y + lastObj.dy;
-          }else{
-            emptyPath = true;
-          }
           if(cH && p1.length > 0) {
               if(creep.transfer(p1[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 if(emptyPath || (lastObj && (p1[0].pos.x !== destX || p1[0].pos.y !== destY))){
