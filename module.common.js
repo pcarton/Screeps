@@ -28,6 +28,8 @@ var modCommon = {
       }
     }
   }
+
+  //TODO Emergency upgrade logic
 };
 
 module.exports = modCommon;
