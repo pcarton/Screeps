@@ -11,6 +11,10 @@ var roleArchitect = {
         return (wallBool || structureType === "Extensions1" || structureType==="Container");
       case 3:
         return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1");
+      case 4:
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1");
+      case 5:
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link");
       default:
         return false;
     }
@@ -108,7 +112,7 @@ var roleArchitect = {
           this.markContainer(creep);
           flag.remove();
           creep.memory.path = null;
-        }else if(flag.name === "Tower1"){
+        }else if(flag.name === "Tower1" || flag.name === "Tower2"){
             this.markTower(creep);
             flag.remove();
             creep.memory.path =null;
