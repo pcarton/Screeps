@@ -12,9 +12,9 @@ var roleArchitect = {
       case 3:
         return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1");
       case 4:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType==="Container" || structureType === "Tower1");
       case 5:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || structureType==="Container" || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link");
       default:
         return false;
     }
@@ -30,6 +30,24 @@ var roleArchitect = {
     creep.room.createConstructionSite(x-1, y, STRUCTURE_EXTENSION);
     creep.room.createConstructionSite(x, y+1, STRUCTURE_EXTENSION);
     creep.room.createConstructionSite(x, y-1, STRUCTURE_EXTENSION);
+  },
+
+  //Function to mark the pattern of 5 extensions that are granted at
+  //controler level 4 and 5
+  markExtensions2: function(creep){
+    var x = creep.pos.x;
+    var y = creep.pos.y;
+    creep.room.createConstructionSite(x-2, y-1, STRUCTURE_EXTENSION);
+    creep.room.createConstructionSite(x-1, y-1, STRUCTURE_EXTENSION);
+    creep.room.createConstructionSite(x, y-1, STRUCTURE_EXTENSION);
+    creep.room.createConstructionSite(x+1, y-1, STRUCTURE_EXTENSION);
+    creep.room.createConstructionSite(x+2, y-1, STRUCTURE_EXTENSION);
+
+    creep.room.createConstructionSite(x-2, y+1, STRUCTURE_EXTENSION);
+    creep.room.createConstructionSite(x-1, y+1, STRUCTURE_EXTENSION);
+    creep.room.createConstructionSite(x, y+1, STRUCTURE_EXTENSION);
+    creep.room.createConstructionSite(x+1, y+1, STRUCTURE_EXTENSION);
+    creep.room.createConstructionSite(x+2, y+1, STRUCTURE_EXTENSION);
   },
 
   // marks a container site
@@ -120,6 +138,10 @@ var roleArchitect = {
             this.markExtensions1(creep);
             flag.remove();
             creep.memory.path =null;
+        }else if(flag.name === "Extensions3" || flag.name ==="Extensions4"){
+            this.markExtensions2(creep);
+            flag.remove();
+            creep.memory.path = null;
         }else if(flag.name.substring(0,4)==="Wall"){
             this.markWall(creep, flag.name);
             flag.remove();
