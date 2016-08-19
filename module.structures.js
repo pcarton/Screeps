@@ -1,9 +1,3 @@
-//Tower initial Memory
-var initialTowerMem = {
-  "target":null,
-  "mode":"attack"
-};
-
 var roleStructures = {
 
   //Tower related functions
@@ -12,7 +6,7 @@ var roleStructures = {
   },
 
   attack:function(tower){
-    var enemy = Game.getObjectById(Memory.tower.target);
+    var enemy= Game.getObjectById(Memory.tower.target);
     if(enemy){
       tower.attack(enemy);
     }
@@ -22,20 +16,22 @@ var roleStructures = {
 
   },
 
-  run:function(tower){
+  runTower:function(tower){
     if(Memory.tower.mode === "attack"){
-      attack(tower);
+      this.attack(tower);
     }else{
-      heal(tower);
+      this.heal(tower);
     }
 
   },
 
-  pickTargets:function(controller){
+  pickTargets:function(controller, allCreepList){
     //priority Targets
-    var pTargets = controller.pos.findInRange(FIND_HOSTILE_CREEPS,20);
-    if(pTargets.length>0){
-      Memory.tower.target = pTargets[0].id;
+    var pTargets = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username !=="PCarton"));
+    if(pTargets){
+      if(pTargets.length){
+        Memory.tower.target = pTargets[0].id;
+      }
     }else{
       var targets = controller.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
       if(targets.length>0){
