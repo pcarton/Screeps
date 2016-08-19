@@ -30,9 +30,16 @@ var initialRolesMem = {
 
 };
 
+//Tower initial Memory
+var initialTowerMem = {
+  "target":null,
+  "mode":"attack"
+};
+
 //Set all the above JSONs into memeory on first start
 function initialize(){
   Memory.roles = initialRolesMem;
+  Memory.tower = initialTowerMem;
   Memory.initialized = true;
 }
 
@@ -101,24 +108,25 @@ module.exports.loop = function () {
 
   for(var roomName in Game.rooms){
     var room = Game.rooms[roomName];
-    var creepList = room.find(FIND_CREEPS);
+    var allCreepList = room.find(FIND_CREEPS);
+    var myCreepList = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username ==="PCarton"));
     var allStructs = room.find(FIND_MY_STRUCTURES);
     var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
 
     //calculates the breakdown of creeps
-    var h  = getNumHarvesters(creepList);
-    var u = getNumUpgraders(creepList);
-    var b = getNumBuilders(creepList);
-    var r = getNumRepair(creepList);
-    var a = getNumArchitects(creepList);
+    var h  = getNumHarvesters(myCreepList);
+    var u = getNumUpgraders(myCreepList);
+    var b = getNumBuilders(myCreepList);
+    var r = getNumRepair(myCreepList);
+    var a = getNumArchitects(myCreepList);
     Memory.roles.numCreeps = h + u + b + r + a;
 
     //Clear dead creeps from memory
     modCommon.clearDead();
 
     //assign the right run method to each creep
-    for(var name in creepList) {
-        var creep = creepList[name];
+    for(var name in myCreepList) {
+        var creep = myCreepList[name];
         if(creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }
@@ -153,7 +161,7 @@ module.exports.loop = function () {
 
     for(var towerName in towers){
       if(target===null || target.room !== t.room){
-        modStructures.pickTargets(allCreepList)
+        modStructures.pickTargets(allCreepList);
       }
       var t = towers[towerName];
       modStructures.runTower(t);

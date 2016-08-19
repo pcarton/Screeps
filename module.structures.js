@@ -1,9 +1,3 @@
-//Tower initial Memory
-var initialTowerMem = {
-  "target":null,
-  "mode":"attack"
-};
-
 var roleStructures = {
 
   //Tower related functions
