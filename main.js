@@ -6,6 +6,7 @@ var roleRepair = require('role.repair');
 var roleArchitect = require('role.architect');
 var modSpawning = require('module.spawning');
 var modCommon = require('module.common');
+var modStructures = require('module.structures');
 
 //TODO have a find() of ALL creeps and use that in filters instead of
 //creepList so enemy creeps can be passed to towers
