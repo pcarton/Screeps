@@ -160,10 +160,10 @@ module.exports.loop = function () {
     var target = Game.getObjectById(Memory.tower.target);
 
     for(var towerName in towers){
-      if(target===null || target.room !== t.room){
-        modStructures.pickTargets(allCreepList);
-      }
       var t = towers[towerName];
+      if(target===null || target.room !== t.room){
+        modStructures.pickTargets(t.room.controller, allCreepList);
+      }
       modStructures.runTower(t);
     }
   }

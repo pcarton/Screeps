@@ -18,18 +18,20 @@ var roleStructures = {
 
   runTower:function(tower){
     if(Memory.tower.mode === "attack"){
-      attack(tower);
+      this.attack(tower);
     }else{
-      heal(tower);
+      this.heal(tower);
     }
 
   },
 
-  pickTargets:function(allCreepList){
+  pickTargets:function(controller, allCreepList){
     //priority Targets
     var pTargets = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username !=="PCarton"));
-    if(pTargets.length>0){
-      Memory.tower.target = pTargets[0].id;
+    if(pTargets){
+      if(pTargets.length){
+        Memory.tower.target = pTargets[0].id;
+      }
     }else{
       var targets = controller.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
       if(targets.length>0){
