@@ -7,6 +7,10 @@ var roleArchitect = require('role.architect');
 var modSpawning = require('module.spawning');
 var modCommon = require('module.common');
 
+//TODO have a find() of ALL creeps and use that in filters instead of
+//creepList so enemy creeps can be passed to towers
+//remember to make multiple rooms still work
+
 //Initial memory JSON for the roles
 //includes counters for roles and maxes
 var initialRolesMem = {
@@ -32,8 +36,8 @@ function initialize(){
 }
 
 //Gets the number of living harvester Creeps
-function getNumHarvesters(){
-  var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
+function getNumHarvesters(creepList){
+  var harvesters = _.filter(creepList, (creep) => creep.memory.role == 'harvester');
   var hL = harvesters.length;
   if(Memory.roles.numHarvesters != hL){
     Memory.roles.numHarvesters = hL;
@@ -43,8 +47,8 @@ function getNumHarvesters(){
 }
 
 //Gets the number of living upgrader Creeps
-function getNumUpgraders(){
-  var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
+function getNumUpgraders(creepList){
+  var upgraders = _.filter(creepList, (creep) => creep.memory.role == 'upgrader');
   var uL = upgraders.length;
   if(Memory.roles.numUpgraders != uL){
     Memory.roles.numUpgraders = uL;
@@ -54,8 +58,8 @@ function getNumUpgraders(){
 }
 
 //Gets the number of living builder Creeps
-function getNumBuilders(){
-  var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
+function getNumBuilders(creepList){
+  var builders = _.filter(creepList, (creep) => creep.memory.role == 'builder');
   var bL = builders.length;
   if(Memory.roles.numBuilders != bL){
     Memory.roles.numBuilders = bL;
@@ -65,8 +69,8 @@ function getNumBuilders(){
 }
 
 //Gets the number of living Repair Creeps
-function getNumRepair(){
-  var repair = _.filter(Game.creeps, (creep) => creep.memory.role == 'repair');
+function getNumRepair(creepList){
+  var repair = _.filter(creepList, (creep) => creep.memory.role == 'repair');
   var rL = repair.length;
   if(Memory.roles.numRepair != rL){
     Memory.roles.numRepair = rL;
@@ -76,8 +80,8 @@ function getNumRepair(){
 }
 
 //Gets the number of living harvester Creeps
-function getNumArchitects(){
-  var architects = _.filter(Game.creeps, (creep) => creep.memory.role == 'architect');
+function getNumArchitects(creepList){
+  var architects = _.filter(creepList, (creep) => creep.memory.role == 'architect');
   var aL = architects.length;
   if(Memory.roles.numArchitects != aL){
     Memory.roles.numArchitects = aL;
@@ -94,46 +98,64 @@ module.exports.loop = function () {
     initialize();
   }
 
-  //calculates the breakdown of creeps
-  var h  = getNumHarvesters();
-  var u = getNumUpgraders();
-  var b = getNumBuilders();
-  var r = getNumRepair();
-  var a = getNumArchitects();
-  Memory.roles.numCreeps = h + u + b + r + a;
+  for(var roomName in Game.rooms){
+    var room = Game.rooms[roomName];
+    var creepList = room.find(FIND_CREEPS);
+    var allStructs = room.find(FIND_MY_STRUCTURES);
+    var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
 
-  //Clear dead creeps from memory
-  modCommon.clearDead();
+    //calculates the breakdown of creeps
+    var h  = getNumHarvesters(creepList);
+    var u = getNumUpgraders(creepList);
+    var b = getNumBuilders(creepList);
+    var r = getNumRepair(creepList);
+    var a = getNumArchitects(creepList);
+    Memory.roles.numCreeps = h + u + b + r + a;
 
-  //assign the right run method to each creep
-  for(var name in Game.creeps) {
-      var creep = Game.creeps[name];
-      if(creep.memory.role == 'harvester') {
-          roleHarvester.run(creep);
+    //Clear dead creeps from memory
+    modCommon.clearDead();
+
+    //assign the right run method to each creep
+    for(var name in creepList) {
+        var creep = creepList[name];
+        if(creep.memory.role == 'harvester') {
+            roleHarvester.run(creep);
+        }
+        if(creep.memory.role == 'upgrader') {
+            roleUpgrader.run(creep);
+        }
+        if(creep.memory.role == 'builder'){
+          roleBuilder.run(creep);
+        }
+        if(creep.memory.role == 'repair'){
+          roleRepair.run(creep);
+        }
+        if(creep.memory.role == 'architect'){
+          roleArchitect.run(creep);
+        }
+    }
+
+    //determin if new creeps need to be spawned and pick an appropriate spawner
+    if(Memory.roles.numCreeps < modSpawning.maxCreeps){
+        for(var spawn in Game.spawns){
+          var spawner = Game.spawns[spawn];
+          var controllerLvl= spawner.room.controller.level;
+          var energyCapacity = spawner.room.energyCapacityAvailable;
+          modSpawning.spawn(spawner,energyCapacity,controllerLvl);
+
+        }
+    }
+
+    //TODO action loop for towers, similar to creeps above
+
+    var target = Game.getObjectById(Memory.tower.target);
+
+    for(var towerName in towers){
+      if(target===null || target.room !== t.room){
+        modStructures.pickTargets(allCreepList)
       }
-      if(creep.memory.role == 'upgrader') {
-          roleUpgrader.run(creep);
-      }
-      if(creep.memory.role == 'builder'){
-        roleBuilder.run(creep);
-      }
-      if(creep.memory.role == 'repair'){
-        roleRepair.run(creep);
-      }
-      if(creep.memory.role == 'architect'){
-        roleArchitect.run(creep);
-      }
+      var t = towers[towerName];
+      modStructures.runTower(t);
+    }
   }
-
-  //determin if new creeps need to be spawned and pick an appropriate spawner
-  if(Memory.roles.numCreeps < modSpawning.maxCreeps){
-      for(var spawn in Game.spawns){
-        var spawner = Game.spawns[spawn];
-        var controllerLvl= spawner.room.controller.level;
-        var energyCapacity = spawner.room.energyCapacityAvailable;
-        modSpawning.spawn(spawner,energyCapacity,controllerLvl);
-
-      }
-  }
-
 };
