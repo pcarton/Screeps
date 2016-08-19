@@ -6,7 +6,7 @@ var roleStructures = {
   },
 
   attack:function(tower){
-    var enemy= Game.getObjectById(Memory.tower.target);
+    var enemy= Game.getObjectById(Memory.towersMem.target);
     if(enemy){
       tower.attack(enemy);
     }
@@ -17,7 +17,7 @@ var roleStructures = {
   },
 
   runTower:function(tower){
-    if(Memory.tower.mode === "attack"){
+    if(Memory.towersMem.mode === "attack"){
       this.attack(tower);
     }else{
       this.heal(tower);
@@ -30,12 +30,12 @@ var roleStructures = {
     var pTargets = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username !=="PCarton"));
     if(pTargets){
       if(pTargets.length){
-        Memory.tower.target = pTargets[0].id;
+        Memory.towersMem.target = pTargets[0].id;
       }
     }else{
       var targets = controller.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
       if(targets.length>0){
-        Memory.tower.target = targets[0].id;
+        Memory.towersMem.target = targets[0].id;
       }
     }
   }
