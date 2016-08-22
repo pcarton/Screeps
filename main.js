@@ -39,7 +39,7 @@ var initialTowerMem = {
 //Set all the above JSONs into memeory on first start
 function initialize(){
   Memory.roles = initialRolesMem;
-  Memory.tower = initialTowerMem;
+  Memory.towersMem = initialTowerMem;
   Memory.initialized = true;
 }
 
@@ -157,7 +157,7 @@ module.exports.loop = function () {
 
     //TODO action loop for towers, similar to creeps above
 
-    var target = Game.getObjectById(Memory.tower.target);
+    var target = Game.getObjectById(Memory.towersMem.target);
 
     for(var towerName in towers){
       var t = towers[towerName];
