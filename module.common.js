@@ -50,6 +50,10 @@ var modCommon = {
           delete Memory.creeps[i];
       }
     }
+  },
+
+  retreat: function(creep){
+    creep.moveTo(creep.room.controller);
   }
 
   //TODO Emergency upgrade logic
