@@ -45,7 +45,7 @@ var modSpawning = {
                console.log("Spawned: " + hc);
             }
             else if(Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
-               var uc = spawner.createCreep(uBody, undefined,{role: 'upgrader', selfHarvest:false});
+               var uc = spawner.createCreep(uBody, undefined,{role: 'upgrader', selfHarvest:true});
                console.log("Spawned: " + uc);
             }
             else if(Memory.roles.numRepair< (Memory.roles.maxRepair)){
