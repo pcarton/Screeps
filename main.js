@@ -127,19 +127,23 @@ module.exports.loop = function () {
     //assign the right run method to each creep
     for(var name in myCreepList) {
         var creep = myCreepList[name];
-        if(creep.memory.role == 'harvester') {
+        //TODO intruder retreat logic
+        if(allCreepList.length>myCreepList.length && creep.memory.role !== "repair"){
+          modCommon.retreat(creep);
+        }
+        else if(creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }
-        if(creep.memory.role == 'upgrader') {
+        else if(creep.memory.role == 'upgrader') {
             roleUpgrader.run(creep);
         }
-        if(creep.memory.role == 'builder'){
+        else if(creep.memory.role == 'builder'){
           roleBuilder.run(creep);
         }
-        if(creep.memory.role == 'repair'){
+        else if(creep.memory.role == 'repair'){
           roleRepair.run(creep);
         }
-        if(creep.memory.role == 'architect'){
+        else if(creep.memory.role == 'architect'){
           roleArchitect.run(creep);
         }
     }
