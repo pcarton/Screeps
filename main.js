@@ -171,8 +171,6 @@ module.exports.loop = function () {
         }
     }
 
-    //TODO action loop for towers, similar to creeps above
-
     var target = Game.getObjectById(Memory.towersMem.target);
 
     for(var towerName in towers){
