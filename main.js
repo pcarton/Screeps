@@ -1,5 +1,7 @@
 //Requires for the other roles and modules
 var roleHarvester = require('role.harvester');
+var roleMiner = require('role.miner');
+var roleHauler = require('role.hauler');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
@@ -149,6 +151,12 @@ module.exports.loop = function () {
         }
         else if(creep.memory.role == 'architect'){
           roleArchitect.run(creep);
+        }
+        else if(creep.memory.role == 'miner'){
+          roleMiner.run(creep);
+        }
+        else if(creep.memory.role == 'hauler'){
+          roleHauler.run(creep);
         }
     }
 
