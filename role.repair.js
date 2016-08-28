@@ -59,7 +59,9 @@ var roleRepair = {
           }
       }else{
         var oldFixe = Game.getObjectById(creep.memory.toFix);
-        if(creep.repair(oldFixe) == ERR_NOT_IN_RANGE) {
+        if(oldFixe.hits >= oldFixe.hitsMax){
+          creep.memory.toFix = "";
+        }else if(creep.repair(oldFixe) == ERR_NOT_IN_RANGE){
           if(emptyPath || (lastObj && (oldFixe.pos.x !== destX || oldFixe.pos.y !== destY))){
             creep.memory.path = creep.pos.findPathTo(oldFixe);
           }

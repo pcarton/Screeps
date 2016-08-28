@@ -45,11 +45,11 @@ var modSpawning = {
                console.log("Spawned: " + hc);
             }
             else if(Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
-               var uc = spawner.createCreep(uBody, undefined,{role: 'upgrader', selfHarvest:false});
+               var uc = spawner.createCreep(uBody, undefined,{role: 'upgrader', selfHarvest:true});
                console.log("Spawned: " + uc);
             }
             else if(Memory.roles.numRepair< (Memory.roles.maxRepair)){
-               var rc = spawner.createCreep(rBody, undefined,{role: 'repair', toFix:'', selfHarvest:true});
+               var rc = spawner.createCreep(rBody, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
                console.log("Spawned: " + rc);
             }
             else if(flags.length && Memory.roles.numArchitects < 1){
@@ -75,7 +75,7 @@ var modSpawning = {
              console.log("Spawned: " + u2c);
           }
           else if(moveOn && Memory.roles.numRepair< (Memory.roles.maxRepair)){
-             var r2c = spawner.createCreep(r2Body, undefined,{role: 'repair', toFix:'', selfHarvest:true});
+             var r2c = spawner.createCreep(r2Body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
              console.log("Spawned: " + r2c);
           }
           else if(moveOn && flags.length && Memory.roles.numArchitects < 1){
@@ -101,7 +101,7 @@ var modSpawning = {
            console.log("Spawned: " + u3c);
         }
         else if(moveOn2 && Memory.roles.numRepair< (Memory.roles.maxRepair)){
-           var r3c = spawner.createCreep(r3Body, undefined,{role: 'repair', toFix:'', selfHarvest:true});
+           var r3c = spawner.createCreep(r3Body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
            console.log("Spawned: " + r3c);
         }
         else if(moveOn2 && flags.length && Memory.roles.numArchitects < 1){

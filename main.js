@@ -128,7 +128,7 @@ module.exports.loop = function () {
     for(var name in myCreepList) {
         var creep = myCreepList[name];
         //TODO intruder retreat logic
-        if(allCreepList.length>myCreepList.length && creep.memory.role !== "repair"){
+        if(allCreepList.length>myCreepList.length && creep.memory.military === true){
           modCommon.retreat(creep);
         }
         else if(creep.memory.role == 'harvester') {
