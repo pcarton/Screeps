@@ -52,9 +52,9 @@ var roleHarvester = {
               var source = Game.getObjectById(sourceID);
               if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 modCommon.move(creep,source.pos);
-              }else{
-                this.assignSource(creep);
               }
+            }else{
+                this.assignSource(creep);
             }
           }
     }else{
