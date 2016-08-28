@@ -22,8 +22,8 @@ var haulerBody = [CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE];
 var minerBody = [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE];
 
 var bodyObj = {
-  getBody:function(type,tier){
-      if(type==='harvester'){
+  getBody:function(role,tier){
+      if(role==='harvester'){
         switch(tier){
           default:
             return hBody;
@@ -32,7 +32,7 @@ var bodyObj = {
           case 3:
             return h3Body;
         }
-      }else if(type === 'upgrader'){
+      }else if(role === 'upgrader'){
         switch(tier){
           default:
             return uBody;
@@ -41,7 +41,7 @@ var bodyObj = {
           case 3:
             return u3Body;
         }
-      }else if(type === 'builder'){
+      }else if(role === 'builder'){
         switch(tier){
           default:
             return bBody;
@@ -50,7 +50,7 @@ var bodyObj = {
           case 3:
             return b3Body;
         }
-      }else if(type === 'repair'){
+      }else if(role === 'repair'){
         switch(tier){
           default:
             return rBody;
@@ -59,15 +59,15 @@ var bodyObj = {
           case 3:
             return r3Body;
         }
-      }else if(type === 'hauler'){
+      }else if(role === 'hauler'){
         return haulerBody;
-      }else if(type === 'miner'){
+      }else if(role === 'miner'){
         return minerBody;
-      }else if(type === 'architect'){
+      }else if(role === 'architect'){
         return bBody;
       }
   }
 
 };
 
-module.export = bodyObj;
+module.exports = bodyObj;
