@@ -26,7 +26,11 @@ var initialRolesMem = {
     "maxRepair":1,
     "numArchitects":0,
     "betterHarvesters1":0,
-    "betterHarvesters2":0
+    "betterHarvesters2":0,
+    "numMiners":0,
+    "maxMiners":0,
+    "numHaulers":0,
+    "maxHaulers":0
 
 };
 
