@@ -53,7 +53,7 @@ var roleHarvester = {
     }
 
       if(!creep.memory.working) {
-          var dropped = creep.room.findClosestByPath(FIND_DROPPED_ENERGY);
+          var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
           if(dropped){
             if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
               if(emptyPath || (lastObj && (dropped.pos.x !== destX || dropped.pos.y !== destY))){
@@ -79,18 +79,18 @@ var roleHarvester = {
           }
       }
       else {
-          var p1 = creep.room.findClosestByPath(FIND_STRUCTURES, {
+          var p1 = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                   filter: (structure) => {
                       return ((structure.structureType == STRUCTURE_EXTENSION ||
                               structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
                   }
           });
-          var p2 = creep.room.findClosestByPath(FIND_STRUCTURES, {
+          var p2 = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                   filter: (structure) => {
                     return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity) || (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
                   }
                 });
-          var p3 = creep.room.findClosestByPath(FIND_STRUCTURES,{
+          var p3 = creep.pos.findClosestByPath(FIND_STRUCTURES,{
             filter: (structure) => {
               return (structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
             }
