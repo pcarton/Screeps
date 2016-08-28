@@ -46,14 +46,14 @@ var roleHauler = {
     var dest = null;
     if(creep.carry.energy > 0){
       dest = findCloseDeliver(creep);
-      if(creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      if(dest && creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
       }else{
         creep.memory.path = null;
       }
     }else{
       dest = findCloseDropOff(creep);
-      if(creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      if(dest && creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
       }else{
         creep.memory.path = null;
