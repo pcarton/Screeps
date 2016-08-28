@@ -53,11 +53,11 @@ var roleHarvester = {
     }
 
       if(!creep.memory.working) {
-          var dropped = creep.room.find(FIND_DROPPED_ENERGY);
-          if(dropped.length){
-            if(creep.pickup(dropped[0])== ERR_NOT_IN_RANGE){
-              if(emptyPath || (lastObj && (dropped[0].pos.x !== destX || dropped[0].pos.y !== destY))){
-                creep.memory.path = creep.pos.findPathTo(dropped[0]);
+          var dropped = creep.room.findClosestByPath(FIND_DROPPED_ENERGY);
+          if(dropped){
+            if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
+              if(emptyPath || (lastObj && (dropped.pos.x !== destX || dropped.pos.y !== destY))){
+                creep.memory.path = creep.pos.findPathTo(dropped);
               }
               creep.moveByPath(creep.memory.path);
             }else{
@@ -79,44 +79,44 @@ var roleHarvester = {
           }
       }
       else {
-          var p1 = creep.room.find(FIND_STRUCTURES, {
+          var p1 = creep.room.findClosestByPath(FIND_STRUCTURES, {
                   filter: (structure) => {
                       return ((structure.structureType == STRUCTURE_EXTENSION ||
                               structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
                   }
           });
-          var p2 = creep.room.find(FIND_STRUCTURES, {
+          var p2 = creep.room.findClosestByPath(FIND_STRUCTURES, {
                   filter: (structure) => {
                     return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity) || (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
                   }
                 });
-          var p3 = creep.room.find(FIND_STRUCTURES,{
+          var p3 = creep.room.findClosestByPath(FIND_STRUCTURES,{
             filter: (structure) => {
               return (structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
             }
           });
-          if(cH && p1.length > 0) {
-              if(creep.transfer(p1[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                if(emptyPath || (lastObj && (p1[0].pos.x !== destX || p1[0].pos.y !== destY))){
-                  creep.memory.path = creep.pos.findPathTo(p1[0]);
+          if(cH && p1) {
+              if(creep.transfer(p1, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                if(emptyPath || (lastObj && (p1.pos.x !== destX || p1.pos.y !== destY))){
+                  creep.memory.path = creep.pos.findPathTo(p1);
                 }
                 creep.moveByPath(creep.memory.path);
               }else{
                 creep.memory.path = null;
               }
-          }else if(cH && p2.length>0){
-            if(creep.transfer(p2[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                if(emptyPath || (lastObj && (p2[0].pos.x !== destX || p2[0].pos.y !== destY))){
-                  creep.memory.path = creep.pos.findPathTo(p2[0]);
+          }else if(cH && p2){
+            if(creep.transfer(p2, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                if(emptyPath || (lastObj && (p2.pos.x !== destX || p2.pos.y !== destY))){
+                  creep.memory.path = creep.pos.findPathTo(p2);
                 }
                 creep.moveByPath(creep.memory.path);
             }else{
               creep.memory.path = null;
             }
-          }else if(cH && p3.length>0){
-            if(creep.transfer(p3[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-              if(emptyPath || (lastObj && (p3[0].pos.x !== destX || p3[0].pos.y !== destY))){
-                creep.memory.path = creep.pos.findPathTo(p3[0]);
+          }else if(cH && p3){
+            if(creep.transfer(p3, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+              if(emptyPath || (lastObj && (p3.pos.x !== destX || p3.pos.y !== destY))){
+                creep.memory.path = creep.pos.findPathTo(p3);
               }
               creep.moveByPath(creep.memory.path);
             }else{
