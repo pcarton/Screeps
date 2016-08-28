@@ -99,20 +99,6 @@ var roleArchitect = {
         creep.memory.path = null;
     }
 
-    var emptyPath = false;
-    var creepPath = creep.memory.path;
-    var destX = -1;
-    var destY = -1;
-    var lastObj = null;
-    if(creepPath && creepPath.length>0){
-     var index = creepPath.length-1;
-     lastObj = creepPath[index];
-      destX = lastObj.x + lastObj.dx;
-      destY = lastObj.y + lastObj.dy;
-    }else{
-      emptyPath = true;
-    }
-
     if(!creep.memory.working){
       creep.memory.role = 'builder';
       if(controllerLvl<=1){
@@ -121,10 +107,7 @@ var roleArchitect = {
     }else{
       var flag = flags[0];
       if(!creep.pos.isEqualTo(flag.pos)){
-        if(emptyPath || (lastObj && (flag.pos.x !== destX || flag.pos.y !== destY))){
-          creep.memory.path = creep.pos.findPathTo(flag);
-        }
-        creep.moveByPath(creep.memory.path);
+        modCommon.move(creep,flag.pos);
       }else{
         if(flag.name === "Container"){
           this.markContainer(creep);

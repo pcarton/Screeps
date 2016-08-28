@@ -54,8 +54,28 @@ var modCommon = {
 
   retreat: function(creep){
     creep.moveTo(creep.room.controller);
-  }
+  },
 
+  move:function(creep,pos){
+    var emptyPath = false;
+    var creepPath = creep.memory.path;
+    var destX = -1;
+    var destY = -1;
+    var lastObj = null;
+    if(creepPath && creepPath.length>0){
+      var index = creepPath.length-1;
+      lastObj = creepPath[index];
+      destX = lastObj.x + lastObj.dx;
+      destY = lastObj.y + lastObj.dy;
+    }else{
+      emptyPath = true;
+    }
+
+    if(emptyPath || (lastObj && (pos.x !== destX || pos.y !== destY))){
+      creep.memory.path = creep.pos.findPathTo(pos);
+    }
+    creep.moveByPath(creep.memory.path);
+  }
   //TODO Emergency upgrade logic
 };
 
