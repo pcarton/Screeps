@@ -53,7 +53,8 @@ var modCommon = {
   },
 
   retreat: function(creep){
-    creep.moveTo(creep.room.controller);
+    this.move(creep, creep.room.controller.pos);
+    creep.say("HELP ME!");
   },
 
   move:function(creep,pos){
