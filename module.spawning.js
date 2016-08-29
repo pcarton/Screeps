@@ -3,13 +3,14 @@ var bodyObj = require('module.bodyTypes');
 
 var modSpawning = {
   spawn:function(spawner,energyCapacity,controllerLvl){
+    var numSources = spawner.room.find(FIND_SOURCES).length;
     var betterHarvesters1 = Memory.roles.betterHarvesters1; // number of tier2 harvesters spawned, to track shift
 
     var betterHarvesters2 = Memory.roles.betterHarvesters2; // number of tier2 harvesters spawned, to track shift
 
     var controllerLvlMod = Math.floor(controllerLvl/2);  //modifier to the max amount of each creep
 
-    var notEnoughHarvest = (Memory.roles.numHarvesters < (Memory.roles.maxHarvesters));  //if there are enough harvesters, to stop other higher tier spawns
+    var notEnoughHarvest = ((Memory.roles.numHarvesters < Memory.roles.maxHarvesters) && (Memory.roles.numMiners < 1));  //if there are enough harvesters, to stop other higher tier spawns
 
     var noHarvest = (Memory.roles.numHarvesters < 1);
 
@@ -17,7 +18,9 @@ var modSpawning = {
 
     var spawnTier2 = (energyCapacity<800 || (spawner.room.energyAvailable<800 && notEnoughHarvest));  //boolean for tier2 spawning
 
-    var spawnTier3 = (energyCapacity>=800);  //boolean for tier3 spawning
+    var spawnTier3 = (energyCapacity<1300 || (spawner.room.energyAvailable<800 && notEnoughHarvest));  //boolean for tier3 spawning
+
+    var spawnTier4 = (energyCapacity>=1300);
 
     var flags = _.filter(spawner.room.find(FIND_FLAGS), (flag) => roleArchitect.ableToBuild(controllerLvl, flag.name));
     var body = [MOVE];
@@ -105,6 +108,40 @@ var modSpawning = {
           body = bodyObj.getBody('architect',3);
           var a3c = spawner.createCreep(body, undefined,{role: 'architect', toFix:'', selfHarvest:false});
           console.log("Spawned: " + a3c);
+        }
+      }
+    }else if (spawnTier4){
+      if(!spawner.spawning){
+        var moveOn3 = (Memory.roles.numMiners >= numSources) && (Memory.roles.numHaulers>=1);
+        if(Memory.roles.numMiners< numSources){
+          body = bodyObj.getBody('miner',4);
+          var mine = spawner.createCreep(body, undefined,{role: 'miner'});
+          console.log("Spawned: " + mine);
+        }
+        else if(Memory.roles.numHaulers<1){
+          body = bodyObj.getBody('hauler',4);
+          var haul = spawner.createCreep(body, undefined,{role: 'hauler'});
+          console.log("Spawned: " + haul);
+        }
+        else if(moveOn3 && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitects === 0){
+          body = bodyObj.getBody('builder',4);
+          var b4c = spawner.createCreep(body, undefined,{role: 'builder',selfHarvest:false});
+          console.log("Spawned: " + b4c);
+        }
+        else if(moveOn3 && Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
+          body = bodyObj.getBody('upgrader',4);
+          var u4c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
+          console.log("Spawned: " + u4c);
+        }
+        else if(moveOn3 && Memory.roles.numRepair< (Memory.roles.maxRepair)){
+          body = bodyObj.getBody('repair',4);
+          var r4c = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
+          console.log("Spawned: " + r4c);
+        }
+        else if(moveOn3 && flags.length && Memory.roles.numArchitects < 1){
+          body = bodyObj.getBody('architect',4);
+          var a4c = spawner.createCreep(body, undefined,{role: 'architect', toFix:'', selfHarvest:false});
+          console.log("Spawned: " + a4c);
         }
       }
     }

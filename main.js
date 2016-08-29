@@ -104,6 +104,28 @@ function getNumArchitects(creepList){
   return aL;
 }
 
+//Gets the number of living harvester Creeps
+function getNumMiners(creepList){
+  var miners = _.filter(creepList, (creep) => creep.memory.role == 'miner');
+  var mL = miners.length;
+  if(Memory.roles.numMiners != mL){
+    Memory.roles.numMiners = mL;
+    console.log('Miners: ' + mL);
+  }
+  return mL;
+}
+
+//Gets the number of living harvester Creeps
+function getNumHaulers(creepList){
+  var haulers = _.filter(creepList, (creep) => creep.memory.role == 'hauler');
+  var haulL = haulers.length;
+  if(Memory.roles.numHaulers != haulL){
+    Memory.roles.numHaulers = haulL;
+    console.log('Haulers: ' + haulL);
+  }
+  return haulL;
+}
+
 //main loop
 module.exports.loop = function () {
 
@@ -125,7 +147,9 @@ module.exports.loop = function () {
     var b = getNumBuilders(myCreepList);
     var r = getNumRepair(myCreepList);
     var a = getNumArchitects(myCreepList);
-    Memory.roles.numCreeps = h + u + b + r + a;
+    var m = getNumMiners(myCreepList);
+    var ha = getNumHaulers(myCreepList);
+    Memory.roles.numCreeps = h + u + b + r + a + m + ha;
 
     //Clear dead creeps from memory
     modCommon.clearDead();

@@ -30,6 +30,7 @@ var bodyObj = {
           case 2:
             return h2Body;
           case 3:
+          case 4:
             return h3Body;
         }
       }else if(role === 'upgrader'){
@@ -39,6 +40,7 @@ var bodyObj = {
           case 2:
             return u2Body;
           case 3:
+          case 4:
             return u3Body;
         }
       }else if(role === 'builder'){
@@ -48,6 +50,7 @@ var bodyObj = {
           case 2:
             return b2Body;
           case 3:
+          case 4:
             return b3Body;
         }
       }else if(role === 'repair'){
@@ -57,6 +60,7 @@ var bodyObj = {
           case 2:
             return r2Body;
           case 3:
+          case 4:
             return r3Body;
         }
       }else if(role === 'hauler'){
