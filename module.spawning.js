@@ -10,7 +10,7 @@ var modSpawning = {
 
     var controllerLvlMod = Math.floor(controllerLvl/2);  //modifier to the max amount of each creep
 
-    var notEnoughHarvest = ((Memory.roles.numHarvesters < Memory.roles.maxHarvesters) && (Memory.roles.numMiners < 1));  //if there are enough harvesters, to stop other higher tier spawns
+    var notEnoughHarvest = ((Memory.roles.numHarvesters < Memory.roles.maxHarvesters) && (Memory.roles.numMiners < 1 && Memory.roles.numHaulers<1));  //if there are enough harvesters, to stop other higher tier spawns
 
     var noHarvest = (Memory.roles.numHarvesters < 1);
 
@@ -111,11 +111,11 @@ var modSpawning = {
         }
       }
     }else if (spawnTier4){
-      if(!spawner.spawning){
+      if(!spawner.spawning && (spawner.room.energyAvailable >=800)){
         var moveOn3 = (Memory.roles.numMiners >= numSources) && (Memory.roles.numHaulers>=1);
         if(Memory.roles.numMiners< numSources){
           body = bodyObj.getBody('miner',4);
-          var mine = spawner.createCreep(body, undefined,{role: 'miner'});
+          var mine = spawner.createCreep(body, undefined,{role: 'miner',source:"", dropOff: ""});
           console.log("Spawned: " + mine);
         }
         else if(Memory.roles.numHaulers<1){
