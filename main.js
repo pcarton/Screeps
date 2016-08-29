@@ -154,11 +154,13 @@ module.exports.loop = function () {
     //Clear dead creeps from memory
     modCommon.clearDead();
 
+    var enemyPresent = allCreepList.length>myCreepList.length;
+
     //assign the right run method to each creep
     for(var name in myCreepList) {
         var creep = myCreepList[name];
         //TODO intruder retreat logic
-        if(allCreepList.length>myCreepList.length && creep.memory.military !== true){
+        if(enemyPresent && creep.memory.military !== true){
           modCommon.retreat(creep);
         }
         else if(creep.memory.role == 'harvester') {
@@ -197,6 +199,8 @@ module.exports.loop = function () {
 
     var target = Game.getObjectById(Memory.towersMem.target);
 
+
+    //TODO switch to repair/heal if !enemyPresent
     for(var towerName in towers){
       var t = towers[towerName];
       if(target===null || target.room !== t.room){
