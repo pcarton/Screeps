@@ -32,7 +32,7 @@ var roleBuilder = {
             });
           if(bTargets1.length) {
               if(creep.build(bTargets1[0]) == ERR_NOT_IN_RANGE) {
-                modCommon.move(creep,bTargets[0].pos);
+                modCommon.move(creep,bTargets1[0].pos);
               }
           }else if(bTargets2.length){
             if(creep.build(bTargets2[0]) == ERR_NOT_IN_RANGE) {
