@@ -7,14 +7,14 @@ var roleMiner = {
     for(var sIndex in sources){
       var s = sources[sIndex];
       var gID = s.id;
-      var thisAssigned =false;
+      var thisAssigned = false;
       for(var cName in Game.creeps){
           var c = Game.creeps[cName];
-          if(c.memory.source === gID){
+          if(c.memory.role === "miner" && c.memory.source === gID){
             thisAssigned = true;
           }
       }
-      if(!thisAssigned && creep.memory.source === null){
+      if(!thisAssigned && creep.memory.source === ""){
         creep.memory.source = gID;
       }
       Memory.roles.maxMiners = sources.length;
@@ -24,39 +24,43 @@ var roleMiner = {
   assignDropOff:function(creep){
     var sourceID = creep.memory.source;
     var source = null;
-    if(sourceID){
+    if(sourceID !== ""){
       source = Game.getObjectById(sourceID);
+
+      var dropOff = source.pos.findClosestByPath(FIND_STRUCTURES, (structure) => struture.structureType === "STRUCTURE_CONTAINER" || struture.structureType === "STRUCTURE_STORAGE" || struture.structureType === "STRUCTURE_LINK");
+      if(dropOff){
+        creep.memory.dropOff = dropOff.id;
+      }
     }else{
       this.assignSource(creep);
     }
-    var dropOff = source.pos.findClosestByPath(FIND_STRUCTURES, (structure) => struture.structureType === "STRUCTURE_CONTAINER" || struture.structureType === "STRUCTURE_STORAGE" || struture.structureType === "STRUCTURE_LINK");
-
-    creep.memory.dropOff = dropOff.id;
   },
 
   run: function(creep) {
 
-    if(creep.memory.source === ""){
-      this.assignSource(creep);
-    }
-    if(creep.memory.dropOff === ""){
-      this.assignDropOff(creep);
-    }
-
     var sPos = null;
     var sourceID = creep.memory.source;
     var source = null;
-    if(sourceID){
-      source = Game.getObjectById(sourceID);
-      sPos = source.pos;
-    }
 
     var dPos = null;
     var dropOffID = creep.memory.dropOff;
     var dropOff = null;
-    if(dropOffID){
-      dropOff = Game.getObjectById(dropOffID);
-      dPos = dropOff.pos;
+
+    if(sourceID === ""){
+      this.assignSource(creep);
+    }else{
+      if(sourceID){
+        source = Game.getObjectById(sourceID);
+        sPos = source.pos;
+      }
+    }
+    if(dropOffID === ""){
+      this.assignDropOff(creep);
+    }else{
+      if(dropOffID){
+        dropOff = Game.getObjectById(dropOffID);
+        dPos = dropOff.pos;
+      }
     }
 
     if(creep.carry.energy == creep.carryCapacity){

@@ -1,29 +1,35 @@
+var modCommon = require('module.common');
+
 //moves from containers marked by flags to other storage
 //Flags: Drop-Off: where miners leave resouce
 //Deliver: where upgraders, etc will likely pick up
 //priority from first to last(energy): Spawn/Extensions - Tower - Deliver flags - Storage
 var roleHauler = {
   findCloseDropOff:function(creep){
-    var flag = _.filter(creep.pos.findClosestByPath(FIND_FLAGS), (flag) => flag.name.substring(0,7)==="DropOff");
-    var dropOff = creep.room.lookForAt(LOOK_STRUCTURES,flag);
+    var flag = creep.pos.findClosestByRange(FIND_FLAGS, {
+        filter: (flag) => flag.name.substring(0,7)=="DropOff"
+    });
+    var dropOff = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER || struct.structureType === STRUCTURE_LINK)[0];
     return dropOff;
   },
 
   findCloseDeliver(creep){
-    var p1 = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+    var p1 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => {
                 return ((structure.structureType == STRUCTURE_EXTENSION ||
                         structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
             }
     });
-    var p2 = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+    var p2 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => {
               return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
             }
           });
-    var p3Flag = _.filter(creep.pos.findClosestByPath(FIND_FLAGS), (flag) => flag.name.substring(0,7)==="Deliver");
-    var p3 = creep.room.lookForAt(LOOK_STRUCTURES,flag);
-    var p4 = creep.pos.findClosestByPath(FIND_STRUCTURES,{
+    var p3Flag = creep.pos.findClosestByRange(FIND_FLAGS, {
+        filter: (flag) => flag.name.substring(0,7)=="Deliver"
+    });
+    var p3 = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,p3Flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER)[0];
+    var p4 = creep.pos.findClosestByRange(FIND_STRUCTURES,{
       filter: (structure) => {
         return (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
       }
