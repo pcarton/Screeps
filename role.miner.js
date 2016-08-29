@@ -14,7 +14,7 @@ var roleMiner = {
             thisAssigned = true;
           }
       }
-      if(!thisAssigned && creep.memory.source === ""){
+      if(!thisAssigned && creep.memory.source === null){
         creep.memory.source = gID;
       }
       Memory.roles.maxMiners = sources.length;
@@ -22,13 +22,12 @@ var roleMiner = {
   },
 
   assignDropOff:function(creep){
-    if(creep.memory.source === ""){
-      assignSource(creep);
-    }
     var sourceID = creep.memory.source;
     var source = null;
     if(sourceID){
       source = Game.getObjectById(sourceID);
+    }else{
+      this.assignSource(creep);
     }
     var dropOff = source.pos.findClosestByPath(FIND_STRUCTURES, (structure) => struture.structureType === "STRUCTURE_CONTAINER" || struture.structureType === "STRUCTURE_STORAGE" || struture.structureType === "STRUCTURE_LINK");
 
@@ -38,10 +37,10 @@ var roleMiner = {
   run: function(creep) {
 
     if(creep.memory.source === ""){
-      assignSource(creep);
+      this.assignSource(creep);
     }
     if(creep.memory.dropOff === ""){
-      assignDropOff(creep);
+      this.assignDropOff(creep);
     }
 
     var sPos = null;
