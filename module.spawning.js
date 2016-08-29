@@ -12,7 +12,7 @@ var modSpawning = {
 
     var notEnoughHarvest = ((Memory.roles.numHarvesters < Memory.roles.maxHarvesters) && (Memory.roles.numMiners < 1 && Memory.roles.numHaulers<1));  //if there are enough harvesters, to stop other higher tier spawns
 
-    var noHarvest = (Memory.roles.numHarvesters < 1);
+    var noHarvest = (Memory.roles.numHarvesters < 1)&& (Memory.roles.numMiners < 1 && Memory.roles.numHaulers<1);
 
     var spawnTier1 = (energyCapacity<550 || (spawner.room.energyAvailable<550 && noHarvest)); //boolean for tier 1 spawning
 
@@ -118,7 +118,7 @@ var modSpawning = {
           var mine = spawner.createCreep(body, undefined,{role: 'miner',source:"", dropOff: ""});
           console.log("Spawned: " + mine);
         }
-        else if(Memory.roles.numHaulers<1){
+        else if(Memory.roles.numHaulers<Memory.roles.maxHaulers){
           body = bodyObj.getBody('hauler',4);
           var haul = spawner.createCreep(body, undefined,{role: 'hauler'});
           console.log("Spawned: " + haul);
