@@ -1,3 +1,5 @@
+var modCommon = require('module.common');
+
 var roleArchitect = {
 
   //Function to determin if there are buildable structures that need to be
