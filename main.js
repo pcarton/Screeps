@@ -32,7 +32,7 @@ var initialRolesMem = {
     "numMiners":0,
     "maxMiners":0,
     "numHaulers":0,
-    "maxHaulers":0
+    "maxHaulers":2
 
 };
 
