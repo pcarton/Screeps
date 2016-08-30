@@ -7,18 +7,17 @@ var modSpawning = {
     var betterHarvesters1 = Memory.roles.betterHarvesters1; // number of tier2 harvesters spawned, to track shift
 
     var betterHarvesters2 = Memory.roles.betterHarvesters2; // number of tier2 harvesters spawned, to track shift
+    var controllerLvlMod = Math.ceil((controllerLvl-1)/3);  //modifier to the max amount of each creep
 
-    var controllerLvlMod = Math.floor(controllerLvl/2);  //modifier to the max amount of each creep
+    var notEnoughHarvest = ((Memory.roles.numHarvesters < Memory.roles.maxHarvesters) && (Memory.roles.numMiners < 1));  //if there are enough harvesters, to stop other higher tier spawns
 
-    var notEnoughHarvest = ((Memory.roles.numHarvesters < Memory.roles.maxHarvesters) && (Memory.roles.numMiners < 1 && Memory.roles.numHaulers<1));  //if there are enough harvesters, to stop other higher tier spawns
-
-    var noHarvest = (Memory.roles.numHarvesters < 1)&& (Memory.roles.numMiners < 1 && Memory.roles.numHaulers<1);
+    var noHarvest = (Memory.roles.numHarvesters < 1)&& (Memory.roles.numHaulers<1);
 
     var spawnTier1 = (energyCapacity<550 || (spawner.room.energyAvailable<550 && noHarvest)); //boolean for tier 1 spawning
 
     var spawnTier2 = (energyCapacity<800 || (spawner.room.energyAvailable<800 && notEnoughHarvest));  //boolean for tier2 spawning
 
-    var spawnTier3 = (energyCapacity<1300 || (spawner.room.energyAvailable<800 && notEnoughHarvest));  //boolean for tier3 spawning
+    var spawnTier3 = (energyCapacity<1300 || (spawner.room.energyAvailable<1300 && notEnoughHarvest));  //boolean for tier3 spawning
 
     var spawnTier4 = (energyCapacity>=1300);
 
@@ -135,7 +134,7 @@ var modSpawning = {
         }
         else if(moveOn3 && Memory.roles.numRepair< (Memory.roles.maxRepair)){
           body = bodyObj.getBody('repair',4);
-          var r4c = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
+          var r4c = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:false, military:true});
           console.log("Spawned: " + r4c);
         }
         else if(moveOn3 && flags.length && Memory.roles.numArchitects < 1){
