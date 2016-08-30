@@ -27,7 +27,9 @@ var roleMiner = {
     if(sourceID !== ""){
       source = Game.getObjectById(sourceID);
 
-      var dropOff = source.pos.findClosestByPath(FIND_STRUCTURES, (structure) => struture.structureType === "STRUCTURE_CONTAINER" || struture.structureType === "STRUCTURE_STORAGE" || struture.structureType === "STRUCTURE_LINK");
+      var dropOffFlag = source.pos.findClosestByRange(FIND_FLAGS, { filter: (object)=>(object.name.substring(0,7) === "DropOff")});
+      var dropOffArr = creep.room.lookForAt(LOOK_STRUCTURES, dropOffFlag);
+      var dropOff = _.filter(dropOffArr, (object) => object.structureType != STRUCTURE_ROAD)[0];
       if(dropOff){
         creep.memory.dropOff = dropOff.id;
       }
