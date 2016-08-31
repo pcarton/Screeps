@@ -28,7 +28,7 @@ var roleHauler = {
     var p3Flag = creep.pos.findClosestByRange(FIND_FLAGS, {
         filter: (flag) => flag.name.substring(0,7)=="Deliver"
     });
-    var p3 = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,p3Flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER)[0];
+    var p3 = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,p3Flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER && struct.store[RESOURCE_ENERGY] < struct.storeCapacity)[0];
     var p4 = creep.pos.findClosestByRange(FIND_STRUCTURES,{
       filter: (structure) => {
         return (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
