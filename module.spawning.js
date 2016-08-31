@@ -115,12 +115,12 @@ var modSpawning = {
         var moveOn3 = (Memory.roles.numMiners >= numSources) && (Memory.roles.numHaulers>=1);
         if(Memory.roles.numMiners< numSources){
           body = bodyObj.getBody('miner',4);
-          var mine = spawner.createCreep(body, undefined,{role: 'miner',source:"", dropOff: ""});
+          var mine = spawner.createCreep(body, undefined,{role: 'miner',source:"", dropOff: "", military:true});
           console.log("Spawned: " + mine);
         }
         else if(Memory.roles.numHaulers<Memory.roles.maxHaulers){
           body = bodyObj.getBody('hauler',4);
-          var haul = spawner.createCreep(body, undefined,{role: 'hauler'});
+          var haul = spawner.createCreep(body, undefined,{role: 'hauler', military:tru});
           console.log("Spawned: " + haul);
         }
         else if(moveOn3 && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitects === 0){
