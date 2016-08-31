@@ -1,3 +1,5 @@
+var modCommon = require('module.common');
+
 var roleStructures = {
 
   //Tower related functions
@@ -13,7 +15,15 @@ var roleStructures = {
   },
 
   heal:function(tower){
+    //TODO Add a priority to heal creeps here (before repair)
 
+    var damagedStructs = modCommon.findToFixArr(tower.room);
+    toFix = tower.pos.findClosestByRange(damagedStructs);
+
+
+    if(toFix!==null){
+      tower.repair(toFix);
+    }
   },
 
   runTower:function(tower){

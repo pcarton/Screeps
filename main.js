@@ -39,7 +39,8 @@ var initialRolesMem = {
 //Tower initial Memory
 var initialTowerMem = {
   "target":null,
-  "mode":"attack"
+  "mode":"attack",
+  "fixe":null
 };
 
 //Set all the above JSONs into memeory on first start
@@ -200,7 +201,12 @@ module.exports.loop = function () {
     var target = Game.getObjectById(Memory.towersMem.target);
 
 
-    //TODO switch to repair/heal if !enemyPresent
+    if(enemyPresent){
+      Memory.towersMem.mode = "attack";
+    }else{
+      Memory.towersMem.mode = "heal";
+    }
+
     for(var towerName in towers){
       var t = towers[towerName];
       if(target===null || target.room !== t.room){

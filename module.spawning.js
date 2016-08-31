@@ -4,6 +4,7 @@ var bodyObj = require('module.bodyTypes');
 var modSpawning = {
   spawn:function(spawner,energyCapacity,controllerLvl){
     var numSources = spawner.room.find(FIND_SOURCES).length;
+    var numTowers = spawner.room.find(FIND_STRUCTURES, {filter: (struct)=> struct.structureType === STRUCTURE_TOWER}).length;
     var betterHarvesters1 = Memory.roles.betterHarvesters1; // number of tier2 harvesters spawned, to track shift
 
     var betterHarvesters2 = Memory.roles.betterHarvesters2; // number of tier2 harvesters spawned, to track shift
@@ -36,7 +37,7 @@ var modSpawning = {
               var uc = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:true});
               console.log("Spawned: " + uc);
             }
-            else if(Memory.roles.numRepair< (Memory.roles.maxRepair)){
+            else if(Memory.roles.numRepair< (Memory.roles.maxRepair - numTowers)){
               body = bodyObj.getBody('repair',1);
               var rc = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
               console.log("Spawned: " + rc);
@@ -67,7 +68,7 @@ var modSpawning = {
             var u2c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
             console.log("Spawned: " + u2c);
           }
-          else if(moveOn && Memory.roles.numRepair< (Memory.roles.maxRepair)){
+          else if(moveOn && Memory.roles.numRepair< (Memory.roles.maxRepair - numTowers)){
             body = bodyObj.getBody('repair',2);
             var r2c = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
             console.log("Spawned: " + r2c);
@@ -98,7 +99,7 @@ var modSpawning = {
           var u3c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
           console.log("Spawned: " + u3c);
         }
-        else if(moveOn2 && Memory.roles.numRepair< (Memory.roles.maxRepair)){
+        else if(moveOn2 && Memory.roles.numRepair< (Memory.roles.maxRepair - numTowers)){
           body = bodyObj.getBody('repair',3);
           var r3c = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
           console.log("Spawned: " + r3c);
@@ -132,7 +133,7 @@ var modSpawning = {
           var u4c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
           console.log("Spawned: " + u4c);
         }
-        else if(moveOn3 && Memory.roles.numRepair< (Memory.roles.maxRepair)){
+        else if(moveOn3 && Memory.roles.numRepair< (Memory.roles.maxRepair - numTowers)){
           body = bodyObj.getBody('repair',4);
           var r4c = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:false, military:true});
           console.log("Spawned: " + r4c);

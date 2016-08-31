@@ -52,6 +52,18 @@ var modCommon = {
     }
   },
 
+  findToFixArr: function(room){
+    var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
+      var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
+      var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < 5000) && (object.hitsMax-object.hits>0);
+      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < 5000);
+      var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 100000);
+      return brokenRoad || brokenWall || brokenRamp || brokenCont;
+    }});
+
+    return fixeArr;
+  },
+
   retreat: function(creep){
     this.move(creep, creep.room.controller.pos);
     creep.say("HELP ME!");
