@@ -120,7 +120,7 @@ var modSpawning = {
         }
         else if(Memory.roles.numHaulers<Memory.roles.maxHaulers){
           body = bodyObj.getBody('hauler',4);
-          var haul = spawner.createCreep(body, undefined,{role: 'hauler', military:tru});
+          var haul = spawner.createCreep(body, undefined,{role: 'hauler', military:true});
           console.log("Spawned: " + haul);
         }
         else if(moveOn3 && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitects === 0){
