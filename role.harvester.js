@@ -38,28 +38,11 @@ var roleHarvester = {
     }
 
     var cH = creep.memory.currentlyHarvester;
-    var emptyPath = false;
-    var creepPath = creep.memory.path;
-    var destX = -1;
-    var destY = -1;
-    var lastObj = null;
-    if(creepPath && creepPath.length>0){
-     var index = creepPath.length-1;
-     lastObj = creepPath[index];
-      destX = lastObj.x + lastObj.dx;
-      destY = lastObj.y + lastObj.dy;
-    }else{
-      emptyPath = true;
-    }
-
-      if(!creep.memory.working) {
+    if(!creep.memory.working){
           var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
           if(dropped){
             if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
-              if(emptyPath || (lastObj && (dropped.pos.x !== destX || dropped.pos.y !== destY))){
-                creep.memory.path = creep.pos.findPathTo(dropped);
-              }
-              creep.moveByPath(creep.memory.path);
+              modCommon.move(creep,dropped.pos);
             }else{
               creep.memory.path = null;
             }
@@ -68,17 +51,13 @@ var roleHarvester = {
             if(sourceID){
               var source = Game.getObjectById(sourceID);
               if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                if(emptyPath || (lastObj && (source.pos.x !== destX || source.pos.y !== destY))){
-                  creep.memory.path = creep.pos.findPathTo(source);
-                }
-                creep.moveByPath(creep.memory.path);
+                modCommon.move(creep,source.pos);
               }
             }else{
-              this.assignSource(creep);
+                this.assignSource(creep);
             }
           }
-      }
-      else {
+    }else{
           var p1 = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                   filter: (structure) => {
                       return ((structure.structureType == STRUCTURE_EXTENSION ||
@@ -97,28 +76,19 @@ var roleHarvester = {
           });
           if(cH && p1) {
               if(creep.transfer(p1, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                if(emptyPath || (lastObj && (p1.pos.x !== destX || p1.pos.y !== destY))){
-                  creep.memory.path = creep.pos.findPathTo(p1);
-                }
-                creep.moveByPath(creep.memory.path);
+                modCommon.move(creep,p1.pos);
               }else{
                 creep.memory.path = null;
               }
           }else if(cH && p2){
             if(creep.transfer(p2, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                if(emptyPath || (lastObj && (p2.pos.x !== destX || p2.pos.y !== destY))){
-                  creep.memory.path = creep.pos.findPathTo(p2);
-                }
-                creep.moveByPath(creep.memory.path);
+              modCommon.move(creep,p2.pos);
             }else{
               creep.memory.path = null;
             }
           }else if(cH && p3){
             if(creep.transfer(p3, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-              if(emptyPath || (lastObj && (p3.pos.x !== destX || p3.pos.y !== destY))){
-                creep.memory.path = creep.pos.findPathTo(p3);
-              }
-              creep.moveByPath(creep.memory.path);
+              modCommon.move(creep,p3.pos);
             }else{
               creep.memory.path = null;
             }

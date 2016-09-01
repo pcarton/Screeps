@@ -1,5 +1,7 @@
 //Requires for the other roles and modules
 var roleHarvester = require('role.harvester');
+var roleMiner = require('role.miner');
+var roleHauler = require('role.hauler');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
@@ -26,14 +28,19 @@ var initialRolesMem = {
     "maxRepair":1,
     "numArchitects":0,
     "betterHarvesters1":0,
-    "betterHarvesters2":0
+    "betterHarvesters2":0,
+    "numMiners":0,
+    "maxMiners":0,
+    "numHaulers":0,
+    "maxHaulers":1
 
 };
 
 //Tower initial Memory
 var initialTowerMem = {
   "target":null,
-  "mode":"attack"
+  "mode":"attack",
+  "fixe":null
 };
 
 //Set all the above JSONs into memeory on first start
@@ -98,6 +105,28 @@ function getNumArchitects(creepList){
   return aL;
 }
 
+//Gets the number of living harvester Creeps
+function getNumMiners(creepList){
+  var miners = _.filter(creepList, (creep) => creep.memory.role == 'miner');
+  var mL = miners.length;
+  if(Memory.roles.numMiners != mL){
+    Memory.roles.numMiners = mL;
+    console.log('Miners: ' + mL);
+  }
+  return mL;
+}
+
+//Gets the number of living harvester Creeps
+function getNumHaulers(creepList){
+  var haulers = _.filter(creepList, (creep) => creep.memory.role == 'hauler');
+  var haulL = haulers.length;
+  if(Memory.roles.numHaulers != haulL){
+    Memory.roles.numHaulers = haulL;
+    console.log('Haulers: ' + haulL);
+  }
+  return haulL;
+}
+
 //main loop
 module.exports.loop = function () {
 
@@ -119,16 +148,20 @@ module.exports.loop = function () {
     var b = getNumBuilders(myCreepList);
     var r = getNumRepair(myCreepList);
     var a = getNumArchitects(myCreepList);
-    Memory.roles.numCreeps = h + u + b + r + a;
+    var m = getNumMiners(myCreepList);
+    var ha = getNumHaulers(myCreepList);
+    Memory.roles.numCreeps = h + u + b + r + a + m + ha;
 
     //Clear dead creeps from memory
     modCommon.clearDead();
+
+    var enemyPresent = allCreepList.length>myCreepList.length;
 
     //assign the right run method to each creep
     for(var name in myCreepList) {
         var creep = myCreepList[name];
         //TODO intruder retreat logic
-        if(allCreepList.length>myCreepList.length && creep.memory.military === true){
+        if(enemyPresent && creep.memory.military !== true){
           modCommon.retreat(creep);
         }
         else if(creep.memory.role == 'harvester') {
@@ -146,6 +179,12 @@ module.exports.loop = function () {
         else if(creep.memory.role == 'architect'){
           roleArchitect.run(creep);
         }
+        else if(creep.memory.role == 'miner'){
+          roleMiner.run(creep);
+        }
+        else if(creep.memory.role == 'hauler'){
+          roleHauler.run(creep);
+        }
     }
 
     //determin if new creeps need to be spawned and pick an appropriate spawner
@@ -159,9 +198,14 @@ module.exports.loop = function () {
         }
     }
 
-    //TODO action loop for towers, similar to creeps above
-
     var target = Game.getObjectById(Memory.towersMem.target);
+
+
+    if(enemyPresent){
+      Memory.towersMem.mode = "attack";
+    }else{
+      Memory.towersMem.mode = "heal";
+    }
 
     for(var towerName in towers){
       var t = towers[towerName];

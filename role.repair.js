@@ -16,38 +16,14 @@ var roleRepair = {
         creep.memory.currentlyRepair = true;
     }
 
-    var emptyPath = false;
-    var creepPath = creep.memory.path;
-    var destX = -1;
-    var destY = -1;
-    var lastObj = null;
-    if(creepPath && creepPath.length>0){
-     var index = creepPath.length-1;
-     lastObj = creepPath[index];
-      destX = lastObj.x + lastObj.dx;
-      destY = lastObj.y + lastObj.dy;
-    }else{
-      emptyPath = true;
-    }
-
     if(creep.memory.working){
       if(creep.memory.toFix=== ""){
         //This finds the closest structure and checks if it needs repair
-        var fixe = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: function(object){
-          var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
-          var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < 5000) && (object.hitsMax-object.hits>0);
-          var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < 5000);
-          var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 100000);
-          return brokenRoad || brokenWall || brokenRamp || brokenCont;
-        }
-      });
+        var fixe = creep.pos.findClosestByPath(modCommon.findToFixArr(creep.room));
           if(fixe!==null){
             creep.memory.toFix = fixe.id;
             if(creep.repair(fixe) == ERR_NOT_IN_RANGE) {
-              if(emptyPath || (lastObj && (fixe.pos.x !== destX || fixe.pos.y !== destY))){
-                creep.memory.path = creep.pos.findPathTo(fixe);
-              }
-              creep.moveByPath(creep.memory.path);
+              modCommon.move(creep,fixe.pos);
             }
           }else{
             //If repairing is done, build to not waste time
@@ -62,10 +38,7 @@ var roleRepair = {
         if(oldFixe.hits >= oldFixe.hitsMax){
           creep.memory.toFix = "";
         }else if(creep.repair(oldFixe) == ERR_NOT_IN_RANGE){
-          if(emptyPath || (lastObj && (oldFixe.pos.x !== destX || oldFixe.pos.y !== destY))){
-            creep.memory.path = creep.pos.findPathTo(oldFixe);
-          }
-          creep.moveByPath(creep.memory.path);
+          modCommon.move(creep,oldFixe.pos);
         }
       }
     }else{
