@@ -32,7 +32,7 @@ var modSpawning = {
               var hc = spawner.createCreep(body, undefined,{role: 'harvester',selfHarvest:true, source:""});
               console.log("Spawned: " + hc);
             }
-            else if(Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
+            else if(Memory.roles.numUpgraders < Math.min(Memory.roles.maxUpgraders+controllerLvlMod, spawner.room.find(FIND_SOURCES).length)){
               body = bodyObj.getBody('upgrader',1);
               var uc = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:true});
               console.log("Spawned: " + uc);
@@ -63,7 +63,7 @@ var modSpawning = {
             var b2c = spawner.createCreep(body, undefined,{role: 'builder',selfHarvest:false});
             console.log("Spawned: " + b2c);
           }
-          else if(moveOn && Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
+          else if(moveOn && Memory.roles.numUpgraders < Math.min(Memory.roles.maxUpgraders+controllerLvlMod, spawner.room.find(FIND_SOURCES).length)){
             body = bodyObj.getBody('upgrader',2);
             var u2c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
             console.log("Spawned: " + u2c);
@@ -94,7 +94,7 @@ var modSpawning = {
           var b3c = spawner.createCreep(body, undefined,{role: 'builder',selfHarvest:false});
           console.log("Spawned: " + b3c);
         }
-        else if(moveOn2 && Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
+        else if(moveOn2 && Memory.roles.numUpgraders < Math.min(Memory.roles.maxUpgraders+controllerLvlMod, spawner.room.find(FIND_SOURCES).length)){
           body = bodyObj.getBody('upgrader',3);
           var u3c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
           console.log("Spawned: " + u3c);
@@ -128,7 +128,7 @@ var modSpawning = {
           var b4c = spawner.createCreep(body, undefined,{role: 'builder',selfHarvest:false});
           console.log("Spawned: " + b4c);
         }
-        else if(moveOn3 && Memory.roles.numUpgraders < (Memory.roles.maxUpgraders + controllerLvlMod)){
+        else if(moveOn3 && Memory.roles.numUpgraders < Math.min(Memory.roles.maxUpgraders+controllerLvlMod, spawner.room.find(FIND_SOURCES).length)){
           body = bodyObj.getBody('upgrader',4);
           var u4c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
           console.log("Spawned: " + u4c);
