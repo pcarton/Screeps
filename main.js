@@ -203,6 +203,7 @@ module.exports.loop = function () {
 
     if(enemyPresent){
       Memory.towersMem.mode = "attack";
+      Game.notify("EnemyFound at "+ Game.time.toString(),60);
     }else{
       Memory.towersMem.mode = "heal";
     }
