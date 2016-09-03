@@ -10,9 +10,9 @@ var modSpawning = {
     var betterHarvesters2 = Memory.roles.betterHarvesters2; // number of tier2 harvesters spawned, to track shift
     var controllerLvlMod = Math.ceil((controllerLvl-1)/3);  //modifier to the max amount of each creep
 
-    var notEnoughHarvest = ((Memory.roles.numHarvesters < Memory.roles.maxHarvesters) && (Memory.roles.numMiners < 1));  //if there are enough harvesters, to stop other higher tier spawns
+    var notEnoughHarvest = ((Memory.roles.numHarvesters < Memory.roles.maxHarvesters) && (Memory.roles.numMiners + Memory.roles.numHarvesters < 1));  //if there are enough harvesters, to stop other higher tier spawns
 
-    var noHarvest = (Memory.roles.numHarvesters < 1)&& (Memory.roles.numHaulers<1);
+    var noHarvest = (Memory.roles.numHarvesters < 1) && (Memory.roles.numHaulers<1);
 
     var spawnTier1 = (energyCapacity<550 || (spawner.room.energyAvailable<550 && noHarvest)); //boolean for tier 1 spawning
 
