@@ -1,4 +1,6 @@
 //Requires for the other roles and modules
+
+//Roles
 var roleHarvester = require('role.harvester');
 var roleMiner = require('role.miner');
 var roleHauler = require('role.hauler');
@@ -6,13 +8,12 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
 var roleArchitect = require('role.architect');
+
+//Modules
 var modSpawning = require('module.spawning');
 var modCommon = require('module.common');
 var modStructures = require('module.structures');
 
-//TODO have a find() of ALL creeps and use that in filters instead of
-//creepList so enemy creeps can be passed to towers
-//remember to make multiple rooms still work
 
 //Initial memory JSON for the roles
 //includes counters for roles and maxes
@@ -36,7 +37,7 @@ var initialRolesMem = {
 
 };
 
-//Tower initial Memory
+//Tower initial memory JSON
 var initialTowerMem = {
   "target":null,
   "mode":"attack",
@@ -94,7 +95,7 @@ function getNumRepair(creepList){
   return rL;
 }
 
-//Gets the number of living harvester Creeps
+//Gets the number of living architect Creeps
 function getNumArchitects(creepList){
   var architects = _.filter(creepList, (creep) => creep.memory.role == 'architect');
   var aL = architects.length;
@@ -105,7 +106,7 @@ function getNumArchitects(creepList){
   return aL;
 }
 
-//Gets the number of living harvester Creeps
+//Gets the number of living miner Creeps
 function getNumMiners(creepList){
   var miners = _.filter(creepList, (creep) => creep.memory.role == 'miner');
   var mL = miners.length;
@@ -116,7 +117,7 @@ function getNumMiners(creepList){
   return mL;
 }
 
-//Gets the number of living harvester Creeps
+//Gets the number of living hauler Creeps
 function getNumHaulers(creepList){
   var haulers = _.filter(creepList, (creep) => creep.memory.role == 'hauler');
   var haulL = haulers.length;
@@ -135,14 +136,21 @@ module.exports.loop = function () {
     initialize();
   }
 
+  //Loop to check each room that is visible to the script
   for(var roomName in Game.rooms){
     var room = Game.rooms[roomName];
+
+    //Creep lists in each room, comparing lengths shows if there are 'others'
+    //TODO check if filter is faster than just Game.creeps
     var allCreepList = room.find(FIND_CREEPS);
     var myCreepList = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username ==="PCarton"));
+    var enemyPresent = allCreepList.length>myCreepList.length;
+
+    //Al the structures in the room that are controlled by the player
     var allStructs = room.find(FIND_MY_STRUCTURES);
     var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
 
-    //calculates the breakdown of creeps
+    //calculates the breakdown of creeps by roles
     var h  = getNumHarvesters(myCreepList);
     var u = getNumUpgraders(myCreepList);
     var b = getNumBuilders(myCreepList);
@@ -155,15 +163,16 @@ module.exports.loop = function () {
     //Clear dead creeps from memory
     modCommon.clearDead();
 
-    var enemyPresent = allCreepList.length>myCreepList.length;
-
-    //assign the right run method to each creep
+    //assign the right run method to each creep based on its role
     for(var name in myCreepList) {
         var creep = myCreepList[name];
-        //TODO intruder retreat logic
+
+        //Has the non-military creeps retreat
+        //Mining creeps are considered military - like the supply line
         if(enemyPresent && creep.memory.military !== true){
           modCommon.retreat(creep);
         }
+        //If there are no enemies, run the appropriate role method
         else if(creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }
@@ -187,7 +196,8 @@ module.exports.loop = function () {
         }
     }
 
-    //determin if new creeps need to be spawned and pick an appropriate spawner
+    //determine if new creeps need to be spawned and pick an appropriate spawner
+    //Spawn logic is in a seperate module
     if(Memory.roles.numCreeps < modSpawning.maxCreeps){
         for(var spawn in Game.spawns){
           var spawner = Game.spawns[spawn];
@@ -198,9 +208,11 @@ module.exports.loop = function () {
         }
     }
 
+    //Variable to keep track of which enemy to shoot
     var target = Game.getObjectById(Memory.towersMem.target);
 
 
+    //Notify the user on enemies or switch to healing and repairing
     if(enemyPresent){
       Memory.towersMem.mode = "attack";
       Game.notify("EnemyFound at "+ Game.time.toString(),60);
@@ -208,9 +220,10 @@ module.exports.loop = function () {
       Memory.towersMem.mode = "heal";
     }
 
+    //Run through the towers, picking a target if needed
     for(var towerName in towers){
       var t = towers[towerName];
-      if(target===null || target.room !== t.room){
+      if(enemyPresent && (target===null || target.room !== t.room)){
         modStructures.pickTargets(t.room.controller, allCreepList);
       }
       modStructures.runTower(t);
