@@ -1,4 +1,4 @@
-//variables for the different creeps that auto spawn
+//Constants for the different creeps' Bodies that auto spawn
 //Tier 1
 var hBody = [WORK, CARRY, CARRY, MOVE, MOVE];
 var uBody = [WORK, CARRY, CARRY, CARRY, MOVE];
@@ -21,7 +21,9 @@ var r3Body = [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MO
 var haulerBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK];
 var minerBody = [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE];
 
+//Object that holds a getter for these body types
 var bodyObj = {
+  //getter that useses a lot of switch statement to return the appropriate body array for the given role and tier
   getBody:function(role,tier){
       if(role==='harvester'){
         switch(tier){
