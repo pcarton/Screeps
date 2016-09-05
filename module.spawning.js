@@ -18,7 +18,7 @@ var modSpawning = {
 
     var spawnTier2 = (energyCapacity<800 || (spawner.room.energyAvailable<800 && notEnoughHarvest));  //boolean for tier2 spawning
 
-    var spawnTier3 = (energyCapacity<1300 || (spawner.room.energyAvailable<1300 && notEnoughHarvest));  //boolean for tier3 spawning
+    var spawnTier3 = (energyCapacity<1300 || (spawner.room.energyAvailable<800 && notEnoughHarvest));  //boolean for tier3 spawning
 
     var spawnTier4 = (energyCapacity>=1300);
 
