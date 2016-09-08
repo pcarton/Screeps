@@ -29,7 +29,7 @@ var roleStructures = {
   runTower:function(tower){
     if(Memory.towersMem.mode === "attack"){
       this.attack(tower);
-    }else{
+    }else if(tower.energy > 300){
       this.heal(tower);
     }
 
