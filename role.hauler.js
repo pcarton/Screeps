@@ -37,10 +37,10 @@ var roleHauler = {
     var deliver = null;
     if(p1){
       deliver = p1;
-    }else if(p3){
-      deliver = p3;
     }else if(p2){
       deliver = p2;
+    }else if(p3){
+      deliver = p3;
     }else if(p4){
       deliver = p4;
     }
