@@ -22,7 +22,7 @@ var roleHauler = {
     });
     var p2 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => {
-              return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
+              return (structure.structureType == STRUCTURE_TOWER && structure.energy < (structure.energyCapacity-100));
             }
           });
     var p3Flag = creep.pos.findClosestByRange(FIND_FLAGS, {
