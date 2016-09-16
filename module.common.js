@@ -83,6 +83,12 @@ var modCommon = {
       creep.memory.path = creep.pos.findPathTo(pos);
     }
     creep.moveByPath(creep.memory.path);
+  },
+
+  playerAttack:function(allCreepList){
+    //priority Targets
+    var pTargets = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username !=="PCarton"));
+    return pTargets !== null;
   }
   //TODO Emergency upgrade logic
 };

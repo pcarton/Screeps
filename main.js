@@ -208,6 +208,12 @@ module.exports.loop = function () {
         }
     }
 
+    var control = room.controller;
+
+    if(enemyPresent && modCommon.playerAttack(allCreepList) && !(control.safeMode || control.safeModeCooldown) && control.safeModeAvailable > 0 ){
+      control.activateSafeMode();
+    }
+
     //Variable to keep track of which enemy to shoot
     var target = Game.getObjectById(Memory.towersMem.target);
 
