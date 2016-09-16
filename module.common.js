@@ -57,6 +57,14 @@ var modCommon = {
     return fixeArr;
   },
 
+  findToFortify: function(room){
+    var fortArr = room.find(FIND_STRUCTURES, {filter: function(object){
+      return (object.structureType ===STRUCTURE_WALL || object.structureType ===STRUCTURE_RAMPART) && (object.hits < object.hitsMax) && (object.hitsMax-object.hits>0);
+    }});
+
+    return fortArr;
+  },
+
   //Function to run away and hide
   retreat: function(creep){
     this.move(creep, creep.room.controller.pos);
