@@ -33,8 +33,7 @@ var initialRolesMem = {
     "numMiners":0,
     "maxMiners":0,
     "numHaulers":0,
-    "maxHaulers":1,
-    "conservation":false
+    "maxHaulers":1
 
 };
 
@@ -50,6 +49,7 @@ function initialize(){
   Memory.roles = initialRolesMem;
   Memory.towersMem = initialTowerMem;
   Memory.initialized = true;
+  Memory.conservation = false;
 }
 
 //Gets the number of living harvester Creeps
