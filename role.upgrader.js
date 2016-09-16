@@ -20,7 +20,9 @@ var roleUpgrader = {
               modCommon.move(creep,controller.pos);
             }
         }
-        else{
+        else if(creep.memory.working){
+          creep.say("Waiting...");
+        }else{
           modCommon.getEn(creep);
         }
     }
