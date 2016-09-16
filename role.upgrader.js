@@ -1,4 +1,5 @@
 var modCommon = require('module.common');
+ar roleHauler = require('role.hauler');
 
 var roleUpgrader = {
 
@@ -21,7 +22,7 @@ var roleUpgrader = {
             }
         }
         else if(creep.memory.working){
-          role.hauler.run(creep);
+          roleHauler.run(creep);
         }else{
           modCommon.getEn(creep);
         }
