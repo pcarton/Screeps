@@ -33,7 +33,8 @@ var initialRolesMem = {
     "numMiners":0,
     "maxMiners":0,
     "numHaulers":0,
-    "maxHaulers":1
+    "maxHaulers":1,
+    "conservation":false
 
 };
 
