@@ -21,7 +21,7 @@ var roleUpgrader = {
             }
         }
         else if(creep.memory.working){
-          creep.say("Waiting...");
+          role.hauler.run(creep);
         }else{
           modCommon.getEn(creep);
         }
