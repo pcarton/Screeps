@@ -14,7 +14,7 @@ var roleUpgrader = {
             creep.memory.path = null;
         }
 
-        if(creep.memory.working && !(Memory.conservation && creep.room.controller.ticksToDowngrade>1000)) {
+        if(creep.memory.working && !(Memory.conservation && creep.room.controller.ticksToDowngrade>4200)) {
           var controller = creep.room.controller;
             if(creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
               modCommon.move(creep,controller.pos);
