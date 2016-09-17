@@ -18,7 +18,10 @@ var roleStructures = {
     //TODO Add a priority to heal creeps here (before repair)
     var damagedStructs;
     if(Memory.fortify){
-      damagedStructs = modCommon.findToFortify(tower.room);
+      damagedStructs= modCommon.findToFixArr(tower.room);
+      if(damagedStructs===null){
+        damagedStructs = modCommon.findToFortify(tower.room);
+      }
     }else{
       damagedStructs= modCommon.findToFixArr(tower.room);
     }
