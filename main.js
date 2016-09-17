@@ -46,10 +46,12 @@ var initialTowerMem = {
 
 //Set all the above JSONs into memeory on first start
 function initialize(){
+  //TODO make these per room
   Memory.roles = initialRolesMem;
   Memory.towersMem = initialTowerMem;
   Memory.initialized = true;
   Memory.conservation = false;
+  Memory.fortify = false;
 }
 
 //Gets the number of living harvester Creeps
@@ -141,6 +143,10 @@ module.exports.loop = function () {
   for(var roomName in Game.rooms){
     var room = Game.rooms[roomName];
 
+    if(Memory.fortify && (!room.controller.safeMode || room.controller.safeMode<1000)){
+      Memory.fortify = false;
+    }
+
     //Creep lists in each room, comparing lengths shows if there are 'others'
     //TODO check if filter is faster than just Game.creeps
     var allCreepList = room.find(FIND_CREEPS);
@@ -213,6 +219,7 @@ module.exports.loop = function () {
 
     if(enemyPresent && modCommon.playerAttack(allCreepList) && !(control.safeMode || control.safeModeCooldown) && control.safeModeAvailable > 0 ){
       control.activateSafeMode();
+      Memory.fortify = true;
     }
 
     //Variable to keep track of which enemy to shoot
