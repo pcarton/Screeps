@@ -96,8 +96,8 @@ var modCommon = {
 
   playerAttack:function(allCreepList){
     //priority Targets
-    var pTargets = _.filter(allCreepList, (creep) => (creep.owner && !( creep.owner.username ==="PCarton" || creep.owner.username === 'Invader')));
-    return pTargets !== null;
+    var pTargets = _.filter(allCreepList, (creep) => (creep.owner && !( creep.owner.username == "PCarton" || creep.owner.username == 'Invader')));
+    return pTargets.length;
   }
   //TODO Emergency upgrade logic
 };
