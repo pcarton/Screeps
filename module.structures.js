@@ -19,7 +19,7 @@ var roleStructures = {
     var damagedStructs;
     if(Memory.fortify){
       damagedStructs= modCommon.findToFixArr(tower.room);
-      if(!damagedStructs.structureType){
+      if(!damagedStructs.length){
         damagedStructs = modCommon.findToFortify(tower.room);
       }
     }else{
