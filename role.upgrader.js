@@ -6,7 +6,7 @@ var roleUpgrader = {
     /** @param {Creep} creep **/
     run: function(creep) {
 
-      var conserve = Memory.conservation && creep.room.controller.safeMode;
+      var conserve = Memory.conservation && creep.room.controller.safeMode && creep.room.controller.level>3;
 
       if(creep.memory.working && creep.carry.energy === 0) {
           creep.memory.working = false;
