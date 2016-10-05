@@ -15,7 +15,7 @@ var roleStructures = {
   },
 
   heal:function(tower, allCreepList){
-    var injured = modCommon.findInjured(allCreepList);
+    var injured = modCommon.findInjured(allCreepList); //TODO add this to mem so it runs less often
     if(injured.length){
       tower.heal(injured[0]);
     }else{
