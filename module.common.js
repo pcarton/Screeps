@@ -101,7 +101,7 @@ var modCommon = {
   },
 
   findInjured:function(allCreepList){
-    var hTargets = _.filter(myCreepList, (creep) => creep.hits<creep.hitsMax && creep.owner.username === "PCarton");
+    var hTargets = _.filter(allCreepList, (creep) => creep.hits<creep.hitsMax && creep.owner.username === "PCarton");
     //TODO sort by a priority
     return hTargets;
   }
