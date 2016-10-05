@@ -14,7 +14,7 @@ var roleStructures = {
     }
   },
 
-  heal:function(tower){
+  heal:function(tower, allCreepList){
     var injured = modCommon.findInjured(allCreepList);
     if(injured.length){
       tower.heal(injured[0]);
@@ -42,7 +42,7 @@ var roleStructures = {
     if(Memory.towersMem.mode === "attack"){
       this.attack(tower);
     }else if(tower.energy > 300){
-      this.heal(tower);
+      this.heal(tower,allCreepList);
     }
 
   },

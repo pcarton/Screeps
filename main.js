@@ -240,7 +240,7 @@ module.exports.loop = function () {
       if(enemyPresent && (target===null || target.room !== t.room)){
         modStructures.pickTargets(t.room.controller, allCreepList);
       }
-      modStructures.runTower(t);
+      modStructures.runTower(t,allCreepList);
     }
   }
 };
