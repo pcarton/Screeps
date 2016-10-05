@@ -148,7 +148,6 @@ module.exports.loop = function () {
     }
 
     //Creep lists in each room, comparing lengths shows if there are 'others'
-    //TODO check if filter is faster than just Game.creeps
     var allCreepList = room.find(FIND_CREEPS);
     var myCreepList = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username ==="PCarton"));
     var enemyPresent = allCreepList.length>myCreepList.length;
