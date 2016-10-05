@@ -98,8 +98,15 @@ var modCommon = {
     //priority Targets
     var pTargets = _.filter(allCreepList, (creep) => (creep.owner && !( creep.owner.username == "PCarton" || creep.owner.username == 'Invader')));
     return pTargets.length;
+  },
+
+  findInjured:function(allCreepList){
+    var hTargets = _.filter(myCreepList, (creep) => creep.hits<creep.hitsMax && creep.owner.username === "PCarton");
+    //TODO sort by a priority
+    return hTargets;
   }
   //TODO Emergency upgrade logic
+
 };
 
 module.exports = modCommon;
