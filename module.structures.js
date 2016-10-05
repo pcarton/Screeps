@@ -38,7 +38,7 @@ var roleStructures = {
     }
   },
 
-  runTower:function(tower){
+  runTower:function(tower, allCreepList){
     if(Memory.towersMem.mode === "attack"){
       this.attack(tower);
     }else if(tower.energy > 300){
