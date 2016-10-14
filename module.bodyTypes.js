@@ -19,6 +19,7 @@ var r3Body = [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MO
 
 //Tier4
 var haulerBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK];
+var feederBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK];
 var minerBody = [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE];
 
 //Object that holds a getter for these body types
@@ -71,6 +72,8 @@ var bodyObj = {
         return minerBody;
       }else if(role === 'architect'){
         return bBody;
+      }else if(role === 'feeder'){
+        return feederBody;
       }
   }
 
