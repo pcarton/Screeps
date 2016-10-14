@@ -141,7 +141,7 @@ function getNumFeeders(creepList){
     Memory.roles.numFeeders = feedL;
     console.log('Haulers: ' + feedL);
   }
-  return haulL;
+  return feedL;
 }
 
 //main loop
