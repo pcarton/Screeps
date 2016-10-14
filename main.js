@@ -8,6 +8,7 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
 var roleArchitect = require('role.architect');
+var roleFeeder = require('role.feeder');
 
 //Modules
 var modSpawning = require('module.spawning');
@@ -33,7 +34,9 @@ var initialRolesMem = {
     "numMiners":0,
     "maxMiners":0,
     "numHaulers":0,
-    "maxHaulers":1
+    "maxHaulers":1,
+    "numFeeders":0,
+    "maxFeeders":1
 
 };
 
@@ -131,6 +134,16 @@ function getNumHaulers(creepList){
   return haulL;
 }
 
+function getNumFeeders(creepList){
+  var feeders = _.filter(creepList, (creep) => creep.memory.role == 'feeder');
+  var feedL = feeders.length;
+  if(Memory.roles.numFeeders != feedL){
+    Memory.roles.numFeeders = feedL;
+    console.log('Haulers: ' + feedL);
+  }
+  return haulL;
+}
+
 //main loop
 module.exports.loop = function () {
 
@@ -164,7 +177,8 @@ module.exports.loop = function () {
     var a = getNumArchitects(myCreepList);
     var m = getNumMiners(myCreepList);
     var ha = getNumHaulers(myCreepList);
-    Memory.roles.numCreeps = h + u + b + r + a + m + ha;
+    var f = getNumFeeders(myCreepList);
+    Memory.roles.numCreeps = h + u + b + r + a + m + ha + f;
 
     //Clear dead creeps from memory
     modCommon.clearDead();
@@ -199,6 +213,9 @@ module.exports.loop = function () {
         }
         else if(creep.memory.role == 'hauler'){
           roleHauler.run(creep);
+        }
+        else if(creep.memory.role == 'feeder'){
+          roleFeeder.run(creep);
         }
     }
 
