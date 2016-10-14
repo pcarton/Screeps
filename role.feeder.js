@@ -1,4 +1,5 @@
 var modCommon = require('module.common');
+var roleUpgrader = require('role.upgrader');
 
 //moves from containers marked by flags to other storage
 //Flags: Drop-Off: where miners leave resouce
@@ -52,7 +53,9 @@ var roleFeeder = {
       }
     }else{
       dest = this.findCloseDropOff(creep);
-      if(dest && creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      if(!dest){
+        roleUpgrader.run(creep);
+      }else if(creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
       }else{
         creep.memory.path = null;
