@@ -170,7 +170,7 @@ module.exports.loop = function () {
     var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
 
     //calculates the breakdown of creeps by roles
-    var h  = getNumHarvesters(myCreepList);
+    /* var h  = getNumHarvesters(myCreepList);
     var u = getNumUpgraders(myCreepList);
     var b = getNumBuilders(myCreepList);
     var r = getNumRepair(myCreepList);
@@ -179,6 +179,7 @@ module.exports.loop = function () {
     var ha = getNumHaulers(myCreepList);
     var f = getNumFeeders(myCreepList);
     Memory.roles.numCreeps = h + u + b + r + a + m + ha + f;
+    */
 
     //Clear dead creeps from memory
     modCommon.clearDead();
@@ -236,7 +237,7 @@ module.exports.loop = function () {
     if(enemyPresent && modCommon.playerAttack(allCreepList) && !(control.safeMode || control.safeModeCooldown) && control.safeModeAvailable > 0 ){
       control.activateSafeMode();
       Memory.fortify = true;
-      Game.notify("Activated Safe Mode");
+      Game.notify("Activated Safe Mode at " + Game.time.toString);
     }
 
     //Variable to keep track of which enemy to shoot
