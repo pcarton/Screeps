@@ -237,7 +237,7 @@ module.exports.loop = function () {
     if(enemyPresent && modCommon.playerAttack(allCreepList) && !(control.safeMode || control.safeModeCooldown) && control.safeModeAvailable > 0 ){
       control.activateSafeMode();
       Memory.fortify = true;
-      Game.notify("Activated Safe Mode");
+      Game.notify("Activated Safe Mode at " + Game.time.toString);
     }
 
     //Variable to keep track of which enemy to shoot
