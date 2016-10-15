@@ -1,22 +1,9 @@
 var modCommon = {
+
   //Gets energy from availible locations, including sources
   //if it can self harvest but at a lower priority
   getEn: function(creep){
-
-    var emptyPath = false;
-    var creepPath = creep.memory.path;
-    var destX = -1;
-    var destY = -1;
-    var lastObj = null;
-    if(creepPath && creepPath.length>0){
-     var index = creepPath.length-1;
-     lastObj = creepPath[index];
-      destX = lastObj.x + lastObj.dx;
-      destY = lastObj.y + lastObj.dy;
-    }else{
-      emptyPath = true;
-    }
-
+    //Priority 1 is dropped energy, since it detiorates
     var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
     if(dropped){
       if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
@@ -25,26 +12,22 @@ var modCommon = {
         creep.memory.path = null;
       }
     }else{
+      //Next priority is the closest container or storage
       var storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
         filter: (object)=>((object.structureType === STRUCTURE_CONTAINER) || (object.structureType === STRUCTURE_STORAGE)) && (object.store[RESOURCE_ENERGY] > creep.carryCapacity)
       });
       if(storage!==null){
         var getEnergy = creep.withdraw(storage, RESOURCE_ENERGY, creep.carryCapacity-creep.carry);
         if(getEnergy===ERR_NOT_IN_RANGE) {
-          if(emptyPath || (lastObj && (storage.pos.x !== destX || storage.pos.y !== destY))){
-            creep.memory.path = creep.pos.findPathTo(storage);
-          }
-          creep.moveByPath(creep.memory.path);
+            modCommon.move(creep, storage);
         }else{
           creep.memory.path = null;
         }
+      //Finally, the creep will harvest if it can
       }else if(creep.memory.selfHarvest){
         var sources = creep.room.find(FIND_SOURCES);
         if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-          if(emptyPath || (lastObj && (sources[0].pos.x !== destX || sources[0].pos.y !== destY))){
-            creep.memory.path = creep.pos.findPathTo(sources[0]);
-          }
-          creep.moveByPath(creep.memory.path);
+          modCommon.move(creep, sources[0]);
         }else{
           creep.memory.path = null;
         }
@@ -56,11 +39,35 @@ var modCommon = {
   clearDead: function(){
     for(var i in Memory.creeps) {
       if(!Game.creeps[i]) {
+          var job = Memory.creeps[i].role;
+          this.decrementNum(job);
           delete Memory.creeps[i];
       }
     }
   },
 
+  decrementNum:function(creepType){
+    if(creepType==="harvester"){
+      --Memory.roles.numHarvesters;
+    }else if(creepType === "upgrader"){
+      --Memory.roles.numUpgraders;
+    }else if(creepType === "builder"){
+      --Memory.roles.numBuilders;
+    }else if(creepType === "repair"){
+      --Memory.roles.numRepair;
+    }else if (creepType === "architect"){
+      --Memory.roles.numArchitects;
+    }else if(creepType === "miner"){
+      --Memory.roles.numMiners;
+    }else if(creepType === "hauler"){
+      --Memory.roles.numHaulers;
+    }else if(creepType === "feeder"){
+      --Memory.roles.numFeeders;
+    }
+    --Memory.roles.numCreeps;
+  },
+
+  //Method to find the next structure to repair, shared by repair creeps and towers
   findToFixArr: function(room){
     var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
@@ -73,11 +80,22 @@ var modCommon = {
     return fixeArr;
   },
 
+  findToFortify: function(room){
+    // use  '|| object.structureType ===STRUCTURE_RAMPART' ?
+    var fortArr = room.find(FIND_STRUCTURES, {filter: function(object){
+      return (object.structureType ===STRUCTURE_WALL) && (object.hits < 100000) && (object.hitsMax-object.hits>0);
+    }});
+
+    return fortArr;
+  },
+
+  //Function to run away and hide
   retreat: function(creep){
     this.move(creep, creep.room.controller.pos);
     creep.say("HELP ME!");
   },
 
+  //Function to move useing a stored path
   move:function(creep,pos){
     var emptyPath = false;
     var creepPath = creep.memory.path;
@@ -97,8 +115,21 @@ var modCommon = {
       creep.memory.path = creep.pos.findPathTo(pos);
     }
     creep.moveByPath(creep.memory.path);
+  },
+
+  playerAttack:function(allCreepList){
+    //priority Targets
+    var pTargets = _.filter(allCreepList, (creep) => (creep.owner && !( creep.owner.username == "PCarton" || creep.owner.username == 'Invader')));
+    return pTargets.length;
+  },
+
+  findInjured:function(allCreepList){
+    var hTargets = _.filter(allCreepList, (creep) => creep.hits<creep.hitsMax && creep.owner.username === "PCarton");
+    //TODO sort by a priority
+    return hTargets;
   }
   //TODO Emergency upgrade logic
+
 };
 
 module.exports = modCommon;

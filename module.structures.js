@@ -14,23 +14,35 @@ var roleStructures = {
     }
   },
 
-  heal:function(tower){
-    //TODO Add a priority to heal creeps here (before repair)
+  heal:function(tower, allCreepList){
+    var injured = modCommon.findInjured(allCreepList); //TODO add this to mem so it runs less often
+    if(injured.length){
+      tower.heal(injured[0]);
+    }else{
+      var damagedStructs;
+      if(Memory.fortify){
+        damagedStructs= modCommon.findToFixArr(tower.room);
+        if(!damagedStructs.length){
+          damagedStructs = modCommon.findToFortify(tower.room);
+        }
+      }else{
+        damagedStructs= modCommon.findToFixArr(tower.room);
+      }
 
-    var damagedStructs = modCommon.findToFixArr(tower.room);
-    toFix = tower.pos.findClosestByRange(damagedStructs);
+      toFix = tower.pos.findClosestByRange(damagedStructs);
 
 
-    if(toFix!==null){
-      tower.repair(toFix);
+      if(toFix!==null){
+        tower.repair(toFix);
+      }
     }
   },
 
-  runTower:function(tower){
+  runTower:function(tower, allCreepList){
     if(Memory.towersMem.mode === "attack"){
       this.attack(tower);
-    }else{
-      this.heal(tower);
+    }else if(tower.energy > 300){
+      this.heal(tower,allCreepList);
     }
 
   },
