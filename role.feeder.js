@@ -54,7 +54,7 @@ var roleFeeder = {
     }else{
       dest = this.findCloseDropOff(creep);
       if(!dest){
-        roleUpgrader.run(creep);
+        roleUpgrader.upgrade(creep);
       }else if(creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
       }else{

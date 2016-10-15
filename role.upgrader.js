@@ -3,6 +3,13 @@ var roleHauler = require('role.hauler');
 
 var roleUpgrader = {
 
+    upgrade:function(creep){
+      var controller = creep.room.controller;
+      if(creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+        modCommon.move(creep,controller.pos);
+      }
+    },
+
     /** @param {Creep} creep **/
     run: function(creep) {
 
@@ -18,10 +25,7 @@ var roleUpgrader = {
       }
 
       if(creep.memory.working && !(conserve && creep.room.controller.ticksToDowngrade>4200)) {
-        var controller = creep.room.controller;
-          if(creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
-            modCommon.move(creep,controller.pos);
-          }
+        this.upgrade(creep);
       }
       else if(creep.memory.working){
         roleHauler.run(creep);
