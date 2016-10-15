@@ -39,9 +39,32 @@ var modCommon = {
   clearDead: function(){
     for(var i in Memory.creeps) {
       if(!Game.creeps[i]) {
+          var job = Memory.creeps[i].role;
+          this.decrementNum(job);
           delete Memory.creeps[i];
       }
     }
+  },
+
+  decrementNum:function(creepType){
+    if(creepType==="harvester"){
+      --Memory.roles.numHarvesters;
+    }else if(creepType === "upgrader"){
+      --Memory.roles.numUpgraders;
+    }else if(creepType === "builder"){
+      --Memory.roles.numBuilders;
+    }else if(creepType === "repair"){
+      --Memory.roles.numRepair;
+    }else if (creepType === "architect"){
+      --Memory.roles.numArchitects;
+    }else if(creepType === "miner"){
+      --Memory.roles.numMiners;
+    }else if(creepType === "hauler"){
+      --Memory.roles.numHaulers;
+    }else if(creepType === "feeder"){
+      --Memory.roles.numFeeders;
+    }
+    --Memory.roles.numCreeps;
   },
 
   //Method to find the next structure to repair, shared by repair creeps and towers

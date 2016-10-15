@@ -20,6 +20,7 @@ var modSpawning = {
     }else if(creepType === "feeder"){
       ++Memory.roles.numFeeders;
     }
+    ++Memory.roles.numCreeps;
   },
 
   spawn:function(spawner,energyCapacity,controllerLvl){
