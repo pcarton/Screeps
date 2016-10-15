@@ -38,6 +38,8 @@ var roleFeeder = {
       deliver = p2;
     }else if(p3){
       deliver = p3;
+    }else{
+      deliver = "Nowhere to Go";
     }
     return deliver;
   },
@@ -53,7 +55,7 @@ var roleFeeder = {
       }
     }else{
       dest = this.findCloseDropOff(creep);
-      if(!dest){
+      if(dest === "Nowhere to Go"){
         roleUpgrader.upgrade(creep);
       }else if(creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
