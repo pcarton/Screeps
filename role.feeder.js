@@ -48,16 +48,16 @@ var roleFeeder = {
     var dest = null;
     if(creep.carry.energy > 0){
       dest = this.findCloseDeliver(creep);
-      if(dest && creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      if(dest === "Nowhere to Go"){
+        roleUpgrader.upgrade(creep);
+      }else if(creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
       }else{
         creep.memory.path = null;
       }
     }else{
       dest = this.findCloseDropOff(creep);
-      if(dest === "Nowhere to Go"){
-        roleUpgrader.upgrade(creep);
-      }else if(creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      if(dest && creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
       }else{
         creep.memory.path = null;
