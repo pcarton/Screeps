@@ -247,7 +247,7 @@ module.exports.loop = function () {
     //Notify the user on enemies or switch to healing and repairing
     if(enemyPresent){
       Memory.towersMem.mode = "attack";
-      Game.notify("EnemyFound at "+ Game.time.toString(),60);
+      Game.notify("EnemyFound at "+ Game.time.toString(),600);
     }else{
       Memory.towersMem.mode = "heal";
     }
