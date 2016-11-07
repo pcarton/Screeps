@@ -190,7 +190,7 @@ module.exports.loop = function () {
 
         //Has the non-military creeps retreat
         //Mining creeps are considered military - like the supply line
-        if(enemyPresent && creep.memory.military !== true){
+        if(!control.safeMode && enemyPresent && creep.memory.military !== true){
           modCommon.retreat(creep);
         }
         //If there are no enemies, run the appropriate role method
