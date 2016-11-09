@@ -4,7 +4,7 @@ var modCommon = require('module.common');
 //Flags: Drop-Off: where miners leave resouce
 //Deliver: where upgraders, etc will likely pick up
 //priority from first to last(energy): Spawn/Extensions - Tower - Deliver flags - Storage
-var roleHauler = {
+var roleJHauler = {
   findCloseDropOff:function(creep){
     var flag = creep.pos.findClosestByRange(FIND_FLAGS, {
         filter: (flag) => flag.name.substring(0,7)=="DropOff"
@@ -67,4 +67,4 @@ var roleHauler = {
   }
 };
 
-module.exports = roleHauler;
+module.exports = roleJHauler;
