@@ -9,6 +9,7 @@ var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
 var roleArchitect = require('role.architect');
 var roleFeeder = require('role.feeder');
+var roleJuniorHauler = require('role.juniorHauler');
 
 //Modules
 var modSpawning = require('module.spawning');
@@ -213,7 +214,14 @@ module.exports.loop = function () {
           roleMiner.run(creep);
         }
         else if(creep.memory.role == 'hauler'){
-          roleHauler.run(creep);
+          if(creep.room.find(FIND_STRUCTURES,{
+            filter: (structure) => {
+              return (structure.structureType === STRUCTURE_STORAGE);
+          }})){
+            roleHauler.run(creep);
+          }else {
+            roleJuniorHauler.run(creep);
+          }
         }
         else if(creep.memory.role == 'feeder'){
           roleFeeder.run(creep);
