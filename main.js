@@ -214,7 +214,7 @@ module.exports.loop = function () {
           roleMiner.run(creep);
         }
         else if(creep.memory.role == 'hauler'){
-          if(creep.room.find(FIND_STRUCTURES,{
+          if(creep.pos.findClosestByRange(FIND_STRUCTURES,{
             filter: (structure) => {
               return (structure.structureType === STRUCTURE_STORAGE);
           }})){
