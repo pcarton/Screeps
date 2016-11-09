@@ -9,7 +9,7 @@ var roleFeeder = {
   findCloseDropOff:function(creep){
     var dropOff = creep.pos.findClosestByRange(FIND_STRUCTURES,{
       filter: (structure) => {
-        return (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]>(structure.storeCapacity*3/4)));
+        return (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]>(creep.carryCapacity)));
       }
     });
     return dropOff;
