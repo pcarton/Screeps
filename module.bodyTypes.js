@@ -21,6 +21,7 @@ var r3Body = [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MO
 var haulerBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK];
 var feederBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK];
 var minerBody = [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE];
+var u4Body = [WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE];
 
 //Object that holds a getter for these body types
 var bodyObj = {
@@ -43,8 +44,9 @@ var bodyObj = {
           case 2:
             return u2Body;
           case 3:
-          case 4:
             return u3Body;
+          case 4:
+            return u4Body;
         }
       }else if(role === 'builder'){
         switch(tier){
