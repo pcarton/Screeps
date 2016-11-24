@@ -130,6 +130,10 @@ var modCommon = {
   }
   //TODO Emergency upgrade logic
 
+  //TODO link to history page for the room at given tick
+  //Formated as https://screeps.com/a/#!/history/E33N43?t=15527000
+  //linkRoomAtTick:function(room,tick){}
+
 };
 
 module.exports = modCommon;
