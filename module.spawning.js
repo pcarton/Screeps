@@ -157,7 +157,7 @@ var modSpawning = {
         }
         else if(Memory.roles.numHaulers<Memory.roles.maxHaulers){
           body = bodyObj.getBody('hauler',4);
-          var haul = spawner.createCreep(body, undefined,{role: 'hauler', military:true});
+          var haul = spawner.createCreep(body, undefined,{role: 'hauler', military:true, dropOff:""});
           console.log("Spawned Hauler: " + haul);
           this.incrementNum("hauler");
         }

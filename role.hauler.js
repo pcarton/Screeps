@@ -5,12 +5,26 @@ var modCommon = require('module.common');
 //Deliver: where upgraders, etc will likely pick up
 //priority from first to last(energy): Spawn/Extensions - Tower - Deliver flags - Storage
 var roleHauler = {
-  findCloseDropOff:function(creep){
-    var flag = creep.pos.findClosestByRange(FIND_FLAGS, {
+  assignDropOff:function(creep){
+    var flags = creep.pos.find(FIND_FLAGS, {
         filter: (flag) => flag.name.substring(0,7)=="DropOff"
     });
-    var dropOff = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER || struct.structureType === STRUCTURE_LINK)[0];
-    return dropOff;
+    for(var flagIndex in flags){
+      var flag = flags[flagIndex];
+      var dropOff = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER || struct.structureType === STRUCTURE_LINK)[0];
+      var gID = dropOff.id;
+      var thisAssigned = false;
+      for (var cName in Game.creeps){
+        var c = Game.creeps[cName];
+        if(c.memory.role === "hauler" && c.memory.dropOff === gID){
+          thisAssigned = true;
+        }
+      }
+      if(!thisAssigned && creep.memory.dropOff === ""){
+        creep.memory.dropOff = gID;
+      }
+    }
+    Memory.roles.maxHaulers = flags.length;
   },
 
   findCloseDeliver(creep){
@@ -36,6 +50,20 @@ var roleHauler = {
 
   run:function(creep){
     var dest = null;
+
+    var dpos = null;
+    var dropOffID = creep.memory.dropOff;
+    var dropOff = null;
+
+    if(dropOffID === ""){
+      this.assignDropOff(creep);
+    }else{
+      if(dropOffID){
+        dropOff = Game.getObjectById(dropOffID);
+        dPos = dropOff.pos;
+      }
+    }
+
     if(creep.carry.energy > 0){
       dest = this.findCloseDeliver(creep);
       if(dest && creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
@@ -44,9 +72,8 @@ var roleHauler = {
         creep.memory.path = null;
       }
     }else{
-      dest = this.findCloseDropOff(creep);
-      if(dest && creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        modCommon.move(creep,dest.pos);
+      if(creep.withdraw(dropOff, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        modCommon.move(creep,dPos);
       }else{
         creep.memory.path = null;
       }

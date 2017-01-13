@@ -17,8 +17,8 @@ var roleMiner = {
       if(!thisAssigned && creep.memory.source === ""){
         creep.memory.source = gID;
       }
-      Memory.roles.maxMiners = sources.length;
     }
+    Memory.roles.maxMiners = sources.length;
   },
 
   assignDropOff:function(creep){
