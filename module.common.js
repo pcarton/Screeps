@@ -24,7 +24,7 @@ var modCommon = {
     var xSquared = x * x;
     var ySquared = y * y;
     var root = xSquared + ySquared;
-    var dist = sqrt(root);
+    var dist = Math.sqrt(root);
     return dist;
   },
 
