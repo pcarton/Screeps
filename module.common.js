@@ -1,15 +1,49 @@
 var modCommon = {
 
+  getFatigue: function(creep){
+    var body = creep.body;
+    var nonMoveCount = 0;
+    var moveCount = 0;
+    var total = 0;
+    for(var limb in body){
+      if(limb.type === MOVE){
+        moveCount++;
+        total++;
+      }else{
+        nonMoveCount++;
+        total++;
+      }
+    }
+    return 2*(nonMoveCount * 0.5 - moveCount);
+
+  },
+
+  distTo: function(creep, pos){
+    var x = creep.pos.x - pos.x;
+    var y = creep.pos.y - pos.y;
+    var xSquared = x * x;
+    var ySquared = y * y;
+    var root = xSquared + ySquared;
+    var dist = sqrt(root);
+    return dist;
+  },
+
   //Gets energy from availible locations, including sources
   //if it can self harvest but at a lower priority
   getEn: function(creep){
+    var maxTicks = 10;
     //Priority 1 is dropped energy, since it detiorates
     var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
     if(dropped){
-      if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
-        modCommon.move(creep,dropped.pos);
-      }else{
-        creep.memory.path = null;
+      var dist = distTo(creep, dropped.pos);
+      var fat = getFatigue(creep);
+      var worth = (dist * fat) / maxTicks;
+      if(worth<=1){
+        if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
+          modCommon.move(creep,dropped.pos);
+        }else{
+          creep.memory.path = null;
+        }
       }
     }else{
       //Next priority is the closest container or storage
