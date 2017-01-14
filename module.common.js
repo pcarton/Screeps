@@ -31,7 +31,7 @@ var modCommon = {
   //Gets energy from availible locations, including sources
   //if it can self harvest but at a lower priority
   getEn: function(creep){
-    var maxTicks = 10;
+    var maxTicks = 50;
     //Priority 1 is dropped energy, since it detiorates
     var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
     if(dropped){
