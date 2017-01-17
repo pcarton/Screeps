@@ -34,9 +34,14 @@ var modCommon = {
     var maxTicks = 50;
     //Priority 1 is dropped energy, since it detiorates
     var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
-    var dist = this.distTo(creep, dropped.pos);
-    var fat = this.getFatigue(creep);
-    var worth = (dist * fat) / maxTicks;
+    var dist;
+    var fat;
+    var worth = 2;
+    if(dropped){
+      dist = this.distTo(creep, dropped.pos);
+      fat = this.getFatigue(creep);
+      worth = (dist * fat) / maxTicks;
+    }
     if(dropped && worth<=1){
       if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
         modCommon.move(creep,dropped.pos);
