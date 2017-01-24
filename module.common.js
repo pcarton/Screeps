@@ -110,8 +110,8 @@ var modCommon = {
     var modifier = Math.pow(10,controlLvl-2);
     var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
-      var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < 500*modifier) && (object.hitsMax-object.hits>0);
-      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < 500*modifier);
+      var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier)) && (object.hitsMax-object.hits>0);
+      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier));
       var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 100000);
       return brokenRoad || brokenWall || brokenRamp || brokenCont;
     }});
