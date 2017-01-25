@@ -250,6 +250,7 @@ module.exports.loop = function () {
         Memory.roles.numMiners = numM;
         Memory.roles.numHaulers = numHA;
         Memory.roles.numFeeders = numF;
+        Memory.roles.numCreeps = numH+numB+numU+numA+numM+numHA+numF;
     }
 
     //determine if new creeps need to be spawned and pick an appropriate spawner
