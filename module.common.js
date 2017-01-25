@@ -107,7 +107,7 @@ var modCommon = {
   //Method to find the next structure to repair, shared by repair creeps and towers
   findToFixArr: function(room){
     var controlLvl = room.controller.level;
-    var modifier = Math.pow(10,controlLvl-2);
+    var modifier = Math.max(Math.pow(10,controlLvl-3),10);
     var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
       var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier)) && (object.hitsMax-object.hits>0);
@@ -122,7 +122,7 @@ var modCommon = {
   findToFortify: function(room){
     // use  '|| object.structureType ===STRUCTURE_RAMPART' ?
     var fortArr = room.find(FIND_STRUCTURES, {filter: function(object){
-      return (object.structureType ===STRUCTURE_WALL) && (object.hits < 100000) && (object.hitsMax-object.hits>0);
+      return (object.structureType ===STRUCTURE_WALL || object.structureType === STRUCTURE_RAMPART) && (object.hits < 100000) && (object.hitsMax-object.hits>0);
     }});
 
     return fortArr;
