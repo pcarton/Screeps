@@ -201,33 +201,38 @@ module.exports.loop = function () {
         //Mining creeps are considered military - like the supply line
         if(!room.controller.safeMode && enemyPresent && creep.memory.military !== true){
           modCommon.retreat(creep);
+          //TODO make Memory role count not get overwritten
         }
         //If there are no enemies, run the appropriate role method
         else if(creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
-            numH++;
+          numH++;
+          roleHarvester.run(creep);
+
         }
         else if(creep.memory.role == 'upgrader') {
-            roleUpgrader.run(creep);
-            numU++;
+          numU++;
+          roleUpgrader.run(creep);
+
         }
         else if(creep.memory.role == 'builder'){
-          roleBuilder.run(creep);
           numB++;
+          roleBuilder.run(creep);
+
         }
         else if(creep.memory.role == 'repair'){
-          roleRepair.run(creep);
           numR++;
+          roleRepair.run(creep);
         }
         else if(creep.memory.role == 'architect'){
-          roleArchitect.run(creep);
           numA++;
+          roleArchitect.run(creep);
         }
         else if(creep.memory.role == 'miner'){
-          roleMiner.run(creep);
           numM++;
+          roleMiner.run(creep);
         }
         else if(creep.memory.role == 'hauler'){
+          numHA++;
           if(creep.pos.findClosestByRange(FIND_STRUCTURES,{
             filter: (structure) => {
               return (structure.structureType === STRUCTURE_STORAGE);
@@ -236,11 +241,10 @@ module.exports.loop = function () {
           }else {
             roleJuniorHauler.run(creep);
           }
-          numHA++;
         }
         else if(creep.memory.role == 'feeder'){
-          roleFeeder.run(creep);
           numF++;
+          roleFeeder.run(creep);
         }
         Memory.roles.numHarvesters = numH;
         Memory.roles.numBuilders = numB;
