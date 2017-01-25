@@ -188,6 +188,14 @@ module.exports.loop = function () {
     //assign the right run method to each creep based on its role
     for(var name in myCreepList) {
         var creep = myCreepList[name];
+        var numH = 0;
+        var numU = 0;
+        var numB = 0;
+        var numA = 0;
+        var numR = 0;
+        var numHA = 0;
+        var numM = 0;
+        var numF = 0;
 
         //Has the non-military creeps retreat
         //Mining creeps are considered military - like the supply line
@@ -197,21 +205,27 @@ module.exports.loop = function () {
         //If there are no enemies, run the appropriate role method
         else if(creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
+            numH++;
         }
         else if(creep.memory.role == 'upgrader') {
             roleUpgrader.run(creep);
+            numU++;
         }
         else if(creep.memory.role == 'builder'){
           roleBuilder.run(creep);
+          numB++;
         }
         else if(creep.memory.role == 'repair'){
           roleRepair.run(creep);
+          numR++;
         }
         else if(creep.memory.role == 'architect'){
           roleArchitect.run(creep);
+          numA++;
         }
         else if(creep.memory.role == 'miner'){
           roleMiner.run(creep);
+          numM++;
         }
         else if(creep.memory.role == 'hauler'){
           if(creep.pos.findClosestByRange(FIND_STRUCTURES,{
@@ -222,10 +236,20 @@ module.exports.loop = function () {
           }else {
             roleJuniorHauler.run(creep);
           }
+          numHA++;
         }
         else if(creep.memory.role == 'feeder'){
           roleFeeder.run(creep);
+          numF++;
         }
+        Memory.roles.numHarvesters = numH;
+        Memory.roles.numBuilders = numB;
+        Memory.roles.numUpgraders = numU;
+        Memory.roles.numRepair = numR;
+        Memory.roles.numArchitects = numA;
+        Memory.roles.numMiners = numM;
+        Memory.roles.numHaulers = numHA;
+        Memory.roles.numFeeders = numF;
     }
 
     //determine if new creeps need to be spawned and pick an appropriate spawner
