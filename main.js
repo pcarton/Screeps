@@ -185,17 +185,20 @@ module.exports.loop = function () {
     //Clear dead creeps from memory
     modCommon.clearDead();
 
+    //Vars for Memory Assignment
+    var numH = 0;
+    var numU = 0;
+    var numB = 0;
+    var numA = 0;
+    var numR = 0;
+    var numHA = 0;
+    var numM = 0;
+    var numF = 0;
+
     //assign the right run method to each creep based on its role
     for(var name in myCreepList) {
         var creep = myCreepList[name];
-        var numH = 0;
-        var numU = 0;
-        var numB = 0;
-        var numA = 0;
-        var numR = 0;
-        var numHA = 0;
-        var numM = 0;
-        var numF = 0;
+
 
         //Has the non-military creeps retreat
         //Mining creeps are considered military - like the supply line
@@ -246,16 +249,17 @@ module.exports.loop = function () {
           numF++;
           roleFeeder.run(creep);
         }
-        Memory.roles.numHarvesters = numH;
-        Memory.roles.numBuilders = numB;
-        Memory.roles.numUpgraders = numU;
-        Memory.roles.numRepair = numR;
-        Memory.roles.numArchitects = numA;
-        Memory.roles.numMiners = numM;
-        Memory.roles.numHaulers = numHA;
-        Memory.roles.numFeeders = numF;
-        Memory.roles.numCreeps = numH+numB+numU+numA+numM+numHA+numF;
     }
+
+    Memory.roles.numHarvesters = numH;
+    Memory.roles.numBuilders = numB;
+    Memory.roles.numUpgraders = numU;
+    Memory.roles.numRepair = numR;
+    Memory.roles.numArchitects = numA;
+    Memory.roles.numMiners = numM;
+    Memory.roles.numHaulers = numHA;
+    Memory.roles.numFeeders = numF;
+    Memory.roles.numCreeps = numH+numB+numU+numA+numM+numHA+numF;
 
     //determine if new creeps need to be spawned and pick an appropriate spawner
     //Spawn logic is in a seperate module
