@@ -56,11 +56,20 @@ var roleFeeder = {
         creep.memory.path = null;
       }
     }else{
-      dest = this.findCloseDropOff(creep);
-      if(dest && creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        modCommon.move(creep,dest.pos);
+      var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
+      if(dropped){
+        if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
+          modCommon.move(creep,dropped.pos);
+        }else{
+          creep.memory.path = null;
+        }
       }else{
-        creep.memory.path = null;
+        dest = this.findCloseDropOff(creep);
+        if(dest && creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          modCommon.move(creep,dest.pos);
+        }else{
+          creep.memory.path = null;
+        }
       }
     }
   }
