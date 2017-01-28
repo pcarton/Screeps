@@ -119,7 +119,7 @@ var modCommon = {
       var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier)) && (object.hitsMax-object.hits>0);
       return brokenWall;
     }});
-    if(fixeArr.length()>0){
+    if(fixeArr.length>0){
       return fixeArr;
     }else {
       return fixeArr2;
