@@ -12,16 +12,18 @@ var roleHauler = {
     for(var flagIndex in flags){
       var flag = flags[flagIndex];
       var dropOff = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER || struct.structureType === STRUCTURE_LINK)[0];
-      var gID = dropOff.id;
-      var thisAssigned = false;
-      for (var cName in Game.creeps){
-        var c = Game.creeps[cName];
-        if(c.memory.role === "hauler" && c.memory.dropOff === gID){
-          thisAssigned = true;
+      if(dropOff){
+        var gID = dropOff.id;
+        var thisAssigned = false;
+        for (var cName in Game.creeps){
+          var c = Game.creeps[cName];
+          if(c.memory.role === "hauler" && c.memory.dropOff === gID){
+            thisAssigned = true;
+          }
         }
-      }
-      if(!thisAssigned && creep.memory.dropOff === ""){
-        creep.memory.dropOff = gID;
+        if(!thisAssigned && creep.memory.dropOff === ""){
+          creep.memory.dropOff = gID;
+        }
       }
     }
     Memory.roles.maxHaulers = flags.length;
