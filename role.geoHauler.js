@@ -68,7 +68,7 @@ var roleHauler = {
         creep.memory.path = null;
       }
     }else{
-      resourceType = modCommon.whatStore(struct);
+      resourceType = modCommon.whatStore(dropOff);
       if(creep.withdraw(dropOff, resourceType) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dPos);
       }else{
