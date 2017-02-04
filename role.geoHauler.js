@@ -17,7 +17,7 @@ var roleHauler = {
         var thisAssigned = false;
         for (var cName in Game.creeps){
           var c = Game.creeps[cName];
-          if(c.memory.role === "hauler" && c.memory.dropOff === gID){
+          if(c.memory.role === "geoH" && c.memory.dropOff === gID){
             thisAssigned = true;
           }
         }
