@@ -24,12 +24,12 @@ var roleGeoMiner = {
   },
 
   assignDropOff:function(creep){
-    var mineralID = creep.memory.source;
-    var source = null;
-    if(sourceID !== ""){
-      source = Game.getObjectById(sourceID);
+    var mineralID = creep.memory.mineral;
+    var mineral = null;
+    if(mineralID !== ""){
+      mineral = Game.getObjectById(mineralID);
 
-      var dropOffFlag = source.pos.findClosestByRange(FIND_FLAGS, { filter: (object)=>(object.name.substring(0,8) === "GDropOff")});
+      var dropOffFlag = mineral.pos.findClosestByRange(FIND_FLAGS, { filter: (object)=>(object.name.substring(0,8) === "GDropOff")});
       var dropOffArr = creep.room.lookForAt(LOOK_STRUCTURES, dropOffFlag);
       var dropOff = _.filter(dropOffArr, (object) => object.structureType != STRUCTURE_ROAD)[0];
       if(dropOff){
@@ -39,6 +39,45 @@ var roleGeoMiner = {
       this.assignMineral(creep);
     }
   },
+
+  run:function(creep){
+    var sPos = null;
+    var mineralID = creep.memory.mineral;
+    var mineral = null;
+
+    var dPos = null;
+    var dropOffID = creep.memory.dropOff;
+    var dropOff = null;
+
+    if(mineralID === ""){
+      this.assignSource(creep);
+    }else{
+      if(mineralID){
+        mineral = Game.getObjectById(mineralID);
+        sPos = mineral.pos;
+      }
+    }
+    if(dropOffID === ""){
+      this.assignDropOff(creep);
+    }else{
+      if(dropOffID){
+        dropOff = Game.getObjectById(dropOffID);
+        dPos = dropOff.pos;
+      }
+    }
+
+    if(creep.carry.energy == creep.carryCapacity){
+      if(creep.transfer(dropOff, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        modCommon.move(creep,dPos);
+      }else{
+        creep.memory.path = null;
+      }
+    }else{
+      if(creep.harvest(mineral) == ERR_NOT_IN_RANGE) {
+        modCommon.move(creep,sPos);
+      }
+    }
+  }
 
 };
 
