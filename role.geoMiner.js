@@ -1,3 +1,5 @@
+var modCommon = require('module.common');
+
 var roleGeoMiner = {
 
   assignMineral:function(creep){
@@ -73,7 +75,7 @@ var roleGeoMiner = {
         creep.memory.path = null;
       }
     }else{
-      if(creep.harvest(mineral) == ERR_NOT_IN_RANGE) {
+      if(creep.harvest(mineral) === (ERR_NOT_IN_RANGE)) {
         modCommon.move(creep,sPos);
       }
     }
