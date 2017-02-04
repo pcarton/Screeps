@@ -3,11 +3,7 @@ var modCommon = require('module.common');
 var roleGeoMiner = {
 
   assignMineral:function(creep){
-    var minerals = creep.room.find(FIND_STRUCTURES,{
-      filter: (structure) => {
-        return structure.structureType === STRUCTURE_EXTRACTOR;
-      }
-    });
+    var minerals = creep.room.find(FIND_MINERALS);
     for(var mIndex in minerals){
       var m = minerals[mIndex];
       var gID = m.id;
