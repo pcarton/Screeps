@@ -50,7 +50,7 @@ var roleGeoMiner = {
     var dropOff = null;
 
     if(mineralID === ""){
-      this.assignSource(creep);
+      this.assignMineral(creep);
     }else{
       if(mineralID){
         mineral = Game.getObjectById(mineralID);
