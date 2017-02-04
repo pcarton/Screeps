@@ -46,8 +46,8 @@ var roleFeeder = {
 
   run:function(creep){
     var dest = null;
-    if(_.sum(creep.carry)>0 && creep.carry.energy === 0){
-      var dropOff = findCloseDropOff(creep);
+    if(_.sum(creep.carry)>0 && creep.carry.energy < _.sum(creep.carry)){
+      var dropOff = this.findCloseDropOff(creep);
       var resourceType = modCommon.whatCarry(creep);
       if(dropOff && resourceType){
         if(creep.transfer(dropOff, resourceType) === ERR_NOT_IN_RANGE){
