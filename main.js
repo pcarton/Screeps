@@ -4,6 +4,8 @@
 var roleHarvester = require('role.harvester');
 var roleMiner = require('role.miner');
 var roleHauler = require('role.hauler');
+var roleGeoMiner = require('role.geoMiner');
+var roleGeoHauler = require('role.geoHauler');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
@@ -198,6 +200,8 @@ module.exports.loop = function () {
     var numHA = 0;
     var numM = 0;
     var numF = 0;
+    var numG = 0;
+    var numGH = 0;
 
     //assign the right run method to each creep based on its role
     for(var name in myCreepList) {
@@ -253,6 +257,14 @@ module.exports.loop = function () {
           numF++;
           roleFeeder.run(creep);
         }
+        else if(creep.memory.role == 'geo'){
+          numG++;
+          roleGeoMiner.run(creep);
+        }
+        else if(creep.memory.role == 'geoH'){
+          numGH++;
+          roleGeoHauler.run(creep);
+        }
     }
 
     Memory.roles.numHarvesters = numH;
@@ -263,6 +275,8 @@ module.exports.loop = function () {
     Memory.roles.numMiners = numM;
     Memory.roles.numHaulers = numHA;
     Memory.roles.numFeeders = numF;
+    Memory.roles.numGeo = numG;
+    Memory.roles.numGeoH = numGH;
     Memory.roles.numCreeps = numH+numB+numU+numA+numM+numHA+numF;
 
     //determine if new creeps need to be spawned and pick an appropriate spawner
