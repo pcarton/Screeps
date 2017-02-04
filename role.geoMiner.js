@@ -51,6 +51,8 @@ var roleGeoMiner = {
     var dropOffID = creep.memory.dropOff;
     var dropOff = null;
 
+    var resourceType = modCommon.whatCarry(creep);
+
     if(mineralID === ""){
       this.assignMineral(creep);
     }else{
@@ -69,13 +71,13 @@ var roleGeoMiner = {
     }
 
     if(_.sum(creep.carry) == creep.carryCapacity){
-      if(creep.transfer(dropOff, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      if(creep.transfer(dropOff, resourceType) === ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dPos);
       }else{
         creep.memory.path = null;
       }
     }else{
-      if(creep.harvest(mineral) === (ERR_NOT_IN_RANGE)) {
+      if(creep.harvest(mineral) === ERR_NOT_IN_RANGE) {
         modCommon.move(creep,sPos);
       }
     }
