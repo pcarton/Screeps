@@ -184,21 +184,21 @@ var modCommon = {
       resourceType = RESOURCE_ENERGY;
     }else if(creepCarry.power>0){
       resourceType = RESOURCE_POWER;
-    }else if(creepCarry.hydrogen>0){
+    }else if(creepCarry.H>0){
       resourceType = RESOURCE_HYDROGEN;
-    }else if(creepCarry.oxygen>0){
+    }else if(creepCarry.O>0){
       resourceType = RESOURCE_OXYGEN;
-    }else if(creepCarry.utrium>0){
+    }else if(creepCarry.U>0){
       resourceType = RESOURCE_UTRIUM;
-    }else if(creepCarry.lemergium>0){
+    }else if(creepCarry.L>0){
       resourceType = RESOURCE_LEMERGIUM;
-    }else if(creepCarry.keanium>0){
+    }else if(creepCarry.K>0){
       resourceType = RESOURCE_KEANIUM;
-    }else if(creepCarry.zynthium>0){
+    }else if(creepCarry.Z>0){
       resourceType = RESOURCE_ZYNTHIUM;
-    }else if(creepCarry.catalyst>0){
+    }else if(creepCarry.X>0){
       resourceType = RESOURCE_CATALYST;
-    }else if(creepCarry.ghodium>0){
+    }else if(creepCarry.G>0){
       resourceType = RESOURCE_GHODIUM;
     }else{
       resourceType = RESOURCE_ENERGY;
