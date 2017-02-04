@@ -194,7 +194,7 @@ var modSpawning = {
         }
         else if(moveOn3 && extractor && Memory.roles.numGeo < Memory.roles.maxGeo){
           body = bodyObj.getBody('miner',4);
-          var g4c = spawner.createCreep(body, undefined,{role: 'geo', mineral:""});
+          var g4c = spawner.createCreep(body, undefined,{role: 'geo', mineral:"", dropOff:""});
           console.log("Spawned GeoMiner: " + g4c);
         }
         else if(moveOn3 && extractor && Memory.roles.numGeoH < Memory.roles.maxGeoH){
