@@ -46,7 +46,18 @@ var roleFeeder = {
 
   run:function(creep){
     var dest = null;
-    if(creep.carry.energy > 0){
+    if(_.sum(creep.carry)>0 && creep.carry.energy === 0){
+      var dropOff = findCloseDropOff(creep);
+      var resourceType = modCommon.whatCarry(creep);
+      if(dropOff && resourceType){
+        if(creep.transfer(dropOff, resourceType) === ERR_NOT_IN_RANGE){
+          modCommon.move(creep, dropOff.pos);
+        }else{
+          creep.memory.path = null;
+        }
+      }
+    }
+    else if(creep.carry.energy > 0){
       dest = this.findCloseDeliver(creep);
       if(dest === "Nowhere to Go"){
         roleUpgrader.upgrade(creep);
