@@ -48,7 +48,7 @@ var roleHauler = {
     var dpos = null;
     var dropOffID = creep.memory.dropOff;
     var dropOff = null;
-    var resourceType = modCommon.whatCarry(creep);
+    var resourceType = RESOURCE_ENERGY;
 
     if(dropOffID === ""){
       this.assignDropOff(creep);
@@ -61,12 +61,14 @@ var roleHauler = {
 
     if(_.sum(creep.carry) > 0){
       dest = this.findCloseDeliver(creep);
+      resourceType = modCommon.whatCarry(creep);
       if(dest && creep.transfer(dest, resourceType) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
       }else{
         creep.memory.path = null;
       }
     }else{
+      resourceType = modCommon.whatStore(struct);
       if(creep.withdraw(dropOff, resourceType) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dPos);
       }else{

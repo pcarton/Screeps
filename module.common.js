@@ -205,6 +205,37 @@ var modCommon = {
     }
 
     return resourceType;
+  },
+
+  whatStore:function(struct){
+    var resourceType;
+
+    var structStore = struct.store;
+    if(structStore.energy>0){
+      resourceType = RESOURCE_ENERGY;
+    }else if(structStore.power>0){
+      resourceType = RESOURCE_POWER;
+    }else if(structStore.H>0){
+      resourceType = RESOURCE_HYDROGEN;
+    }else if(structStore.O>0){
+      resourceType = RESOURCE_OXYGEN;
+    }else if(structStore.U>0){
+      resourceType = RESOURCE_UTRIUM;
+    }else if(structStore.L>0){
+      resourceType = RESOURCE_LEMERGIUM;
+    }else if(structStore.K>0){
+      resourceType = RESOURCE_KEANIUM;
+    }else if(structStore.Z>0){
+      resourceType = RESOURCE_ZYNTHIUM;
+    }else if(structStore.X>0){
+      resourceType = RESOURCE_CATALYST;
+    }else if(structStore.G>0){
+      resourceType = RESOURCE_GHODIUM;
+    }else{
+      resourceType = RESOURCE_ENERGY;
+    }
+
+    return resourceType;
   }
   //TODO Emergency upgrade logic
 
