@@ -46,6 +46,7 @@ var modSpawning = {
 
     var flags = _.filter(spawner.room.find(FIND_FLAGS), (flag) => roleArchitect.ableToBuild(controllerLvl, flag.name));
     var body = [MOVE];
+    var extractor = _.filter(spawner.room.find(FIND_STRUCTURES), (structure) => structure.structureType === STRUCTURE_EXTRACTOR);
     if(spawnTier1){
         //make sure there is energy and the spawner isnt already working, then spawn harvesters, upgrader, and repair in that priority
         if((!spawner.spawning) && (spawner.room.energyAvailable>=300)){
@@ -190,6 +191,16 @@ var modSpawning = {
           var a4c = spawner.createCreep(body, undefined,{role: 'architect', toFix:'', selfHarvest:false});
           console.log("Spawned Architect: " + a4c);
           //this.incrementNum("architect");
+        }
+        else if(moveOn3 && extractor && Memory.roles.numGeo < Memory.roles.maxGeo){
+          body = bodyObj.getBody('miner',4);
+          var g4c = spawner.createCreep(body, undefined,{role: 'geo', mineral:""});
+          console.log("Spawned GeoMiner: " + g4c);
+        }
+        else if(moveOn3 && extractor && Memory.roles.numGeoH < Memory.roles.maxGeoH){
+          body = bodyObj.getBody('hauler',4);
+          var gh4c = spawner.createCreep(body, undefined,{role: 'geoH', dropOff:""});
+          console.log("Spawned GeoHauler: " + gh4c);
         }
       }
     }

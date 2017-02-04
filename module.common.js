@@ -174,6 +174,37 @@ var modCommon = {
     var hTargets = _.filter(allCreepList, (creep) => creep.hits<creep.hitsMax && creep.owner.username === "PCarton");
     //TODO sort by a priority
     return hTargets;
+  },
+
+  whatCarry:function(creep){
+    var resourceType;
+
+    var creepCarry = creep.carry;
+    if(creepCarry.energy>0){
+      resourceType = RESOURCE_ENERGY;
+    }else if(creepCarry.power>0){
+      resourceType = RESOURCE_POWER;
+    }else if(creepCarry.hydrogen>0){
+      resourceType = RESOURCE_HYDROGEN;
+    }else if(creepCarry.oxygen>0){
+      resourceType = RESOURCE_OXYGEN;
+    }else if(creepCarry.utrium>0){
+      resourceType = RESOURCE_UTRIUM;
+    }else if(creepCarry.lemergium>0){
+      resourceType = RESOURCE_LEMERGIUM;
+    }else if(creepCarry.keanium>0){
+      resourceType = RESOURCE_KEANIUM;
+    }else if(creepCarry.zynthium>0){
+      resourceType = RESOURCE_ZYNTHIUM;
+    }else if(creepCarry.catalyst>0){
+      resourceType = RESOURCE_CATALYST;
+    }else if(creepCarry.ghodium>0){
+      resourceType = RESOURCE_GHODIUM;
+    }else{
+      resourceType = RESOURCE_ENERGY;
+    }
+
+    return resourceType;
   }
   //TODO Emergency upgrade logic
 

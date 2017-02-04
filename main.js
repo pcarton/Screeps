@@ -37,7 +37,11 @@ var initialRolesMem = {
     "numHaulers":0,
     "maxHaulers":1,
     "numFeeders":0,
-    "maxFeeders":1
+    "maxFeeders":1,
+    "numGeo":0,
+    "maxGeo":1,
+    "numGeoH":0,
+    "maxGeoH":1,
 
 };
 
