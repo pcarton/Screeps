@@ -193,12 +193,12 @@ var modSpawning = {
           //this.incrementNum("architect");
         }
         else if(moveOn3 && extractor && Memory.roles.numGeo < Memory.roles.maxGeo){
-          body = bodyObj.getBody('miner',4);
+          body = bodyObj.getBody('geoMiner',4);
           var g4c = spawner.createCreep(body, undefined,{role: 'geo', mineral:"", dropOff:""});
           console.log("Spawned GeoMiner: " + g4c);
         }
         else if(moveOn3 && extractor && Memory.roles.numGeoH < Memory.roles.maxGeoH){
-          body = bodyObj.getBody('hauler',4);
+          body = bodyObj.getBody('geoHauler',4);
           var gh4c = spawner.createCreep(body, undefined,{role: 'geoH', dropOff:""});
           console.log("Spawned GeoHauler: " + gh4c);
         }

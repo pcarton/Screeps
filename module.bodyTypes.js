@@ -23,6 +23,8 @@ var feederBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,CARRY,CARRY,CARRY,CARRY,CARRY,CA
 var minerBody = [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE];
 var u4Body = [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE];
 var soldierBody = [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE, MOVE, MOVE, MOVE, RANGED_ATTACK, RANGED_ATTACK]; //800 energy so that two can spawn at rc5 without refil
+var geoMinerBody = minerBody;
+var geoHaulerBody = haulerBody;
 
 //Object that holds a getter for these body types
 var bodyObj = {
@@ -79,6 +81,10 @@ var bodyObj = {
         return feederBody;
       }else if(role === 'soldier'){
         return soliderBody;
+      }else if(role === 'geoMiner'){
+        return geoMinerBody;
+      }else if(role === 'geoHauler'){
+        return geoHaulerBody;
       }
   }
 
