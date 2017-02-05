@@ -11,6 +11,7 @@ var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
 var roleArchitect = require('role.architect');
 var roleFeeder = require('role.feeder');
+var roleMerchant = require('role.merchant');
 var roleJuniorHauler = require('role.juniorHauler');
 
 //Modules
@@ -44,8 +45,9 @@ var initialRolesMem = {
     "maxGeo":1,
     "numGeoH":0,
     "maxGeoH":1,
-
-};
+    "numMerchant":0,
+    "maxMerchant":0,
+  };
 
 //Tower initial memory JSON
 var initialTowerMem = {
@@ -202,6 +204,7 @@ module.exports.loop = function () {
     var numF = 0;
     var numG = 0;
     var numGH = 0;
+    var numMER = 0;
 
     //assign the right run method to each creep based on its role
     for(var name in myCreepList) {
@@ -265,6 +268,10 @@ module.exports.loop = function () {
           numGH++;
           roleGeoHauler.run(creep);
         }
+        else if(creep.memory.role == 'merchant'){
+          numMER++;
+          roleMerchant.run(creep);
+        }
     }
 
     Memory.roles.numHarvesters = numH;
@@ -277,7 +284,8 @@ module.exports.loop = function () {
     Memory.roles.numFeeders = numF;
     Memory.roles.numGeo = numG;
     Memory.roles.numGeoH = numGH;
-    Memory.roles.numCreeps = numH+numB+numU+numA+numM+numHA+numF;
+    Memory.roles.numMerchant = numMER;
+    Memory.roles.numCreeps = numH+numB+numU+numA+numM+numHA+numF+numG+numGH+numMER;
 
     //determine if new creeps need to be spawned and pick an appropriate spawner
     //Spawn logic is in a seperate module
