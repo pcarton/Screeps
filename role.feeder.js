@@ -85,7 +85,7 @@ var roleFeeder = {
         dest = this.findCloseDropOff(creep);
         var minerals = this.findMineralDropOff(creep);
         resourceType = RESOURCE_ENERGY;
-        if(_.sum(minerals.store)>0 && Math.random()>=0.5){
+        if(_.sum(minerals.store)>0){
           dest = minerals;
           resourceType = modCommon.whatStore(minerals);
         }
