@@ -14,6 +14,12 @@ var roleFeeder = {
     });
     return dropOff;
   },
+  findMineralDropOff:function(creep){
+    var dropOffFlag = creep.room.find(FIND_FLAGS, { filter: (object)=>(object.name.substring(0,8) === "GDropOff")});
+    var dropOffArr = creep.room.lookForAt(LOOK_STRUCTURES, dropOffFlag[0]);
+    var dropOff = _.filter(dropOffArr, (object) => object.structureType != STRUCTURE_ROAD)[0];
+    return dropOff;
+  },
 
   findCloseDeliver(creep){
     var p1 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
@@ -76,6 +82,9 @@ var roleFeeder = {
         }
       }else{
         dest = this.findCloseDropOff(creep);
+        var minerals = this.findMineralDropOff(creep);
+        if(_.sum(minerals.store)>0 && Math.random()>=0.5)
+          dest = minerals;
         if(dest && creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           modCommon.move(creep,dest.pos);
         }else{
