@@ -44,7 +44,7 @@ var initialRolesMem = {
     "numGeo":0,
     "maxGeo":1,
     "numGeoH":0,
-    "maxGeoH":1,
+    "maxGeoH":0,
     "numMerchant":0,
     "maxMerchant":0,
   };
