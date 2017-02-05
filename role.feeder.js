@@ -52,9 +52,10 @@ var roleFeeder = {
 
   run:function(creep){
     var dest = null;
+    var resourceType = modCommon.whatCarry(creep);
     if(_.sum(creep.carry)>0 && creep.carry.energy < _.sum(creep.carry)){
       var dropOff = this.findCloseDropOff(creep);
-      var resourceType = modCommon.whatCarry(creep);
+      resourceType = modCommon.whatCarry(creep);
       if(dropOff && resourceType){
         if(creep.transfer(dropOff, resourceType) === ERR_NOT_IN_RANGE){
           modCommon.move(creep, dropOff.pos);
@@ -83,9 +84,12 @@ var roleFeeder = {
       }else{
         dest = this.findCloseDropOff(creep);
         var minerals = this.findMineralDropOff(creep);
-        if(_.sum(minerals.store)>0 && Math.random()>=0.5)
+        resourceType = RESOURCE_ENERGY;
+        if(_.sum(minerals.store)>0 && Math.random()>=0.5){
           dest = minerals;
-        if(dest && creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          resourceType = modCommon.whatStore(minerals);
+        }
+        if(dest && creep.withdraw(dest, resourceType) == ERR_NOT_IN_RANGE) {
           modCommon.move(creep,dest.pos);
         }else{
           creep.memory.path = null;
