@@ -205,7 +205,7 @@ var modSpawning = {
         }
         else if(moveOn3 && market && Memory.roles.numMerchant < Memory.roles.maxMerchant){
           body = bodyObj.getBody('merchant',4);
-          var mer4c = spawner.createCreep(body, undefined,{role: 'merchant', terminal:"", storage:""});
+          var mer4c = spawner.createCreep(body, undefined,{role: 'merchant', terminal:"", storage:"", currentOrder:""});
           console.log("Spawned Merchant: " + mer4c);
         }
       }
