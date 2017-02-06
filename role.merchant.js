@@ -38,7 +38,30 @@ var roleMerchant = {
   },
 
   run:function(creep){
+    //Make sure the creep has all necessary ids
+    var terminal;
+    var storage;
+    var orderID;
+    var toLoad = Memory.toTrade.amount;
 
+    if(creep.memory.terminal === ""){
+      this.assignTerminal(creep);
+      terminal = Game.getObjectById(creep.memory.terminal);
+    }
+    if(creep.memory.storage === ""){
+      this.assignStorage(creep);
+      storage = Game.getObjectById(creep.memory.storage);
+    }
+    if(creep.memory.currentOrder === ""){
+      this.getOrder(creep);
+      orderID = creep.memory.currentOrder;
+    }
+
+    var order = Game.market.getOrderById(orderID);
+    if(order.remainingAmount<toLoad){
+      toLoad = order.remainingAmount;
+    }
+    //TODO keep track of toLoad and put that much in the terminal
   }
 
 };
