@@ -9,6 +9,7 @@ var roleMerchant = {
     });
     creep.memory.terminal = terminal.id;
   },
+
   assignStorage:function(creep){
     var storage = creep.pos.findClosestByRange(FIND_STRUCTURES,{
       filter: (structure) => {
@@ -17,14 +18,26 @@ var roleMerchant = {
     });
     creep.memory.storage = storage.id;
   },
-  getOrder:function(){
+
+  getResourceType:function(storageID){
+    var storage = Game.getObjectById(storageID);
+    return whatStore(storage);
+  },
+
+  getOrder:function(creep){
+    if(creep.memory.storage === ""){
+      this.assignStorage(creep);
+    }
+    var storageID = creep.memory.storage;
+    var resourceType = this.getResourceType(storageID);
     var orders =Game.market.getAllOrders({
-      filter: (order) => order.type === "buy" //TODO && close && priceDecent && resourceHave
+      filter: (order) => order.type === "buy" && order.resourceType === resourceType
+      //TODO && close && priceDecent
     });
-    //TODO sort array by best price
-    if(orders){
-      var order = orders[0];
-      creep.memory.currentOrder = order.id;
+    var sortedOrders = _.sortBy(orders,['price','id']);
+    if(sortedOrders){
+      var order = sortedOrders[0];
+      creep.memory.currentOrder = order[1];
     }else{
       creep.memory.currentOrder = "";
     }
