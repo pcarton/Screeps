@@ -24,7 +24,7 @@ var roleMerchant = {
     var storageID = creep.memory.storage;
     var resourceType = this.getResourceType(storageID);
     var orders =Game.market.getAllOrders({
-      filter: (order) => order.type === "buy" && order.resourceType === resourceType && Game.getRoomLinearDistance(order.roomName, thisRoom) <= 30
+      filter: (order) => order.type === "buy" && order.resourceType === resourceType && Game.getRoomLinearDistance(order.roomName, thisRoom, true) <= 30
       //TODO && priceDecent
     });
     var sortedOrders = _.sortBy(orders,['price','id']);
