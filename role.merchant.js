@@ -61,7 +61,9 @@ var roleMerchant = {
     if(order.remainingAmount<toLoad){
       toLoad = order.remainingAmount;
     }
+
     //TODO keep track of toLoad and put that much in the terminal
+    //If toTrade.amount == 0, calculate energy needed from terminal and fill with that
   }
 
 };
