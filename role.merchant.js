@@ -17,14 +17,15 @@ var roleMerchant = {
   },
 
   getOrder:function(creep){
+    var thisRoom = creep.room.name;
     if(creep.memory.storage === ""){
       this.assignStorage(creep);
     }
     var storageID = creep.memory.storage;
     var resourceType = this.getResourceType(storageID);
     var orders =Game.market.getAllOrders({
-      filter: (order) => order.type === "buy" && order.resourceType === resourceType
-      //TODO && close && priceDecent
+      filter: (order) => order.type === "buy" && order.resourceType === resourceType && Game.getRoomLinearDistance(order.roomName, thisRoom) <= 30
+      //TODO && priceDecent
     });
     var sortedOrders = _.sortBy(orders,['price','id']);
     if(sortedOrders){
