@@ -26,7 +26,7 @@ var modSpawning = {
   spawn:function(spawner,energyCapacity,controllerLvl){
     var numSources = spawner.room.find(FIND_SOURCES).length;
     var numTowers = spawner.room.find(FIND_STRUCTURES, {filter: (struct)=> struct.structureType === STRUCTURE_TOWER}).length;
-    var isStorage = spawner.room.find(FIND_STRUCTURES, {filter: (struct)=> struct.structureType === STRUCTURE_STORAGE}).length >0;
+    var isStorage = spawner.room.storage !== undefined;
     var betterHarvesters1 = Memory.roles.betterHarvesters1; // number of tier2 harvesters spawned, to track shift
 
     var betterHarvesters2 = Memory.roles.betterHarvesters2; // number of tier2 harvesters spawned, to track shift

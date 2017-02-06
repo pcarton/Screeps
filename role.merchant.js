@@ -2,20 +2,12 @@ var modCommon = require('module.common');
 var roleMerchant = {
 
   assignTerminal:function(creep){
-    var terminal = creep.pos.findClosestByRange(FIND_STRUCTURES,{
-      filter: (structure) => {
-        return (structure.structureType === STRUCTURE_STORAGE);
-      }
-    });
+    var terminal = creep.room.terminal;
     creep.memory.terminal = terminal.id;
   },
 
   assignStorage:function(creep){
-    var storage = creep.pos.findClosestByRange(FIND_STRUCTURES,{
-      filter: (structure) => {
-        return (structure.structureType === STRUCTURE_STORAGE);
-      }
-    });
+    var storage = creep.room.storage;
     creep.memory.storage = storage.id;
   },
 

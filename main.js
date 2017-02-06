@@ -247,10 +247,7 @@ module.exports.loop = function () {
         }
         else if(creep.memory.role == 'hauler'){
           numHA++;
-          if(creep.pos.findClosestByRange(FIND_STRUCTURES,{
-            filter: (structure) => {
-              return (structure.structureType === STRUCTURE_STORAGE);
-          }})){
+          if(creep.room.storage){
             roleHauler.run(creep);
           }else {
             roleJuniorHauler.run(creep);
