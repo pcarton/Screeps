@@ -34,19 +34,21 @@ var modCommon = {
     var maxTicks = 50;
     //Priority 1 is dropped energy, since it detiorates
     var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
-    var dist;
-    var fat;
-    var worth = 2;
-    if(dropped){
-      dist = this.distTo(creep, dropped.pos);
-      fat = this.getFatigue(creep);
-      worth = (dist * fat) / maxTicks;
-    }
-    if(dropped && worth<=1){
-      if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
-        modCommon.move(creep,dropped.pos);
-      }else{
-        creep.memory.path = null;
+    if(dropped.resourceType === RESOURCE_ENERGY){
+      var dist;
+      var fat;
+      var worth = 2;
+      if(dropped){
+        dist = this.distTo(creep, dropped.pos);
+        fat = this.getFatigue(creep);
+        worth = (dist * fat) / maxTicks;
+      }
+      if(dropped && worth<=1){
+        if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
+          modCommon.move(creep,dropped.pos);
+        }else{
+          creep.memory.path = null;
+        }
       }
     }else{
       //Next priority is the closest container or storage
