@@ -1,5 +1,9 @@
 var modCommon = require('module.common');
 
+//TODO make build container at GDropOff's when extractor unlocked
+//TODO make build extractor when unlocked
+//TODO Storage at flag when unlocked
+//TODO Terminal at flag when unlocked
 var roleArchitect = {
 
   //Function to determin if there are buildable structures that need to be
@@ -104,7 +108,7 @@ var roleArchitect = {
     if(!creep.memory.working){
       Memory.roles.numArchitects = Memory.roles.numArchitects - 1;
       Memory.roles.numBuilders = Memory.roles.numBuilders + 1;
-      creep.memory.role = 'builder';      
+      creep.memory.role = 'builder';
       if(controllerLvl<=1){
         creep.memory.selfHarvest = true;
       }
