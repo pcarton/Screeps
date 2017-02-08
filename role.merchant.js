@@ -72,7 +72,7 @@ var roleMerchant = {
         //get resource from storage
       }
     }else{
-      //if enough energy to do transaction, do it
+      //if enough energy to do transaction, do it && new toLoad
       //else fill with energy
     }
 
