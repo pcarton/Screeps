@@ -24,6 +24,8 @@ var modSpawning = {
   },
 
   spawn:function(spawner,energyCapacity,controllerLvl){
+    //TODO put all of the constants here in memory after first run
+    //Maybe an init method for the module
     var numSources = spawner.room.find(FIND_SOURCES).length;
     var numTowers = spawner.room.find(FIND_STRUCTURES, {filter: (struct)=> struct.structureType === STRUCTURE_TOWER}).length;
     var isStorage = spawner.room.storage !== undefined;
