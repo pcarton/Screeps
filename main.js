@@ -267,7 +267,12 @@ module.exports.loop = function () {
         }
         else if(creep.memory.role == 'merchant'){
           numMER++;
-          roleMerchant.run(creep);
+          try{
+            roleMerchant.run(creep);
+          }catch(err){
+            console.log(err.name + "\n" + err.message);
+            roleFeeder.run(creep);
+          }
         }
     }
 

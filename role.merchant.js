@@ -76,10 +76,10 @@ var roleMerchant = {
         //if enough energy to do transaction, do it
         //else fill with energy
       }
-    }
 
     //TODO keep track of toLoad and put that much in the terminal
     //If toTrade.amount == 0, calculate energy needed from terminal and fill with that
+    }
   }
 
 };
