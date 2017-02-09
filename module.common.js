@@ -108,15 +108,16 @@ var modCommon = {
   findToFixArr: function(room){
     var controlLvl = room.controller.level;
     var modifier = Math.max(Math.pow(10,controlLvl-3),10);
+    var buffer = 1000;
     var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
-      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier))&& (object.hitsMax-object.hits>0);
+      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+buffer))&& (object.hitsMax-object.hits>0);
       var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 100000);
       return brokenRoad || brokenRamp || brokenCont;
     }});
 
     var fixeArr2 = room.find(FIND_STRUCTURES, {filter: function(object){
-      var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier)) && (object.hitsMax-object.hits>0);
+      var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier+buffer)) && (object.hitsMax-object.hits>0);
       return brokenWall;
     }});
     if(fixeArr.length>0){
