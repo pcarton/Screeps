@@ -58,22 +58,24 @@ var roleMerchant = {
     }
 
     var order = Game.market.getOrderById(orderID);
-    if(order.remainingAmount<toLoad){
-      toLoad = order.remainingAmount;
-    }
-
-    var resourceType = order.resourceType;
-    if(toLoad>0){
-      if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) === resourceType){
-        //put the resource in the terminal and decrease toLoad
-      }else if(modCommon.whatCarry(creep) !== resourceType){
-        //Store what it is carrying in storage
-      }else{
-        //get resource from storage
+    if(order){
+      if(order.remainingAmount<toLoad){
+        toLoad = order.remainingAmount;
       }
-    }else{
-      //if enough energy to do transaction, do it
-      //else fill with energy
+
+      var resourceType = order.resourceType;
+      if(toLoad>0){
+        if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) === resourceType){
+          //put the resource in the terminal and decrease toLoad
+        }else if(modCommon.whatCarry(creep) !== resourceType){
+          //Store what it is carrying in storage
+        }else{
+          //get resource from storage
+        }
+      }else{
+        //if enough energy to do transaction, do it
+        //else fill with energy
+      }
     }
 
     //TODO keep track of toLoad and put that much in the terminal
