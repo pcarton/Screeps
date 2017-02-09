@@ -45,9 +45,15 @@ var modSpawning = {
     var spawnTier4 = (energyCapacity>=1300);
 
     var flags = _.filter(spawner.room.find(FIND_FLAGS), (flag) => roleArchitect.ableToBuild(controllerLvl, flag.name));
+
     var body = [MOVE];
+
     var extractor = _.filter(spawner.room.find(FIND_STRUCTURES), (structure) => structure.structureType === STRUCTURE_EXTRACTOR);
+
     var market = _.filter(spawner.room.find(FIND_STRUCTURES), (structure) => structure.structureType === STRUCTURE_TERMINAL);
+
+    var minerals = (_.filter(spawner.room.find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
+
     if(spawnTier1){
         //make sure there is energy and the spawner isnt already working, then spawn harvesters, upgrader, and repair in that priority
         if((!spawner.spawning) && (spawner.room.energyAvailable>=300)){
@@ -193,7 +199,7 @@ var modSpawning = {
           console.log("Spawned Architect: " + a4c);
           //this.incrementNum("architect");
         }
-        else if(moveOn3 && extractor && Memory.roles.numGeo < Memory.roles.maxGeo){
+        else if(moveOn3 && extractor && minerals && Memory.roles.numGeo < Memory.roles.maxGeo){
           body = bodyObj.getBody('geoMiner',4);
           var g4c = spawner.createCreep(body, undefined,{role: 'geo', mineral:"", dropOff:""});
           console.log("Spawned GeoMiner: " + g4c);
