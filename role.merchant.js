@@ -87,8 +87,6 @@ var roleMerchant = {
     if(order){
       if(order.remainingAmount<toLoad){
         toLoad = order.remainingAmount;
-      }else if(toLoad === 0){
-        toLoad = 1000;
       }
 
       var resourceType = creep.memory.toLoad.resourceType;
@@ -125,7 +123,7 @@ var roleMerchant = {
             if(order.remainingAmount === 0){
               this.getOrder(creep);
             }
-            creep.memory.toLoad.amount = 1000;
+            toLoad = 1000;
           }else{
             console.log("Error "+ dealSuccess +" on deal.");
           }
