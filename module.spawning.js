@@ -1,5 +1,6 @@
 var roleArchitect = require('role.architect');
 var bodyObj = require('module.bodyTypes');
+var modCommon = require('module.common');
 
 var modSpawning = {
   incrementNum:function(creepType){
