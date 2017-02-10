@@ -56,6 +56,8 @@ var modSpawning = {
 
     var minerals = (_.filter(spawner.room.find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
 
+    var toSell = modCommon.whatStore(spawner.room.storage) != RESOURCE_ENERGY;
+
     if(spawnTier1){
         //make sure there is energy and the spawner isnt already working, then spawn harvesters, upgrader, and repair in that priority
         if((!spawner.spawning) && (spawner.room.energyAvailable>=300)){
@@ -211,7 +213,7 @@ var modSpawning = {
           var gh4c = spawner.createCreep(body, undefined,{role: 'geoH', dropOff:""});
           console.log("Spawning GeoHauler: " + gh4c);
         }
-        else if(moveOn3 && market && Memory.roles.numMerchant < Memory.roles.maxMerchant){
+        else if(moveOn3 && market && toSell && Memory.roles.numMerchant < Memory.roles.maxMerchant){
           body = bodyObj.getBody('merchant',4);
           var mer4c = spawner.createCreep(body, undefined,{role: 'merchant', terminal:"", storage:""});
           console.log("Spawning Merchant: " + mer4c);
