@@ -212,9 +212,7 @@ var modCommon = {
     var resourceType;
 
     var structStore = struct.store;
-    if(structStore.energy>0){
-      resourceType = RESOURCE_ENERGY;
-    }else if(structStore.power>0){
+    if(structStore.power>0){
       resourceType = RESOURCE_POWER;
     }else if(structStore.H>0){
       resourceType = RESOURCE_HYDROGEN;
