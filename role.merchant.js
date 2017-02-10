@@ -5,6 +5,7 @@ var roleMerchant = {
     creep.memory.toLoad = {};
     creep.memory.toLoad.amount = 0;
     creep.memory.toLoad.resourceType = RESOURCE_ENERGY;
+    creep.memory.currentOrder = "";
     creep.memory.initialized = true;
   },
 
