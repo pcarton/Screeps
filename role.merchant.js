@@ -37,7 +37,7 @@ var roleMerchant = {
     if(sortedOrders && sortedOrders.length){
       var order = sortedOrders[0];
       console.log(order);
-      creep.memory.orderID = order[1];
+      creep.memory.orderID = order.id;
       creep.memory.toLoad.resourceType = order.resourceType;
     }else{
       creep.memory.orderID = "";
