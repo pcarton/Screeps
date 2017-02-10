@@ -42,22 +42,38 @@ var roleMerchant = {
     var terminal;
     var storage;
     var orderID;
+    var order;
     var toLoad = Memory.toTrade.amount;
 
     if(creep.memory.terminal === ""){
       this.assignTerminal(creep);
+    }
+    try{
       terminal = Game.getObjectById(creep.memory.terminal);
-    }
-    if(creep.memory.storage === ""){
-      this.assignStorage(creep);
-      storage = Game.getObjectById(creep.memory.storage);
-    }
-    if(creep.memory.currentOrder === ""){
-      this.getOrder(creep);
-      orderID = creep.memory.currentOrder;
+    }catch(err){
+      console.log(err.name + "\n" + err.message);
     }
 
-    var order = Game.market.getOrderById(orderID);
+
+    if(creep.memory.storage === ""){
+      this.assignStorage(creep);
+    }
+    try{
+      storage = Game.getObjectById(creep.memory.storage);
+    }catch(err){
+      console.log(err.name + "\n" + err.message);
+    }
+
+    if(creep.memory.currentOrder === ""){
+      this.getOrder(creep);
+    }
+    try{
+      orderID = creep.memory.currentOrder;
+      order = Game.market.getOrderById(orderID);
+    }catch(err){
+      console.log(err.name + "\n" + err.message);
+    }
+
     if(order){
       if(order.remainingAmount<toLoad){
         toLoad = order.remainingAmount;
@@ -67,14 +83,40 @@ var roleMerchant = {
       if(toLoad>0){
         if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) === resourceType){
           //put the resource in the terminal and decrease toLoad
+          if(creep.transfer(terminal, resourceType) == ERR_NOT_IN_RANGE) {
+            modCommon.move(creep,terminal.pos);
+          }
         }else if(modCommon.whatCarry(creep) !== resourceType){
           //Store what it is carrying in storage
+          if(creep.transfer(storage, modCommon.whatCarry(creep)) == ERR_NOT_IN_RANGE) {
+            modCommon.move(creep,storage.pos);
+          }
         }else{
           //get resource from storage
+          if(creep.withdraw(storage, resourceType) == ERR_NOT_IN_RANGE) {
+            modCommon.move(creep,storage.pos);
+          }
         }
       }else{
-        //if enough energy to do transaction, do it
-        //else fill with energy
+        var amountToTrade = modCommon.getResourceCount(terminal.store, resourceType); //the amount of resource to trade, get the amount in the terminal
+        var energyInTerminal = modCommon.getResourceCount(terminal.store, RESOURCE_ENERGY); //amount of energy in the terminal
+        var energyCost = Game.market.calcTransactionCost(amountToTrade, creep.room.name, order.roomName);
+
+        if(energyCost<=energyInTerminal){
+          //if enough energy to do transaction, do it
+          Game.market.deal(orderID,amountToTrade,creep.room.name);
+        }else{
+          //else fill with energy
+          if(creep.carry.energy>0){
+            if(creep.transfer(terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+              modCommon.move(creep,terminal.pos);
+            }
+          }else{
+            if(creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+              modCommon.move(creep,storage.pos);
+            }
+          }
+        }
       }
 
     //TODO keep track of toLoad and put that much in the terminal
