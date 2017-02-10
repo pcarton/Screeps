@@ -237,12 +237,53 @@ var modCommon = {
     }
 
     return resourceType;
-  }
+  },
+
+  getResourceCount:function(storeObj, resourceType){
+    var count;
+    switch(resourceType){
+      case RESOURCE_ENERGY:
+        count = storeObj.energy;
+        break;
+      case RESOURCE_POWER:
+        count = storeObj.power;
+        break;
+      case RESOURCE_HYDROGEN:
+        count = storeObj.H;
+        break;
+      case RESOURCE_OXYGEN:
+        count = storeObj.O;
+        break;
+      case RESOURCE_UTRIUM:
+        count = storeObj.U;
+        break;
+      case RESOURCE_LEMERGIUM:
+        count = storeObj.L;
+        break;
+      case RESOURCE_KEANIUM:
+        count = storeObj.K;
+        break;
+      case RESOURCE_ZYNTHIUM:
+        count = storeObj.Z;
+        break;
+      case RESOURCE_CATALYST:
+        count = storeObj.X;
+        break;
+      case RESOURCE_GHODIUM:
+        count = storeObj.G;
+        break;
+      default:
+        count = 0;
+    }
+    return count;
+  },
   //TODO Emergency upgrade logic
 
   //TODO link to history page for the room at given tick
   //Formated as https://screeps.com/a/#!/history/E33N43?t=15527000
-  //linkRoomAtTick:function(room,tick){}
+  linkRoomAtTick:function(room,tick){
+    return "https://screeps.com/a/#!/history/"+room.name+"?t="+tick;
+  }
 
 };
 
