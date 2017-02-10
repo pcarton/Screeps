@@ -20,7 +20,7 @@ var roleMerchant = {
 
   getResourceType:function(storageID){
     var storage = Game.getObjectById(storageID);
-    return whatStore(storage);
+    return modCommon.whatStore(storage);
   },
 
   getOrder:function(creep){
