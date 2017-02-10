@@ -267,12 +267,7 @@ module.exports.loop = function () {
         }
         else if(creep.memory.role == 'merchant'){
           numMER++;
-          try{
-            roleMerchant.run(creep);
-          }catch(err){
-            console.log(err.name + "\n" + err.message);
-            roleFeeder.run(creep);
-          }
+          roleMerchant.run(creep);
         }
     }
 
@@ -313,7 +308,7 @@ module.exports.loop = function () {
     var target = Game.getObjectById(Memory.towersMem.target);
 
     var newEnemy = Memory.towersMem.mode !== "attack";
-    
+
     //Notify the user on enemies or switch to healing and repairing
     if(enemyPresent){
       Memory.towersMem.mode = "attack";

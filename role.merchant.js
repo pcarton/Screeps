@@ -54,7 +54,7 @@ var roleMerchant = {
     var storage;
     var orderID;
     var order;
-    var toLoad = creep.memory.toTrade.amount;
+    var toLoad = creep.memory.toLoad.amount;
 
     if(!creep.memory.terminal || creep.memory.terminal === ""){
       this.assignTerminal(creep);
