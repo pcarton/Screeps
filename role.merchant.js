@@ -95,10 +95,11 @@ var roleMerchant = {
       if(toLoad>0){
         if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) == resourceType){
           //put the resource in the terminal and decrease toLoad
-          if(creep.transfer(terminal, resourceType) == ERR_NOT_IN_RANGE) {
+          var tryTransfer = creep.transfer(terminal, resourceType);
+          if( tryTransfer == ERR_NOT_IN_RANGE) {
             modCommon.move(creep,terminal.pos);
           }
-          if(_.sum(creep.carry) === 0){
+          else if( tryTransfer === OK){
             toLoad = toLoad - creep.carryCapacity;
           }
         }else if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) !== resourceType){
