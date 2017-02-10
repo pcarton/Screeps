@@ -93,9 +93,9 @@ var roleMerchant = {
         toLoad = 1000;
       }
 
-      var resourceType = order.resourceType;
+      var resourceType = creep.memory.toLoad.resourceType;
       if(toLoad>0){
-        if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) === resourceType){
+        if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) == resourceType){
           //put the resource in the terminal and decrease toLoad
           if(creep.transfer(terminal, resourceType) == ERR_NOT_IN_RANGE) {
             modCommon.move(creep,terminal.pos);
@@ -123,7 +123,7 @@ var roleMerchant = {
         if(energyCost<=energyInTerminal){
           //if enough energy to do transaction, do it
           Game.market.deal(orderID,amountToTrade,creep.room.name);
-          if(order.remainingAmount===0){
+          if(order.remainingAmount === 0){
             this.getOrder(creep);
           }
           creep.memory.toLoad.amount = 1000;
