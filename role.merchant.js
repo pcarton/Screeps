@@ -36,7 +36,6 @@ var roleMerchant = {
     var sortedOrders = _.sortBy(orders,['price','id','resourceType']);
     if(sortedOrders && sortedOrders.length){
       var order = sortedOrders[0];
-      console.log(order);
       creep.memory.orderID = order.id;
       creep.memory.toLoad.resourceType = order.resourceType;
     }else{
@@ -77,7 +76,6 @@ var roleMerchant = {
 
     if(!creep.memory.orderID || creep.memory.orderID === ""){
       this.getOrder(creep);
-      console.log("Should have assigned order Here");
     }
     try{
       orderID = creep.memory.orderID;
@@ -104,7 +102,7 @@ var roleMerchant = {
               toLoad -= creep.carryCapacity;
             }
           }
-        }else if(modCommon.whatCarry(creep) !== resourceType){
+        }else if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) !== resourceType){
           //Store what it is carrying in storage
           if(creep.transfer(storage, modCommon.whatCarry(creep)) == ERR_NOT_IN_RANGE) {
             modCommon.move(creep,storage.pos);
