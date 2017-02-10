@@ -1,6 +1,13 @@
 var modCommon = require('module.common');
 var roleMerchant = {
 
+  init:function(creep){
+    creep.memory.toLoad = {};
+    creep.memory.toLoad.amount = 0;
+    creep.memory.toLoad.resourceType = RESOURCE_ENERGY;
+    creep.memory.initialized = true;
+  }
+
   assignTerminal:function(creep){
     var terminal = creep.room.terminal;
     creep.memory.terminal = terminal.id;
@@ -31,6 +38,7 @@ var roleMerchant = {
     if(sortedOrders){
       var order = sortedOrders[0];
       creep.memory.currentOrder = order[1];
+      creep.memory.toLoad.resourceType = order.resourceType;
     }else{
       creep.memory.currentOrder = "";
     }
@@ -38,6 +46,9 @@ var roleMerchant = {
   },
 
   run:function(creep){
+    if(!creep.memory.initialized){
+      this.init(creep);
+    }
     //Make sure the creep has all necessary ids
     var terminal;
     var storage;
@@ -108,7 +119,7 @@ var roleMerchant = {
           if(order.remainingAmount===0){
             this.getOrder(creep);
           }
-          creep.memory.toLoad = 1000;
+          creep.memory.toLoad.amount = 1000;
         }else{
           //else fill with energy
           if(creep.carry.energy>0){
