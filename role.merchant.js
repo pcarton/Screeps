@@ -120,11 +120,15 @@ var roleMerchant = {
 
         if(energyCost<=energyInTerminal){
           //if enough energy to do transaction, do it
-          Game.market.deal(orderID,amountToTrade,creep.room.name);
-          if(order.remainingAmount === 0){
-            this.getOrder(creep);
+          var dealSuccess = Game.market.deal(orderID,amountToTrade,creep.room.name);
+          if(dealSuccess == OK){
+            if(order.remainingAmount === 0){
+              this.getOrder(creep);
+            }
+            creep.memory.toLoad.amount = 1000;
+          }else{
+            console.log("Error "+ dealSuccess +" on deal.");
           }
-          creep.memory.toLoad.amount = 1000;
         }else{
           //else fill with energy
           if(creep.carry.energy>0){
