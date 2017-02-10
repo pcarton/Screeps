@@ -312,11 +312,14 @@ module.exports.loop = function () {
     //Variable to keep track of which enemy to shoot
     var target = Game.getObjectById(Memory.towersMem.target);
 
-
+    var newEnemy = Memory.towersMem.mode !== "attack";
+    
     //Notify the user on enemies or switch to healing and repairing
     if(enemyPresent){
       Memory.towersMem.mode = "attack";
-      Game.notify("EnemyFound at "+ Game.time.toString(),600);
+      if(newEnemy){
+        Game.notify("EnemyFound: "+ modCommon.linkRoomAtTick(room, Game.time),600);
+      }
     }else{
       Memory.towersMem.mode = "heal";
     }
