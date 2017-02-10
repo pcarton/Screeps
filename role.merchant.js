@@ -5,7 +5,7 @@ var roleMerchant = {
     creep.memory.toLoad = {};
     creep.memory.toLoad.amount = 0;
     creep.memory.toLoad.resourceType = RESOURCE_ENERGY;
-    creep.memory.currentOrder = "";
+    creep.memory.orderID = "";
     creep.memory.initialized = true;
   },
 
@@ -36,10 +36,11 @@ var roleMerchant = {
     var sortedOrders = _.sortBy(orders,['price','id']);
     if(sortedOrders && sortedOrders.length){
       var order = sortedOrders[0];
-      creep.memory.currentOrder = order[1];
+      console.log(order);
+      creep.memory.orderID = order[1];
       creep.memory.toLoad.resourceType = order.resourceType;
     }else{
-      creep.memory.currentOrder = "";
+      creep.memory.orderID = "";
     }
 
   },
@@ -74,11 +75,12 @@ var roleMerchant = {
       console.log(err.name + "\n" + err.message);
     }
 
-    if(!creep.memory.currentOrder || creep.memory.currentOrder === ""){
+    if(!creep.memory.orderID || creep.memory.orderID === ""){
       this.getOrder(creep);
+      console.log("Should have assigned order Here");
     }
     try{
-      orderID = creep.memory.currentOrder;
+      orderID = creep.memory.orderID;
       order = Game.market.getOrderById(orderID);
     }catch(err){
       console.log(err.name + "\n" + err.message);
