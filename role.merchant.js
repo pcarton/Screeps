@@ -34,7 +34,9 @@ var roleMerchant = {
       filter: (order) => order.type === "buy" && order.resourceType === resourceType && Game.getRoomLinearDistance(order.roomName, thisRoom, true) <= 30
       //TODO && priceDecent
     });
+    console.log(orders);
     var sortedOrders = _.sortBy(orders,['price','id']);
+    console.log(sortedOrders);
     if(sortedOrders){
       var order = sortedOrders[0];
       creep.memory.currentOrder = order[1];
