@@ -89,6 +89,8 @@ var roleMerchant = {
     if(order){
       if(order.remainingAmount<toLoad){
         toLoad = order.remainingAmount;
+      }else if(toLoad === 0){
+        toLoad = 1000;
       }
 
       var resourceType = order.resourceType;
@@ -99,7 +101,6 @@ var roleMerchant = {
             modCommon.move(creep,terminal.pos);
           }else{
             if(_.sum(creep.carry)===0){
-              creep.memory.toLoad.amount = toLoad - creep.carryCapacity;
               toLoad -= creep.carryCapacity;
             }
           }
@@ -143,6 +144,7 @@ var roleMerchant = {
     //TODO keep track of toLoad and put that much in the terminal
     //If toTrade.amount == 0, calculate energy needed from terminal and fill with that
     }
+    creep.memory.toLoad.amount = toLoad;
   }
 
 };
