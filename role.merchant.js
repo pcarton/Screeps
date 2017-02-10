@@ -56,7 +56,7 @@ var roleMerchant = {
     var order;
     var toLoad = creep.memory.toTrade.amount;
 
-    if(creep.memory.terminal === ""){
+    if(!creep.memory.terminal || creep.memory.terminal === ""){
       this.assignTerminal(creep);
     }
     try{
@@ -66,7 +66,7 @@ var roleMerchant = {
     }
 
 
-    if(creep.memory.storage === ""){
+    if(!creep.memory.storage || creep.memory.storage === ""){
       this.assignStorage(creep);
     }
     try{
@@ -75,7 +75,7 @@ var roleMerchant = {
       console.log(err.name + "\n" + err.message);
     }
 
-    if(creep.memory.currentOrder === ""){
+    if(!creep.memory.currentOrder || creep.memory.currentOrder === ""){
       this.getOrder(creep);
     }
     try{
