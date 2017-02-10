@@ -6,7 +6,7 @@ var roleMerchant = {
     creep.memory.toLoad.amount = 0;
     creep.memory.toLoad.resourceType = RESOURCE_ENERGY;
     creep.memory.initialized = true;
-  }
+  },
 
   assignTerminal:function(creep){
     var terminal = creep.room.terminal;
