@@ -33,7 +33,7 @@ var roleMerchant = {
     var resourceType = this.getResourceType(storageID);
     var ordersAll = Game.market.getAllOrders();
     var orders = _.filter(ordersAll, (order) => (order.type === ORDER_BUY) && (order.resourceType === resourceType) && (Game.map.getRoomLinearDistance(order.roomName, thisRoom, true) <= 30) );
-    var sortedOrders = _.sortBy(orders,['price','id']);
+    var sortedOrders = _.sortBy(orders,['price','id','resourceType']);
     if(sortedOrders && sortedOrders.length){
       var order = sortedOrders[0];
       console.log(order);
@@ -97,6 +97,11 @@ var roleMerchant = {
           //put the resource in the terminal and decrease toLoad
           if(creep.transfer(terminal, resourceType) == ERR_NOT_IN_RANGE) {
             modCommon.move(creep,terminal.pos);
+          }else{
+            if(_.sum(creep.carry)===0){
+              creep.memory.toLoad.amount = toLoad - creep.carryCapacity;
+              toLoad -= creep.carryCapacity;
+            }
           }
         }else if(modCommon.whatCarry(creep) !== resourceType){
           //Store what it is carrying in storage
