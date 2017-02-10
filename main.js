@@ -313,7 +313,7 @@ module.exports.loop = function () {
     if(enemyPresent){
       Memory.towersMem.mode = "attack";
       if(newEnemy){
-        Game.notify("EnemyFound: "+ modCommon.linkRoomAtTick(room, Game.time),600);
+        Game.notify(modCommon.linkRoomAtTick(room, Game.time, "EnemyFound"),600);
       }
     }else{
       Memory.towersMem.mode = "heal";
