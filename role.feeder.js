@@ -9,9 +9,15 @@ var roleFeeder = {
   findCloseDropOff:function(creep){
     var dropOff = creep.pos.findClosestByRange(FIND_STRUCTURES,{
       filter: (structure) => {
-        return (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]>(structure.storeCapacity*3/4)));
+        return (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]>(creep.carryCapacity)));
       }
     });
+    return dropOff;
+  },
+  findMineralDropOff:function(creep){
+    var dropOffFlag = creep.room.find(FIND_FLAGS, { filter: (object)=>(object.name.substring(0,8) === "GDropOff")});
+    var dropOffArr = creep.room.lookForAt(LOOK_STRUCTURES, dropOffFlag[0]);
+    var dropOff = _.filter(dropOffArr, (object) => object.structureType != STRUCTURE_ROAD)[0];
     return dropOff;
   },
 
@@ -46,7 +52,19 @@ var roleFeeder = {
 
   run:function(creep){
     var dest = null;
-    if(creep.carry.energy > 0){
+    var resourceType = modCommon.whatCarry(creep);
+    if(_.sum(creep.carry)>0 && creep.carry.energy < _.sum(creep.carry)){
+      var dropOff = this.findCloseDropOff(creep);
+      resourceType = modCommon.whatCarry(creep);
+      if(dropOff && resourceType){
+        if(creep.transfer(dropOff, resourceType) === ERR_NOT_IN_RANGE){
+          modCommon.move(creep, dropOff.pos);
+        }else{
+          creep.memory.path = null;
+        }
+      }
+    }
+    else if(creep.carry.energy > 0){
       dest = this.findCloseDeliver(creep);
       if(dest === "Nowhere to Go"){
         roleUpgrader.upgrade(creep);
@@ -56,11 +74,26 @@ var roleFeeder = {
         creep.memory.path = null;
       }
     }else{
-      dest = this.findCloseDropOff(creep);
-      if(dest && creep.withdraw(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        modCommon.move(creep,dest.pos);
+      var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
+      if(dropped){
+        if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
+          modCommon.move(creep,dropped.pos);
+        }else{
+          creep.memory.path = null;
+        }
       }else{
-        creep.memory.path = null;
+        dest = this.findCloseDropOff(creep);
+        var minerals = this.findMineralDropOff(creep);
+        resourceType = RESOURCE_ENERGY;
+        if(_.sum(minerals.store)>0){
+          dest = minerals;
+          resourceType = modCommon.whatStore(minerals);
+        }
+        if(dest && creep.withdraw(dest, resourceType) == ERR_NOT_IN_RANGE) {
+          modCommon.move(creep,dest.pos);
+        }else{
+          creep.memory.path = null;
+        }
       }
     }
   }

@@ -21,7 +21,8 @@ var roleBuilder = {
           var bTargets1 = creep.room.find(FIND_CONSTRUCTION_SITES, {filter:     function(object){
             var isTower =  object.structureType === STRUCTURE_TOWER;
             var isWall = object.structureType === STRUCTURE_WALL;
-            return isTower || isWall;
+            var isContainer = object.structureType === STRUCTURE_CONTAINER;
+            return isTower || isWall || isContainer;
           }
           });
             var bTargets2 = creep.room.find(FIND_CONSTRUCTION_SITES, {filter: function(object){

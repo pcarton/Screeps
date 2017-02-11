@@ -19,6 +19,7 @@ var roleStructures = {
     if(injured.length){
       tower.heal(injured[0]);
     }else{
+      //TODO add target to that tower's memory
       var damagedStructs;
       if(Memory.fortify){
         damagedStructs= modCommon.findToFixArr(tower.room);
