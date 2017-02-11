@@ -85,14 +85,16 @@ var roleFeeder = {
         dest = this.findCloseDropOff(creep);
         var minerals = this.findMineralDropOff(creep);
         resourceType = RESOURCE_ENERGY;
-        if(_.sum(minerals.store)>0){
-          dest = minerals;
-          resourceType = modCommon.whatStore(minerals);
-        }
-        if(dest && creep.withdraw(dest, resourceType) == ERR_NOT_IN_RANGE) {
-          modCommon.move(creep,dest.pos);
-        }else{
-          creep.memory.path = null;
+        if(minerals){
+          if(_.sum(minerals.store)>0){
+            dest = minerals;
+            resourceType = modCommon.whatStore(minerals);
+          }
+          if(dest && creep.withdraw(dest, resourceType) == ERR_NOT_IN_RANGE) {
+            modCommon.move(creep,dest.pos);
+          }else{
+            creep.memory.path = null;
+          }
         }
       }
     }
