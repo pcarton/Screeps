@@ -109,6 +109,14 @@ var modCommon = {
     var controlLvl = room.controller.level;
     var modifier = Math.max(Math.pow(10,controlLvl-3),10);
     var buffer = 1000;
+
+    var fixeArrPriority = room.find(FIND_STRUCTURES, {filter: function(object){
+      var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < 1000);
+      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (3000))&& (object.hitsMax-object.hits>0);
+      var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 10000);
+      return brokenRoad || brokenRamp || brokenCont;
+    }});
+
     var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
       var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+buffer))&& (object.hitsMax-object.hits>0);
@@ -120,7 +128,9 @@ var modCommon = {
       var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier+buffer)) && (object.hitsMax-object.hits>0);
       return brokenWall;
     }});
-    if(fixeArr.length>0){
+    if(fixeArrPriority.length>0){
+      return fixeArrPriority;
+    }else if(fixeArr.length>0){
       return fixeArr;
     }else {
       return fixeArr2;
