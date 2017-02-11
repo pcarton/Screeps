@@ -61,7 +61,12 @@ var roleMiner = {
     }else{
       if(dropOffID){
         dropOff = Game.getObjectById(dropOffID);
-        dPos = dropOff.pos;
+        if(dropOff){
+          dPos = dropOff.pos;
+        }else{
+          this.assignDropOff(creep);
+          return;
+        }
       }
     }
 

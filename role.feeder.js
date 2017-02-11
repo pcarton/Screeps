@@ -17,7 +17,7 @@ var roleFeeder = {
   findMineralDropOff:function(creep){
     var dropOffFlag = creep.room.find(FIND_FLAGS, { filter: (object)=>(object.name.substring(0,8) === "GDropOff")});
     var dropOffArr = creep.room.lookForAt(LOOK_STRUCTURES, dropOffFlag[0]);
-    var dropOff = _.filter(dropOffArr, (object) => object.structureType != STRUCTURE_ROAD)[0];
+    var dropOff = _.filter(dropOffArr, (object) => object.structureType == STRUCTURE_CONTAINER)[0];
     return dropOff;
   },
 
@@ -85,7 +85,7 @@ var roleFeeder = {
         dest = this.findCloseDropOff(creep);
         var minerals = this.findMineralDropOff(creep);
         resourceType = RESOURCE_ENERGY;
-        if(_.sum(minerals.store)>0){
+        if(minerals && _.sum(minerals.store)>0){
           dest = minerals;
           resourceType = modCommon.whatStore(minerals);
         }
