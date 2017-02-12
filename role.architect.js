@@ -118,6 +118,9 @@ var roleArchitect = {
         creep.memory.selfHarvest = true;
       }
     }else{
+      //TODO autoBuilds like extractor
+
+      //then flag builds after
       var flag = flags[0];
       if(!creep.pos.isEqualTo(flag.pos)){
         modCommon.move(creep,flag.pos);
