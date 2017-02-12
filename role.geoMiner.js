@@ -72,7 +72,7 @@ var roleGeoMiner = {
       }else{
         creep.memory.path = null;
       }
-    }else{
+    }else if(dropOff && _.sum(dropOff.store) <= dropOff.storeCapacity - creep.carryCapacity){
       if(creep.harvest(mineral) === ERR_NOT_IN_RANGE) {
         modCommon.move(creep,sPos);
       }
