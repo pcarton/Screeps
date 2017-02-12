@@ -100,6 +100,12 @@ var modCommon = {
       --Memory.roles.numHaulers;
     }else if(creepType === "feeder"){
       --Memory.roles.numFeeders;
+    }else if(creepType === "geo"){
+      --Memory.roles.numGeo;
+    }else if(creepType === "geoH"){
+      --Memory.roles.numGeoH;
+    }else if(creepType === "merchant"){
+      --Memory.roles.numMerchant;
     }
     --Memory.roles.numCreeps;
   },
