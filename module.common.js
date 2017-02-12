@@ -135,7 +135,8 @@ var modCommon = {
       var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier+buffer)) && (object.hitsMax-object.hits>0);
       return brokenWall;
     }});
-    if(room.storage.energy<roomBuffer || fixeArrPriority.length>0){
+
+    if(room.storage.energy < roomBuffer || fixeArrPriority.length>0){
       return fixeArrPriority;
     }else if(fixeArr.length>0){
       return fixeArr;
