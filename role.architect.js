@@ -8,6 +8,7 @@ var roleArchitect = {
 
   //Function to determin if there are buildable structures that need to be
   //assigned a construction site (marked by named flags)
+  //TODO finish this method for through controllerLvl 8
   ableToBuild:function(controllerLvl, structureType){
     var wallBool = (structureType.substring(0,4)==="Wall");
     switch(controllerLvl){
@@ -91,6 +92,10 @@ var roleArchitect = {
       }
     }
   },
+
+  //Marks the minerals in the room for an extractor construction site
+  //TODO implement this method and use it
+  markExtractor:function(creep){},
 
   /** @param {Creep} creep **/
   run: function(creep) {
