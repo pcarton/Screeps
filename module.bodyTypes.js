@@ -52,7 +52,7 @@ var bodyObj = {
           case 4:
             return u4Body;
         }
-      }else if(role === 'builder'){
+      }else if(role === 'builder' || role === 'architect'){
         switch(tier){
           default:
             return bBody;
@@ -76,8 +76,6 @@ var bodyObj = {
         return haulerBody;
       }else if(role === 'miner'){
         return minerBody;
-      }else if(role === 'architect'){
-        return bBody;
       }else if(role === 'feeder'){
         return feederBody;
       }else if(role === 'soldier'){
