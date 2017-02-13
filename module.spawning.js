@@ -173,7 +173,7 @@ var modSpawning = {
           console.log("Spawning Builder: " + b4c);
           modCommon.incrementCreepNum("builder");
         }
-        else if(moveOn3 && Memory.roles.numUpgraders < Math.min(Memory.roles.maxUpgraders+modConstants.getConLvlMod(spawner.room), spawner.room.find(FIND_SOURCES).length)){
+        else if(moveOn3 && Memory.roles.numUpgraders < 1){
           body = bodyObj.getBody('upgrader',4);
           var u4c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
           console.log("Spawning Upgrader: " + u4c);
