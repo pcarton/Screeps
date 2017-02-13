@@ -7,7 +7,9 @@ var modConstants = {
   getConLvlMod:function(room){
     var controllerLvl = room.controller.level;
     return Math.ceil((controllerLvl-1)/3);
-  }
+  },
+  roomEnergyBuffer: 300000,
+  structBuffer:1000
 
 
 
