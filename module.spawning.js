@@ -2,8 +2,10 @@ var roleArchitect = require('role.architect');
 var bodyObj = require('module.bodyTypes');
 var modCommon = require('module.common');
 var modConstants = require('module.constants');
-
+var modMemory = require('module.memory');
 //TODO queue system
+//var queue = modMemory.getSpawnQ(roomName);
+//var nextSpawn = queue.shift();
 
 var modSpawning = {
 
