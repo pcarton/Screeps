@@ -1,3 +1,5 @@
+var modConstants = require('module.constants');
+
 var modCommon = {
 
   getFatigue: function(creep){
@@ -137,8 +139,6 @@ var modCommon = {
   findToFixArr: function(room){
     var controlLvl = room.controller.level;
     var modifier = Math.max(Math.pow(10,controlLvl-3),10);
-    var buffer = 1000;
-    var roomBuffer = 300000;
 
     var fixeArrPriority = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < 3000);
@@ -150,16 +150,16 @@ var modCommon = {
 
     var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
-      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+buffer))&& (object.hitsMax-object.hits>0);
+      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+modConstants.structBuffer))&& (object.hitsMax-object.hits>0);
       return brokenRoad || brokenRamp;
     }});
 
     var fixeArr2 = room.find(FIND_STRUCTURES, {filter: function(object){
-      var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier+buffer)) && (object.hitsMax-object.hits>0);
+      var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier+modConstants.structBuffer)) && (object.hitsMax-object.hits>0);
       return brokenWall;
     }});
 
-    if(room.storage.store.energy < roomBuffer || fixeArrPriority.length>0){
+    if(room.storage.store.energy < modConstants.roomEnergyBuffer || fixeArrPriority.length>0){
       return fixeArrPriority;
     }else if(fixeArr.length>0){
       return fixeArr;
