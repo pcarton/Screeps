@@ -101,6 +101,12 @@ var modCommon = {
       --Memory.roles.numHaulers;
     }else if(creepType === "feeder"){
       --Memory.roles.numFeeders;
+    }else if(creepType === "geo"){
+      --Memory.roles.numGeo;
+    }else if(creepType === "geoH"){
+      --Memory.roles.numGeoH;
+    }else if(creepType === "merchant"){
+      --Memory.roles.numMerchant;
     }
     --Memory.roles.numCreeps;
   },
@@ -132,26 +138,28 @@ var modCommon = {
     var controlLvl = room.controller.level;
     var modifier = Math.max(Math.pow(10,controlLvl-3),10);
     var buffer = 1000;
+    var roomBuffer = 300000;
 
     var fixeArrPriority = room.find(FIND_STRUCTURES, {filter: function(object){
-      var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < 1000);
-      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (3000))&& (object.hitsMax-object.hits>0);
-      var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 10000);
-      return brokenRoad || brokenRamp || brokenCont;
+      var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < 3000);
+      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < 5000)&& (object.hitsMax-object.hits>0);
+      var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 100000);
+      var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < 5000) && (object.hitsMax-object.hits>0);
+      return brokenRoad || brokenRamp || brokenCont || brokenWall;
     }});
 
     var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
       var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+buffer))&& (object.hitsMax-object.hits>0);
-      var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 100000);
-      return brokenRoad || brokenRamp || brokenCont;
+      return brokenRoad || brokenRamp;
     }});
 
     var fixeArr2 = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier+buffer)) && (object.hitsMax-object.hits>0);
       return brokenWall;
     }});
-    if(fixeArrPriority.length>0){
+
+    if(room.storage.store.energy < roomBuffer || fixeArrPriority.length>0){
       return fixeArrPriority;
     }else if(fixeArr.length>0){
       return fixeArr;
@@ -313,7 +321,7 @@ var modCommon = {
   //TODO link to history page for the room at given tick
   //Formated as https://screeps.com/a/#!/history/E33N43?t=15527000
   linkRoomAtTick:function(room,tick,msg){
-    return "<a href=https://screeps.com/a/#!/history/"+room.name+"%3ft="+tick+">"+msg+"</a>";
+    return "<a href=https://screeps.com/a/#!/history/"+room.name+"\?t="+tick+">"+msg+"</a>";
   }
 
 };

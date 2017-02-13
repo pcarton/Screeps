@@ -12,7 +12,7 @@ var modSpawning = {
     //Maybe an init method for the module
     var numSources = spawner.room.find(FIND_SOURCES).length;
     var numTowers = spawner.room.find(FIND_STRUCTURES, {filter: (struct)=> struct.structureType === STRUCTURE_TOWER}).length;
-    var isStorage = spawner.room.storage !== undefined;
+    var isStorage = (spawner.room.storage !== undefined) && (spawner.room.storage.store.energy > 1000);
     var betterHarvesters1 = Memory.roles.betterHarvesters1; // number of tier2 harvesters spawned, to track shift
 
     var betterHarvesters2 = Memory.roles.betterHarvesters2; // number of tier2 harvesters spawned, to track shift
@@ -39,7 +39,7 @@ var modSpawning = {
 
     var minerals = (_.filter(spawner.room.find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
 
-    var toSell = modCommon.whatStore(spawner.room.storage) != RESOURCE_ENERGY;
+    var toSell = !minerals && (modCommon.whatStore(spawner.room.storage) != RESOURCE_ENERGY);
 
     if(spawnTier1){
         //make sure there is energy and the spawner isnt already working, then spawn harvesters, upgrader, and repair in that priority
@@ -48,25 +48,25 @@ var modSpawning = {
               body = bodyObj.getBody('harvester',1);
               var hc = spawner.createCreep(body, undefined,{role: 'harvester',selfHarvest:true, source:""});
               console.log("Spawning Harvester: " + hc);
-              //this.modCommon.incrementCreepNum("harvester");
+              modCommon.incrementCreepNum("harvester");
             }
             else if(Memory.roles.numUpgraders < Math.min(Memory.roles.maxUpgraders+modConstants.getConLvlMod(spawner.room), spawner.room.find(FIND_SOURCES).length)){
               body = bodyObj.getBody('upgrader',1);
               var uc = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:true});
               console.log("Spawning Upgrader: " + uc);
-              //this.modCommon.incrementCreepNum("upgrader");
+              modCommon.incrementCreepNum("upgrader");
             }
             else if(Memory.roles.numRepair< (Memory.roles.maxRepair - numTowers)){
               body = bodyObj.getBody('repair',1);
               var rc = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
               console.log("Spawning Repair: " + rc);
-              //this.modCommon.incrementCreepNum("repair");
+              modCommon.incrementCreepNum("repair");
             }
             else if(flags.length && Memory.roles.numArchitects < 1){
               body = bodyObj.getBody('architect',1);
               var ac = spawner.createCreep(body, undefined,{role: 'architect', toFix:'', selfHarvest:false});
               console.log("Spawning Architect: " + ac);
-              //this.modCommon.incrementCreepNum("architect");
+              modCommon.incrementCreepNum("architect");
             }
         }
     }else if(spawnTier2){
@@ -78,31 +78,31 @@ var modSpawning = {
             var h2c = spawner.createCreep(body, undefined,{role: 'harvester',selfHarvest:true, source:""});
              console.log("Spawning Harvester: " + h2c);
              betterHarvesters1++;
-             //this.modCommon.incrementCreepNum("harvester");
+             modCommon.incrementCreepNum("harvester");
           }
           else if(moveOn && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitects === 0){
             body = bodyObj.getBody('builder',2);
             var b2c = spawner.createCreep(body, undefined,{role: 'builder',selfHarvest:false});
             console.log("Spawning Builder: " + b2c);
-            //this.modCommon.incrementCreepNum("builder");
+            modCommon.incrementCreepNum("builder");
           }
           else if(moveOn && Memory.roles.numUpgraders < Math.min(Memory.roles.maxUpgraders+modConstants.getConLvlMod(spawner.room), spawner.room.find(FIND_SOURCES).length)){
             body = bodyObj.getBody('upgrader',2);
             var u2c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
             console.log("Spawning Upgrader: " + u2c);
-            //this.modCommon.incrementCreepNum("upgrader");
+            modCommon.incrementCreepNum("upgrader");
           }
           else if(moveOn && Memory.roles.numRepair< (Memory.roles.maxRepair - numTowers)){
             body = bodyObj.getBody('repair',2);
             var r2c = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
             console.log("Spawning Repair: " + r2c);
-            //this.modCommon.incrementCreepNum("repair");
+            modCommon.incrementCreepNum("repair");
           }
           else if(moveOn && flags.length && Memory.roles.numArchitects < 1){
             body = bodyObj.getBody('architect',2);
             var a2c = spawner.createCreep(body, undefined,{role: 'architect', toFix:'', selfHarvest:false});
             console.log("Spawning Architect: " + a2c);
-            //this.modCommon.incrementCreepNum("architect");
+            modCommon.incrementCreepNum("architect");
           }
       }
     }else if(spawnTier3){
@@ -114,31 +114,33 @@ var modSpawning = {
           var h3c = spawner.createCreep(body, undefined,{role: 'harvester',selfHarvest:true, source:""});
           console.log("Spawning Harvester: " + h3c);
           betterHarvesters2++;
-          //this.modCommon.incrementCreepNum("harvester");
+          modCommon.incrementCreepNum("harvester");
+
         }
         else if(moveOn2 && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitects === 0){
           body = bodyObj.getBody('builder',3);
           var b3c = spawner.createCreep(body, undefined,{role: 'builder',selfHarvest:false});
           console.log("Spawning Builder: " + b3c);
-          //this.modCommon.incrementCreepNum("builder");
+          modCommon.incrementCreepNum("builder");
+
         }
         else if(moveOn2 && Memory.roles.numUpgraders < Math.min(Memory.roles.maxUpgraders+modConstants.getConLvlMod(spawner.room), spawner.room.find(FIND_SOURCES).length)){
           body = bodyObj.getBody('upgrader',3);
           var u3c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
           console.log("Spawning Upgrader: " + u3c);
-          //this.modCommon.incrementCreepNum("upgrader");
+          modCommon.incrementCreepNum("upgrader");
         }
         else if(moveOn2 && Memory.roles.numRepair< (Memory.roles.maxRepair - numTowers)){
           body = bodyObj.getBody('repair',3);
           var r3c = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:true, military:true});
           console.log("Spawning Repair: " + r3c);
-          //this.modCommon.incrementCreepNum("repair");
+          modCommon.incrementCreepNum("repair");
         }
         else if(moveOn2 && flags.length && Memory.roles.numArchitects < 1){
           body = bodyObj.getBody('architect',3);
           var a3c = spawner.createCreep(body, undefined,{role: 'architect', toFix:'', selfHarvest:false});
           console.log("Spawning Architect: " + a3c);
-          //this.modCommon.incrementCreepNum("architect");
+          modCommon.incrementCreepNum("architect");
         }
       }
     }else if (spawnTier4){
@@ -148,58 +150,61 @@ var modSpawning = {
           body = bodyObj.getBody('miner',4);
           var mine = spawner.createCreep(body, undefined,{role: 'miner',source:"", dropOff: "", military:true});
           console.log("Spawning Miner: " + mine);
-          //this.modCommon.incrementCreepNum("miner");
+          modCommon.incrementCreepNum("miner");
         }
         else if(Memory.roles.numHaulers<Memory.roles.maxHaulers){
           body = bodyObj.getBody('hauler',4);
           var haul = spawner.createCreep(body, undefined,{role: 'hauler', military:true, dropOff:""});
           console.log("Spawning Hauler: " + haul);
-          //this.modCommon.incrementCreepNum("hauler");
+          modCommon.incrementCreepNum("hauler");
         }
         else if(moveOn3 && Memory.roles.numFeeders<Memory.roles.maxFeeders && isStorage){
           body = bodyObj.getBody('feeder',4);
           var feed = spawner.createCreep(body, undefined,{role: 'feeder', military:true});
           console.log("Spawning Feeder: " + feed);
-          //this.modCommon.incrementCreepNum("feeder");
+          modCommon.incrementCreepNum("feeder");
         }
         else if(moveOn3 && spawner.room.find(FIND_MY_CONSTRUCTION_SITES).length && (Memory.roles.numBuilders < (Memory.roles.maxBuilders)) && Memory.roles.numArchitects === 0){
           body = bodyObj.getBody('builder',4);
           var b4c = spawner.createCreep(body, undefined,{role: 'builder',selfHarvest:false});
           console.log("Spawning Builder: " + b4c);
-          //this.modCommon.incrementCreepNum("builder");
+          modCommon.incrementCreepNum("builder");
         }
         else if(moveOn3 && Memory.roles.numUpgraders < Math.min(Memory.roles.maxUpgraders+modConstants.getConLvlMod(spawner.room), spawner.room.find(FIND_SOURCES).length)){
           body = bodyObj.getBody('upgrader',4);
           var u4c = spawner.createCreep(body, undefined,{role: 'upgrader', selfHarvest:false});
           console.log("Spawning Upgrader: " + u4c);
-          //this.modCommon.incrementCreepNum("upgrader");
+          modCommon.incrementCreepNum("upgrader");
         }
         else if(moveOn3 && Memory.roles.numRepair< (Memory.roles.maxRepair - numTowers)){
           body = bodyObj.getBody('repair',4);
           var r4c = spawner.createCreep(body, undefined,{role: 'repair', toFix:'', selfHarvest:false, military:true});
           console.log("Spawning Repair: " + r4c);
-          //this.modCommon.incrementCreepNum("repair");
+          modCommon.incrementCreepNum("repair");
         }
         else if(moveOn3 && flags.length && Memory.roles.numArchitects < 1){
           body = bodyObj.getBody('architect',4);
           var a4c = spawner.createCreep(body, undefined,{role: 'architect', toFix:'', selfHarvest:false});
           console.log("Spawning Architect: " + a4c);
-          //this.modCommon.incrementCreepNum("architect");
+          modCommon.incrementCreepNum("architect");
         }
         else if(moveOn3 && extractor && minerals && Memory.roles.numGeo < Memory.roles.maxGeo){
           body = bodyObj.getBody('geoMiner',4);
           var g4c = spawner.createCreep(body, undefined,{role: 'geo', mineral:"", dropOff:""});
           console.log("Spawning GeoMiner: " + g4c);
+          modCommon.incrementCreepNum("geo");
         }
         else if(moveOn3 && extractor && Memory.roles.numGeoH < Memory.roles.maxGeoH){
           body = bodyObj.getBody('geoHauler',4);
           var gh4c = spawner.createCreep(body, undefined,{role: 'geoH', dropOff:""});
           console.log("Spawning GeoHauler: " + gh4c);
+          modCommon.incrementCreepNum("geoHauler");
         }
         else if(moveOn3 && market && toSell && Memory.roles.numMerchant < Memory.roles.maxMerchant){
           body = bodyObj.getBody('merchant',4);
           var mer4c = spawner.createCreep(body, undefined,{role: 'merchant', terminal:"", storage:""});
           console.log("Spawning Merchant: " + mer4c);
+          modCommon.incrementCreepNum("merchant");
         }
       }
     }

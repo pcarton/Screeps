@@ -271,6 +271,7 @@ module.exports.loop = function () {
         }
     }
 
+    /*
     Memory.roles.numHarvesters = numH;
     Memory.roles.numBuilders = numB;
     Memory.roles.numUpgraders = numU;
@@ -283,6 +284,7 @@ module.exports.loop = function () {
     Memory.roles.numGeoH = numGH;
     Memory.roles.numMerchant = numMER;
     Memory.roles.numCreeps = numH+numB+numU+numA+numM+numHA+numF+numG+numGH+numMER;
+    */
 
     //determine if new creeps need to be spawned and pick an appropriate spawner
     //Spawn logic is in a seperate module
