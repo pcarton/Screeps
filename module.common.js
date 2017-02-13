@@ -299,6 +299,7 @@ var modCommon = {
   //Formated as https://screeps.com/a/#!/history/E33N43?t=15527000
   linkRoomAtTick:function(room,tick,msg){
     //Disables the autolinking
+    //See http://support.screeps.com/hc/en-us/community/posts/206652879-Email-links-broken
     let roomName = room.name.replace(/^\w/,"&#"+room.name.charCodeAt(0)+";");
     
     var link = "http://screeps.com/a/#!/history/"+roomName+"?t="+tick;
