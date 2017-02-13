@@ -1,6 +1,10 @@
 //TODO have easy memory access and structure here
 
-var defaultCreep = {};
+var defaultCreep = {
+  role:"none",
+  path:null,
+
+};
 var defaultRoom = {
   roles: {
       "numCreeps":0,
