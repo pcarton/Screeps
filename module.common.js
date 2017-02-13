@@ -77,13 +77,14 @@ var modCommon = {
     for(var i in Memory.creeps) {
       if(!Game.creeps[i]) {
           var job = Memory.creeps[i].role;
-          this.decrementNum(job);
+          this.decrementCreepNum(job);
           delete Memory.creeps[i];
       }
     }
   },
 
-  decrementNum:function(creepType){
+  //Decrementes the number of that creep in the memory storage
+  decrementCreepNum:function(creepType){
     if(creepType==="harvester"){
       --Memory.roles.numHarvesters;
     }else if(creepType === "upgrader"){
@@ -102,6 +103,28 @@ var modCommon = {
       --Memory.roles.numFeeders;
     }
     --Memory.roles.numCreeps;
+  },
+
+  //Incrementes the number of that creep in the memory storage
+  incrementCreepNum:function(creepType){
+    if(creepType==="harvester"){
+      ++Memory.roles.numHarvesters;
+    }else if(creepType === "upgrader"){
+      ++Memory.roles.numUpgraders;
+    }else if(creepType === "builder"){
+      ++Memory.roles.numBuilders;
+    }else if(creepType === "repair"){
+      ++Memory.roles.numRepair;
+    }else if (creepType === "architect"){
+      ++Memory.roles.numArchitects;
+    }else if(creepType === "miner"){
+      ++Memory.roles.numMiners;
+    }else if(creepType === "hauler"){
+      ++Memory.roles.numHaulers;
+    }else if(creepType === "feeder"){
+      ++Memory.roles.numFeeders;
+    }
+    ++Memory.roles.numCreeps;
   },
 
   //Method to find the next structure to repair, shared by repair creeps and towers
