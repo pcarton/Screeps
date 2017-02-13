@@ -24,8 +24,9 @@ var minerBody = [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE];
 var u4Body = [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE];
 var soldierBody = [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE, MOVE, MOVE, MOVE, RANGED_ATTACK, RANGED_ATTACK]; //800 energy so that two can spawn at rc5 without refil
 var geoMinerBody = minerBody;
-var geoHaulerBody = haulerBody;
 var merchantBody = [MOVE,CARRY];
+
+//TODO Higher tier(s) for lvl 6,7,8
 
 //Object that holds a getter for these body types
 var bodyObj = {
@@ -82,8 +83,6 @@ var bodyObj = {
         return soliderBody;
       }else if(role === 'geoMiner'){
         return geoMinerBody;
-      }else if(role === 'geoHauler'){
-        return geoHaulerBody;
       }else if(role === 'merchant'){
         return merchantBody;
       }
