@@ -9,8 +9,11 @@ var modConstants = {
     return Math.ceil((controllerLvl-1)/3);
   },
   roomEnergyBuffer: 300000,
-  structBuffer:1000
-
+  structBuffer:1000,
+  tier1EnergyMin: 0,
+  tier2EnergyMin: 550,
+  tier3EnergyMin: 800,
+  tier4EnergyMin: 1300,
 
 
 };
