@@ -6,6 +6,7 @@ var modMemory = require('module.memory');
 //TODO queue system
 //var queue = modMemory.getSpawnQ(roomName);
 //var nextSpawn = queue.shift();
+//Change max upgraders to 1 and just increase work parts
 
 var modSpawning = {
 
