@@ -1,9 +1,6 @@
 var modCommon = require('module.common');
 
-//TODO make build container at GDropOff's when extractor unlocked
-//TODO make build extractor when unlocked
-//TODO Storage at flag when unlocked
-//TODO Terminal at flag when unlocked
+//TODO make build extractor when unlocked - need flag currently
 var roleArchitect = {
 
   //Function to determin if there are buildable structures that need to be
@@ -11,17 +8,24 @@ var roleArchitect = {
   //TODO finish this method for through controllerLvl 8
   ableToBuild:function(controllerLvl, structureType){
     var wallBool = (structureType.substring(0,4)==="Wall");
+    var containerBool = (structureType.substring(0,9)==="Container" || structureType.substring(0,7)==="DropOff" || structureType.substring(0,8)==="GDropOff" || structureType.substring(0,7)==="Deliver");
     switch(controllerLvl){
       case 1:
-        return (structureType==="Container");
+        return containerBool;
       case 2:
-        return (wallBool || structureType === "Extensions1" || structureType==="Container");
+        return (wallBool || structureType === "Extensions1" || containerBool);
       case 3:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType==="Container" || structureType === "Tower1");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || containerBool || structureType === "Tower1");
       case 4:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType==="Container" || structureType === "Tower1");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || containerBool || structureType === "Tower1" || structureType === "Storage");
       case 5:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || structureType==="Container" || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link" || structureType === "Storage");
+      case 6:
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal");
+      case 7:
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal");
+      case 8:
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal");
       default:
         return false;
     }
@@ -29,73 +33,83 @@ var roleArchitect = {
 
   //Function to mark the pattern of 5 extensions that are granted at
   //controler level 2 and 3
-  markExtensions1: function(creep){
-    var x = creep.pos.x;
-    var y = creep.pos.y;
-    creep.room.createConstructionSite(x, y, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x+1, y, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x-1, y, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x, y+1, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x, y-1, STRUCTURE_EXTENSION);
+  markExtensions1: function(flag){
+    var x = flag.pos.x;
+    var y = flag.pos.y;
+    flag.room.createConstructionSite(x, y, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x+1, y, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x-1, y, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x, y+1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x, y-1, STRUCTURE_EXTENSION);
   },
 
   //Function to mark the pattern of 5 extensions that are granted at
   //controler level 4 and 5
-  markExtensions2: function(creep){
-    var x = creep.pos.x;
-    var y = creep.pos.y;
-    creep.room.createConstructionSite(x-2, y-1, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x-1, y-1, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x, y-1, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x+1, y-1, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x+2, y-1, STRUCTURE_EXTENSION);
+  markExtensions2: function(flag){
+    var x = flag.pos.x;
+    var y = flag.pos.y;
+    flag.room.createConstructionSite(x-2, y-1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x-1, y-1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x, y-1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x+1, y-1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x+2, y-1, STRUCTURE_EXTENSION);
 
-    creep.room.createConstructionSite(x-2, y+1, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x-1, y+1, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x, y+1, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x+1, y+1, STRUCTURE_EXTENSION);
-    creep.room.createConstructionSite(x+2, y+1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x-2, y+1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x-1, y+1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x, y+1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x+1, y+1, STRUCTURE_EXTENSION);
+    flag.room.createConstructionSite(x+2, y+1, STRUCTURE_EXTENSION);
   },
 
   // marks a container site
-  markContainer:function(creep){
-      creep.room.createConstructionSite(creep.pos, STRUCTURE_CONTAINER);
+  markContainer:function(flag){
+      flag.room.createConstructionSite(flag.pos, STRUCTURE_CONTAINER);
   },
 
   //marks a tower site
-  markTower: function(creep){
-      creep.room.createConstructionSite(creep.pos, STRUCTURE_TOWER);
+  markTower: function(flag){
+      flag.room.createConstructionSite(flag.pos, STRUCTURE_TOWER);
   },
 
   //marks wall sites starting at the flag, going in the specified
   //direction for the given amount of blocks
-  markWall:function(creep, flagName){
+  markWall:function(flag, flagName){
     var len = parseInt(flagName.substring(5));
     var direction = flagName.substring(4,5);
-    var x = creep.pos.x;
-    var y = creep.pos.y;
+    var x = flag.pos.x;
+    var y = flag.pos.y;
     if(direction === "U"){
         for(i=0; i<=len; i++){
-          creep.room.createConstructionSite(x, y-i, STRUCTURE_WALL);
+          flag.room.createConstructionSite(x, y-i, STRUCTURE_WALL);
         }
     }else if(direction === "D"){
       for(i=0; i<=len; i++){
-        creep.room.createConstructionSite(x,y+i, STRUCTURE_WALL);
+        flag.room.createConstructionSite(x,y+i, STRUCTURE_WALL);
       }
     }else if(direction === "R"){
       for(i=0; i<=len; i++){
-        creep.room.createConstructionSite(x+i,y, STRUCTURE_WALL);
+        flag.room.createConstructionSite(x+i,y, STRUCTURE_WALL);
       }
     }else if(direction === "L"){
       for(i=0; i<=len; i++){
-        creep.room.createConstructionSite(x-i,+y, STRUCTURE_WALL);
+        flag.room.createConstructionSite(x-i,+y, STRUCTURE_WALL);
       }
     }
   },
 
-  //Marks the minerals in the room for an extractor construction site
-  //TODO implement this method and use it
-  markExtractor:function(creep){},
+  //TODO implement these methods and use it
+  markExtractor:function(flag){
+      flag.room.createConstructionSite(flag.pos, STRUCTURE_EXTRACTOR);
+  },
+  markTerminal:function(flag){
+      flag.room.createConstructionSite(flag.pos, STRUCTURE_TERMINAL);
+  },
+  markStorage:function(flag){
+      flag.room.createConstructionSite(flag.pos, STRUCTURE_STORAGE);
+  },
+  markLink:function(flag){
+      flag.room.createConstructionSite(flag.pos, STRUCTURE_LINK);
+  },
 
   /** @param {Creep} creep **/
   run: function(creep) {
@@ -118,35 +132,42 @@ var roleArchitect = {
         creep.memory.selfHarvest = true;
       }
     }else{
+      var flag = flags[0];
+      var structureType = structureType;
+      var wallBool = (structureType.substring(0,4)==="Wall");
+      var containerBool = (structureType.substring(0,9)==="Container" || structureType.substring(0,7)==="DropOff" || structureType.substring(0,8)==="GDropOff" || structureType.substring(0,7)==="Deliver");
       //TODO autoBuilds like extractor
 
       //then flag builds after
-      var flag = flags[0];
-      if(!creep.pos.isEqualTo(flag.pos)){
-        modCommon.move(creep,flag.pos);
-      }else{
-        if(flag.name === "Container"){
-          this.markContainer(creep);
+      if(containerBool){
+        this.markContainer(flag);
+        flag.remove();
+      }else if(structureType.substring(0,5) === "Tower"){
+          this.markTower(flag);
           flag.remove();
-          creep.memory.path = null;
-        }else if(flag.name === "Tower1" || flag.name === "Tower2"){
-            this.markTower(creep);
-            flag.remove();
-            creep.memory.path =null;
-        }else if(flag.name === "Extensions1" || flag.name ==="Extensions2"){
-            this.markExtensions1(creep);
-            flag.remove();
-            creep.memory.path =null;
-        }else if(flag.name === "Extensions3" || flag.name ==="Extensions4"){
-            this.markExtensions2(creep);
-            flag.remove();
-            creep.memory.path = null;
-        }else if(flag.name.substring(0,4)==="Wall"){
-            this.markWall(creep, flag.name);
-            flag.remove();
-            creep.memory.path =null;
-        }
+      }else if(structureType === "Extensions1" || structureType ==="Extensions2"){
+          this.markExtensions1(flag);
+          flag.remove();
+      }else if(structureType === "Extensions3" || structureType ==="Extensions4"){
+          this.markExtensions2(flag);
+          flag.remove();
+      }else if(wallBool){
+          this.markWall(flag, structureType);
+          flag.remove();
+      }else if(structureType === "Link"){
+        this.markLink(flag);
+        flag.remove();
+      }else if(structureType === "Storage"){
+        this.markStorage(flag);
+        flag.remove();
+      }else if(structureType === "Terminal"){
+        this.markTerminal(flag);
+        flag.remove();
+      }else if(structureType === "Extractor"){
+        this.markExtractor(flag);
+        flag.remove();
       }
+
     }
   }
 };
