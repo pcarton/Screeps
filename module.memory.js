@@ -49,6 +49,7 @@ var modMemory = {
   getSpawnQ:function(roomName){
     return Memory.rooms[roomName].spawnQ;
   },
+  changeCreepNum:function(creepType,num,set){}, //creepType - creepJob to change, num, num to add or set to, set - bool, true to set, false to add
 
 };
 
