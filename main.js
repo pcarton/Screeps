@@ -303,7 +303,7 @@ module.exports.loop = function () {
     if(enemyPresent && modCommon.playerAttack(allCreepList) && !(control.safeMode || control.safeModeCooldown) && control.safeModeAvailable > 0 ){
       control.activateSafeMode();
       Memory.fortify = true;
-      Game.notify("Activated Safe Mode at " + Game.time.toString());
+      Game.notify(modCommon.linkRoomAtTick(room,Game.time,"Activated Safe Mode"),0);
     }
 
     //Variable to keep track of which enemy to shoot
@@ -315,7 +315,7 @@ module.exports.loop = function () {
     if(enemyPresent){
       Memory.towersMem.mode = "attack";
       if(newEnemy){
-        Game.notify(modCommon.linkRoomAtTick(room, Game.time, "EnemyFound"),600);
+        Game.notify(modCommon.linkRoomAtTick(room, Game.time, "EnemyFound"),60);
       }
     }else{
       Memory.towersMem.mode = "heal";
