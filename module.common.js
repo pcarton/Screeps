@@ -298,7 +298,10 @@ var modCommon = {
   //TODO link to history page for the room at given tick
   //Formated as https://screeps.com/a/#!/history/E33N43?t=15527000
   linkRoomAtTick:function(room,tick,msg){
-    var link = "https://screeps.com/a/#!/history/"+room.name+"?t="+tick;
+    //Disables the autolinking
+    let roomName = room.name.replace(/^\w/,"&#"+room.name.charCodeAt(0)+";");
+    
+    var link = "http://screeps.com/a/#!/history/"+roomName+"?t="+tick;
     console.log(link);
     return "<a href="+link+">"+msg+"</a>";
   }
