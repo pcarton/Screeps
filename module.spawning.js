@@ -38,7 +38,18 @@ var modSpawning = {
   enqueueMerchant:function(roomName){},
 
   //TODO call this and spawn() from main
-  enqueueAllNeeded(roomName){},
+  enqueueAllNeeded(roomName){
+    if(this.needHarvester(roomName)) enqueueHarvester(roomName);
+    if(this.needUpgrader(roomName)) enqueueUpgrader(roomName);
+    if(this.needBuilder(roomName)) enqueueBuilder(roomName);
+    if(this.needRepair(roomName)) enqueueRepair(roomName);
+    if(this.needArchitect(roomName)) enqueueArchitect(roomName);
+    if(this.needMiner(roomName)) enqueueMiner(roomName);
+    if(this.needHauler(roomName)) enqueueHauler(roomName);
+    if(this.needFeeder(roomName)) enqueueFeeder(roomName);
+    if(this.needGeoMiner(roomName)) enqueueGeoMiner(roomName);
+    if(this.needMerchant(roomName)) enqueueMerchant(roomName);
+  },
 
   //Returns a number between 1 and highest tier inclusive
   calcTier:function(roomName){
