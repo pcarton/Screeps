@@ -231,16 +231,18 @@ var modSpawning = {
   spawn:function(roomName){
     var available = Memory.rooms[roomName].energyAvailable;
     var queue = Memory.rooms[roomName].spawnQ;
-    var spawners = Game.rooms[roomName].find(FIND_STRUCTURES, {
-      filter: (structure) => {
-        return (structure.structureType === STRUCTURE_SPAWN && !structure.spawning);
-      }
-    });
-    for(var spawn in spawners){
-      var toSpawn = queue.shift();
-      if(toSpawn !== undefined && bodyObj.calcCost(toSpawn.body)<=available){
-        var creep = spawn.createCreep(toSpawn.body,toSpawn.name,toSpawn.memory);
-        console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep);
+    if(queue.length > 0){
+      var spawners = Game.rooms[roomName].find(FIND_STRUCTURES, {
+        filter: (structure) => {
+          return (structure.structureType === STRUCTURE_SPAWN && !structure.spawning);
+        }
+      });
+      for(var spawn in spawners){
+        var toSpawn = queue.shift();
+        if(toSpawn !== undefined && bodyObj.calcCost(toSpawn.body)<=available){
+          var creep = spawn.createCreep(toSpawn.body,toSpawn.name,toSpawn.memory);
+          console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep);
+        }
       }
     }
   },
