@@ -7,30 +7,30 @@ var defaultCreep = {
 };
 var defaultRoom = {
   roles: {
-      "numCreeps":0,
-      "numHarvesters":0,
-      "maxHarvesters":1,
-      "numUpgraders":0,
-      "maxUpgraders":0,
-      "numBuilders":0,
-      "maxBuilders":1,
-      "numRepair":0,
-      "maxRepair":1,
-      "numArchitects":0,
-      "betterHarvesters1":0,
-      "betterHarvesters2":0,
-      "numMiners":0,
-      "maxMiners":0,
-      "numHaulers":0,
-      "maxHaulers":1,
-      "numFeeders":0,
-      "maxFeeders":1,
-      "numGeo":0,
-      "maxGeo":1,
-      "numGeoH":0,
-      "maxGeoH":0,
-      "numMerchant":0,
-      "maxMerchant":0,
+      numCreeps:0,
+      numHarvesters:0,
+      maxHarvesters:1,
+      numUpgraders:0,
+      maxUpgraders:0,
+      numBuilders:0,
+      maxBuilders:1,
+      numRepair:0,
+      maxRepair:1,
+      numArchitects:0,
+      betterHarvesters1:0,
+      betterHarvesters2:0,
+      numMiners:0,
+      maxMiners:0,
+      numHaulers:0,
+      maxHaulers:1,
+      numFeeders:0,
+      maxFeeders:1,
+      numGeo:0,
+      maxGeo:1,
+      numGeoH:0,
+      maxGeoH:0,
+      numMerchant:0,
+      maxMerchant:0,
     },
   spawnQ:[],
   conservation: false,
@@ -39,9 +39,9 @@ var defaultRoom = {
 
 };
 var defaultTower = {
-  "target":null,
-  "mode":"attack",
-  "fixe":null
+  target:null,
+  mode:"attack",
+  fixe:null
 };
 
 var modMemory = {
