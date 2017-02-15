@@ -35,6 +35,8 @@ var defaultRoom = {
   spawnQ:[],
   conservation: false,
   fortify: false,
+  towers:[],
+  sourceIDs:[],
   initialized:false, //Set to true when init is run
 
 };
