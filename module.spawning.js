@@ -11,87 +11,137 @@ var modSpawning = {
   //These return booleans
   //TODO finish needX()
   needHarvester:function(roomName){
+    var roles = Memory.rooms[roomName].roles;
 
-  },//if no harvesters, enqueue largest buildable
+    var LTMin = roles.numHarvesters < roles.maxHarvesters;
+    var tier = this.calcTier(roomName);
+
+    return LTMin && tier<=3;
+  },
+
   needUpgrader:function(roomName){
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+    var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
-      //TODO
+      var LTMin = roles.numUpgraders < roles.maxUpgraders;
+      return LTMin;
     }
   },
+
   needBuilder:function(roomName){
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+    var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
-      //TODO
+      var tier = this.calcTier(roomName);
+      var construct = Game.rooms[roomName].find(FIND_MY_CONSTRUCTION_SITES).length;
+      var LTMin = roles.numBuilders < roles.maxBuilders;
+      var noArch = roles.numArchitects === 0;
+      return (tier > 1) && construct && LTMin && noArch;
     }
   },
+
   needRepair:function(roomName){
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+    var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
-      //TODO
-    }
-  }, //Attacks?
-  needArchitect:function(roomName){
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
-
-    if(notEnoughHarvest){
-      return false;
-    }else{
-      //TODO
+      var numTowers = Memory.rooms[roomName].towers.length;
+      var LTMin = roles.numRepair < (roles.maxRepair - numTowers);
+      return LTMin;
     }
   },
-  needMiner:function(roomName){
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+  needArchitect:function(roomName){
+    var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
-      //TODO
+      var flags = _.filter(Game.rooms[roomName].find(FIND_FLAGS), (flag) => roleArchitect.ableToBuild(controllerLvl, flag.name));
+
+      return flags.length && roles.numArchitects < 1;
+    }
+  },
+
+  needMiner:function(roomName){
+    var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      var tier = this.calcTier(roomName);
+      var sources = Memory.rooms[roomName].sourceIDs.length;
+      var LTMin = roles.numMiners < sources;
+      return (tier >= 4) && LTMin;
     }
   },
   needHauler:function(roomName){
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+    var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
-      //TODO
+      var tier = this.calcTier(roomName);
+      var LTMin = roles.numHaulers < roles.maxHaulers;
+      return (tier >= 4) && LTMin;
     }
   },
+
   needFeeder:function(roomName){
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+    var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
-      //TODO
+      var storage = Game.rooms[roomName].storage !== undefined;
+      var LTMin = roles.numFeeders < roles.maxFeeders;
+      return storage && LTMin;
     }
   },
+
   needGeoMiner:function(roomName){
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+    var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
-      //TODO
+      var tier = this.calcTier(roomName);
+      var LTMin = roles.numGeo < 1;
+
+      var extractor = _.filter(Game.rooms[roomName].find(FIND_STRUCTURES), (structure) => structure.structureType === STRUCTURE_EXTRACTOR);
+      var minerals = (_.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
+
+      return (tier >=4) && LTMin && extractor && minerals;
     }
   },
+
   needMerchant:function(roomName){
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+    var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
-      //TODO
+      var tier = this.calcTier(roomName);
+      var LTMin = roles.numMerchant < 1;
+
+      var minerals = (_.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
+      var toSell = modCommon.whatStore(Game.rooms[roomName].storage) != RESOURCE_ENERGY;
+
+      return !minerals && toSell && (tier >= 4) && LTMin;
     }
   },
 
@@ -125,7 +175,9 @@ var modSpawning = {
       memory:memoryObj
     };
     harvesterObj.body = bodyObj.getBody('harvester',tier);
-    Memory.rooms[roomName].spawnQ.push(harvesterObj);
+    //Using unshift() to add to front, basic priority
+    //Only use this for miners/harvesters
+    Memory.rooms[roomName].spawnQ.unshift(harvesterObj);
   },
 
   //TODO finish the rest of the enqueues
