@@ -143,7 +143,9 @@ var roleMerchant = {
 
     //TODO keep track of toLoad and put that much in the terminal
     //If toTrade.amount == 0, calculate energy needed from terminal and fill with that
-    }
+  }else{
+    getOrder(creep);
+  }
     creep.memory.toLoad.amount = toLoad;
   }
 
