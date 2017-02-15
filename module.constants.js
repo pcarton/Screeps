@@ -15,6 +15,7 @@ var modConstants = {
   tier3EnergyMin: 800,
   tier4EnergyMin: 1300,
 
+  maxCreeps: Memory.maxCreeps,
 
 
 };
