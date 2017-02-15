@@ -4,14 +4,12 @@ var modCommon = require('module.common');
 var modConstants = require('module.constants');
 var modMemory = require('module.memory');
 //TODO queue system
-//var queue = modMemory.getSpawnQ(roomName);
-//queue.push(addSpawn);
-//var nextSpawn = queue.shift();
 //Change max upgraders to 1 and just increase work parts
 
 var modSpawning = {
 
   //These return booleans
+  //TODO finish needX()
   needHarvester:function(roomName){},//if no harvesters, enqueue largest buildable
   needUpgrader:function(roomName){},
   needBuilder:function(roomName){},
@@ -23,9 +21,21 @@ var modSpawning = {
   needGeoMiner:function(roomName){},
   needMerchant:function(roomName){},
 
-  //Add type to queue, full parameter list object
-  //  {description:'Creep Role',body:bodyObj,name:'',memory:{role:'creep-role'}}
-  //call memory initCreep() in each
+  /* Add type to queue, full parameter list object
+      Example:
+      var memoryObj = {
+        role:'harvester',
+        selfHarvest:true,
+        source:""
+      };
+
+      var harvesterObj = {
+        description:"",
+        body: null,
+        name: undefined,
+        memory:memoryObj
+      };
+  */
   enqueueHarvester:function(roomName){
     var tier = this.calcTier(roomName);
     var enoughHarvest = (Memory.rooms[roomName].roles.numHarvesters > 0) || (Memory.rooms[roomName].roles.numMiners > 0);
@@ -52,6 +62,7 @@ var modSpawning = {
     Memory.rooms[roomName].spawnQ.push(harvesterObj);
   },
 
+  //TODO finish the rest of the enqueues
   enqueueUpgrader:function(roomName){},
   enqueueBuilder:function(roomName){},
   enqueueRepair:function(roomName){}, //Attacks?
