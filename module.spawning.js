@@ -26,7 +26,32 @@ var modSpawning = {
   //Add type to queue, full parameter list object
   //  {description:'Creep Role',body:bodyObj,name:'',memory:{role:'creep-role'}}
   //call memory initCreep() in each
-  enqueueHarvester:function(roomName){},
+  enqueueHarvester:function(roomName){
+    var tier = this.calcTier(roomName);
+    var enoughHarvest = (Memory.rooms[roomName].roles.numHarvesters > 0) || (Memory.rooms[roomName].roles.numMiners > 0);
+
+    var memoryObj = {
+      role:'harvester',
+      selfHarvest:true,
+      source:""
+    };
+
+    var harvesterObj = {
+      description:"",
+      body: null,
+      name: undefined,
+      memory:memoryObj
+    };
+
+    if(!enoughHarvest){
+      harvesterObj.body = bodyObj.getBody('harvester',1);
+    }else{
+      harvesterObj.body = bodyObj.getBody('harvester',tier);
+    }
+
+    Memory.rooms[roomName].spawnQ.push(harvesterObj);
+  },
+
   enqueueUpgrader:function(roomName){},
   enqueueBuilder:function(roomName){},
   enqueueRepair:function(roomName){}, //Attacks?
@@ -54,7 +79,6 @@ var modSpawning = {
   //Returns a number between 1 and highest tier inclusive
   calcTier:function(roomName){
     var energyCapacity = Memory.rooms[roomName].energyCapacityAvailable;
-    var available = Memory.rooms[roomName].energyAvailable;
 
     var spawnTier1 = (energyCapacity<modConstants.tier2EnergyMin);
     var spawnTier2 = (energyCapacity<modConstants.tier3EnergyMin);
@@ -75,6 +99,7 @@ var modSpawning = {
 
   //dequeue and spawn
   spawn:function(roomName){
+    var available = Memory.rooms[roomName].energyAvailable;
     var queue = Memory.rooms[roomName].spawnQ;
     var spawners = Game.rooms[roomName].find(FIND_STRUCTURES, {
       filter: (structure) => {
@@ -83,8 +108,8 @@ var modSpawning = {
     });
     for(var spawn in spawners){
       var toSpawn = queue.shift();
-      if(toSpawn !== undefined){
-        var creep = spawn.createCreep(toSpawn.body,undefined,toSpawn.memory);
+      if(toSpawn !== undefined && bodyObj.calcCost(toSpawn.body)<=available){
+        var creep = spawn.createCreep(toSpawn.body,toSpawn.name,toSpawn.memory);
         console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep);
       }
     }
