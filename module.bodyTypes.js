@@ -43,7 +43,11 @@ var costMap = {
 var bodyObj = {
 
   calcCost:function(bodyObj){
-    //TODO
+    var total = 0;
+    for(var part in bodyObj){
+      total = total + costMap[part];
+    }
+    return total;
   },
   //getter that useses a lot of switch statement to return the appropriate body array for the given role and tier
   getBody:function(role,tier){
