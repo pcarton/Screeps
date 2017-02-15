@@ -9,7 +9,6 @@ var modMemory = require('module.memory');
 var modSpawning = {
 
   //These return booleans
-  //TODO finish needX()
   needHarvester:function(roomName){
     var roles = Memory.rooms[roomName].roles;
 
