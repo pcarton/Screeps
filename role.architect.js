@@ -141,7 +141,9 @@ var roleArchitect = {
       //then flag builds after
       if(containerBool){
         this.markContainer(flag);
-        flag.remove();
+        if(structureType.substring(0,9) === "Container"){
+          flag.remove();
+        }
       }else if(structureType.substring(0,5) === "Tower"){
           this.markTower(flag);
           flag.remove();
