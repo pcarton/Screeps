@@ -149,9 +149,8 @@ var modCommon = {
     }});
 
     var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
-      var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < object.hitsMax/2);
-      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+modConstants.structBuffer))&& (object.hitsMax-object.hits>0);
-      return brokenRoad || brokenRamp;
+      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+buffer))&& (object.hitsMax-object.hits>0);
+      return brokenRamp;
     }});
 
     var fixeArr2 = room.find(FIND_STRUCTURES, {filter: function(object){
