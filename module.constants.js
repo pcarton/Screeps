@@ -16,6 +16,7 @@ var modConstants = {
   tier4EnergyMin: 1300,
 
 
+
 };
 
 module.exports = modConstants;
