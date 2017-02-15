@@ -10,16 +10,90 @@ var modSpawning = {
 
   //These return booleans
   //TODO finish needX()
-  needHarvester:function(roomName){},//if no harvesters, enqueue largest buildable
-  needUpgrader:function(roomName){},
-  needBuilder:function(roomName){},
-  needRepair:function(roomName){}, //Attacks?
-  needArchitect:function(roomName){},
-  needMiner:function(roomName){},
-  needHauler:function(roomName){},
-  needFeeder:function(roomName){},
-  needGeoMiner:function(roomName){},
-  needMerchant:function(roomName){},
+  needHarvester:function(roomName){
+
+  },//if no harvesters, enqueue largest buildable
+  needUpgrader:function(roomName){
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      //TODO
+    }
+  },
+  needBuilder:function(roomName){
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      //TODO
+    }
+  },
+  needRepair:function(roomName){
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      //TODO
+    }
+  }, //Attacks?
+  needArchitect:function(roomName){
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      //TODO
+    }
+  },
+  needMiner:function(roomName){
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      //TODO
+    }
+  },
+  needHauler:function(roomName){
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      //TODO
+    }
+  },
+  needFeeder:function(roomName){
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      //TODO
+    }
+  },
+  needGeoMiner:function(roomName){
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      //TODO
+    }
+  },
+  needMerchant:function(roomName){
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+
+    if(notEnoughHarvest){
+      return false;
+    }else{
+      //TODO
+    }
+  },
 
   /* Add type to queue, full parameter list object
       Example:
@@ -38,8 +112,6 @@ var modSpawning = {
   */
   enqueueHarvester:function(roomName){
     var tier = this.calcTier(roomName);
-    var enoughHarvest = (Memory.rooms[roomName].roles.numHarvesters > 0) || (Memory.rooms[roomName].roles.numMiners > 0);
-
     var memoryObj = {
       role:'harvester',
       selfHarvest:true,
@@ -52,13 +124,7 @@ var modSpawning = {
       name: undefined,
       memory:memoryObj
     };
-
-    if(!enoughHarvest){
-      harvesterObj.body = bodyObj.getBody('harvester',1);
-    }else{
-      harvesterObj.body = bodyObj.getBody('harvester',tier);
-    }
-
+    harvesterObj.body = bodyObj.getBody('harvester',tier);
     Memory.rooms[roomName].spawnQ.push(harvesterObj);
   },
 
@@ -90,13 +156,14 @@ var modSpawning = {
   //Returns a number between 1 and highest tier inclusive
   calcTier:function(roomName){
     var energyCapacity = Memory.rooms[roomName].energyCapacityAvailable;
+    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
 
     var spawnTier1 = (energyCapacity<modConstants.tier2EnergyMin);
     var spawnTier2 = (energyCapacity<modConstants.tier3EnergyMin);
     var spawnTier3 = (energyCapacity<modConstants.tier4EnergyMin);
     var spawnTier4 = (energyCapacity>=modConstants.tier4EnergyMin);
 
-    if(spawnTier1){
+    if(spawnTier1 || notEnoughHarvest){
       return 1;
     }else if(spawnTier2){
       return 2;
