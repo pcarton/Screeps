@@ -5,12 +5,82 @@ var modConstants = require('module.constants');
 var modMemory = require('module.memory');
 //TODO queue system
 //var queue = modMemory.getSpawnQ(roomName);
+//queue.push(addSpawn);
 //var nextSpawn = queue.shift();
 //Change max upgraders to 1 and just increase work parts
 
 var modSpawning = {
 
-  spawn:function(spawner,energyCapacity,controllerLvl){
+  //These return booleans
+  needHarvester:function(roomName){},//if no harvesters, enqueue largest buildable
+  needUpgrader:function(roomName){},
+  needBuilder:function(roomName){},
+  needRepair:function(roomName){}, //Attacks?
+  needArchitect:function(roomName){},
+  needMiner:function(roomName){},
+  needHauler:function(roomName){},
+  needFeeder:function(roomName){},
+  needGeoMiner:function(roomName){},
+  needMerchant:function(roomName){},
+
+  //Add type to queue, full parameter list object
+  //  {description:'Creep Role',body:bodyObj,name:'',memory:{role:'creep-role'}}
+  //call memory initCreep() in each
+  enqueueHarvester:function(roomName){},
+  enqueueUpgrader:function(roomName){},
+  enqueueBuilder:function(roomName){},
+  enqueueRepair:function(roomName){}, //Attacks?
+  enqueueArchitect:function(roomName){},
+  enqueueMiner:function(roomName){},
+  enqueueHauler:function(roomName){},
+  enqueueFeeder:function(roomName){},
+  enqueueGeoMiner:function(roomName){},
+  enqueueMerchant:function(roomName){},
+
+  //TODO call this and spawn() from main
+  enqueueAllNeeded(roomName){},
+
+  //Returns a number between 1 and highest tier inclusive
+  calcTier:function(roomName){
+    var energyCapacity = Memory.rooms[roomName].energyCapacityAvailable;
+    var available = Memory.rooms[roomName].energyAvailable;
+
+    var spawnTier1 = (energyCapacity<modConstants.tier2EnergyMin);
+    var spawnTier2 = (energyCapacity<modConstants.tier3EnergyMin);
+    var spawnTier3 = (energyCapacity<modConstants.tier4EnergyMin);
+    var spawnTier4 = (energyCapacity>=modConstants.tier4EnergyMin);
+
+    if(spawnTier1){
+      return 1;
+    }else if(spawnTier2){
+      return 2;
+    }else if(spawnTier3){
+      return 3;
+    }else if(spawnTier4){
+      return 4;
+    }
+    return 1;
+  },
+
+  //dequeue and spawn
+  spawn:function(roomName){
+    var queue = Memory.rooms[roomName].spawnQ;
+    var spawners = Game.rooms[roomName].find(FIND_STRUCTURES, {
+      filter: (structure) => {
+        return (structure.structureType === STRUCTURE_SPAWN && !structure.spawning);
+      }
+    });
+    for(var spawn in spawners){
+      var toSpawn = queue.shift();
+      if(toSpawn !== undefined){
+        var creep = spawn.createCreep(toSpawn.body,undefined,toSpawn.memory);
+        console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep);
+      }
+    }
+  },
+
+
+  OLD_spawn:function(spawner,energyCapacity,controllerLvl){
     //TODO put all of the constants here in memory after first run, check every 100 or so ticks maybe
     //Maybe an init method for the module
     var numSources = spawner.room.find(FIND_SOURCES).length;
