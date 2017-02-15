@@ -30,6 +30,10 @@ var merchantBody = [MOVE,CARRY];
 
 //Object that holds a getter for these body types
 var bodyObj = {
+
+  calcCost:function(bodyObj){
+    //TODO
+  },
   //getter that useses a lot of switch statement to return the appropriate body array for the given role and tier
   getBody:function(role,tier){
       if(role==='harvester'){
