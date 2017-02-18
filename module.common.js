@@ -326,7 +326,7 @@ var modCommon = {
 
     var link = "http://screeps.com/a/#!/history/"+roomName+"?t="+tick;
     console.log(link);
-    msg = "Room "+roomName+" :"+msg+" @"+tick;
+    msg = "Room>"+roomName+":"+msg+"@"+tick;
     return "<a href="+link+">"+msg+"</a>";
   }
 
