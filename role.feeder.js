@@ -48,6 +48,8 @@ var roleFeeder = {
       deliver = "Nowhere to Go";
     }
     return deliver;
+
+    //TODO add this to memory and check if another feeder is going there
   },
 
   run:function(creep){
