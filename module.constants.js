@@ -14,6 +14,7 @@ var modConstants = {
   tier2EnergyMin: 550,
   tier3EnergyMin: 800,
   tier4EnergyMin: 1300,
+  spawnFrequency: 15, //in ticks
 
   maxCreeps: Memory.maxCreeps,
 
