@@ -47,9 +47,7 @@ var defaultTower = {
 
 var modMemory = {
 
-  init:function(){
-
-  }, //TODO init whole structure with global info
+  init:function(){  }, //TODO init whole structure with global info
   initRoom:function(roomName){
     Memory.rooms[roomName] = defaultRoom;
     //TODO any other things go here
@@ -60,7 +58,7 @@ var modMemory = {
     var roomName = tower.room.name;
     var towerID = tower.id;
     Memory.rooms[roomName].towers[tower.id] = defaultTower;
-  }, 
+  },
   getSpawnQ:function(roomName){
     return Memory.rooms[roomName].spawnQ;
   },

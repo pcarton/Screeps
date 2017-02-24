@@ -1,4 +1,5 @@
 var modCommon = require('module.common');
+//TODO only check for a new order every so ofter, preferably on low CPU ticks
 var roleMerchant = {
 
   init:function(creep){
