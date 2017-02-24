@@ -47,14 +47,24 @@ var defaultTower = {
 
 var modMemory = {
 
-  init:function(){}, //TODO init whole structure with global info
-  initRoom:function(roomName){}, //TODO init room with all room info
+  init:function(){
+
+  }, //TODO init whole structure with global info
+  initRoom:function(roomName){
+    Memory.rooms[roomName] = defaultRoom;
+    //TODO any other things go here
+    Memory.rooms[roomName].initialized = true;
+  }, //TODO init room with all room info
   initCreep:function(creep, creepType){}, //TODO init creep with data currently down in modSpawning
-  initTower:function(tower){}, //TODO init tower with individual aspects (currently global)
+  initTower:function(tower){
+    var roomName = tower.room.name;
+    var towerID = tower.id;
+    Memory.rooms[roomName].towers[tower.id] = defaultTower;
+  }, //TODO init tower with individual aspects (currently global)
   getSpawnQ:function(roomName){
     return Memory.rooms[roomName].spawnQ;
   },
-  changeCreepNum:function(creepType,num,set){}, //creepType - creepJob to change, num, num to add or set to, set - bool, true to set, false to add
+  changeCreepNum:function(roomName,creepType,num,set){}, //creepType - creepJob to change, num, num to add or set to, set - bool, true to set, false to add
 
 };
 
