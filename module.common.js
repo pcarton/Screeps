@@ -154,7 +154,7 @@ var modCommon = {
       return brokenWall2;
     }
     return false;
-  }
+  },
 
   //Method to find the next structure to repair, shared by repair creeps and towers
   findToFixArr: function(room){
