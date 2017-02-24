@@ -1,4 +1,5 @@
 var modConstants = require('module.constants');
+var modSpawning = require('module.spawning');
 
 var modCommon = {
 
