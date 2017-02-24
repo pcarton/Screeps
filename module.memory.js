@@ -47,10 +47,15 @@ var defaultTower = {
 
 var modMemory = {
 
-  init:function(){  }, //TODO init whole structure with global info
+  init:function(){
+    for(var roomName in Game.rooms){
+      this.initRoom(roomName);
+    }
+    Memory.initialized = true;
+  },
   initRoom:function(roomName){
     Memory.rooms[roomName] = defaultRoom;
-    //TODO any other things go here
+    //TODO any other things go here (like Tower init)
     Memory.rooms[roomName].initialized = true;
   },
   initCreep:function(creep, creepType){}, //TODO init creep with data currently down in modSpawning
