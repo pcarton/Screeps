@@ -51,9 +51,6 @@ var roleStructures = {
     }
 
     Memory.rooms[tower.room.name].towers[tower].target = toFix;
-
-
-
   },
 
   runTower:function(tower, allCreepList){
