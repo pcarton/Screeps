@@ -18,156 +18,19 @@ var roleJuniorHauler = require('role.juniorHauler');
 var modSpawning = require('module.spawning');
 var modCommon = require('module.common');
 var modStructures = require('module.structures');
-
-
-//Initial memory JSON for the roles
-//includes counters for roles and maxes
-var initialRolesMem = {
-    "numCreeps":0,
-    "numHarvesters":0,
-    "maxHarvesters":1,
-    "numUpgraders":0,
-    "maxUpgraders":0,
-    "numBuilders":0,
-    "maxBuilders":1,
-    "numRepair":0,
-    "maxRepair":1,
-    "numArchitects":0,
-    "betterHarvesters1":0,
-    "betterHarvesters2":0,
-    "numMiners":0,
-    "maxMiners":0,
-    "numHaulers":0,
-    "maxHaulers":1,
-    "numFeeders":0,
-    "maxFeeders":1,
-    "numGeo":0,
-    "maxGeo":1,
-    "numGeoH":0,
-    "maxGeoH":0,
-    "numMerchant":0,
-    "maxMerchant":0,
-  };
-
-//Tower initial memory JSON
-var initialTowerMem = {
-  "target":null,
-  "mode":"attack",
-  "fixe":null
-};
-
-//Set all the above JSONs into memeory on first start
-function initialize(){
-  //TODO make these per room
-  Memory.roles = initialRolesMem;
-  Memory.towersMem = initialTowerMem;
-  Memory.initialized = true;
-  Memory.conservation = false;
-  Memory.fortify = false;
-}
-
-//Gets the number of living harvester Creeps
-function getNumHarvesters(creepList){
-  var harvesters = _.filter(creepList, (creep) => creep.memory.role == 'harvester');
-  var hL = harvesters.length;
-  if(Memory.roles.numHarvesters != hL){
-    Memory.roles.numHarvesters = hL;
-    console.log('Harvesters: ' + hL);
-  }
-  return hL;
-}
-
-//Gets the number of living upgrader Creeps
-function getNumUpgraders(creepList){
-  var upgraders = _.filter(creepList, (creep) => creep.memory.role == 'upgrader');
-  var uL = upgraders.length;
-  if(Memory.roles.numUpgraders != uL){
-    Memory.roles.numUpgraders = uL;
-    console.log('Upgraders: ' + uL);
-  }
-  return uL;
-}
-
-//Gets the number of living builder Creeps
-function getNumBuilders(creepList){
-  var builders = _.filter(creepList, (creep) => creep.memory.role == 'builder');
-  var bL = builders.length;
-  if(Memory.roles.numBuilders != bL){
-    Memory.roles.numBuilders = bL;
-    console.log('Builders: ' + bL);
-  }
-  return bL;
-}
-
-//Gets the number of living Repair Creeps
-function getNumRepair(creepList){
-  var repair = _.filter(creepList, (creep) => creep.memory.role == 'repair');
-  var rL = repair.length;
-  if(Memory.roles.numRepair != rL){
-    Memory.roles.numRepair = rL;
-    console.log('Repair: ' + rL);
-  }
-  return rL;
-}
-
-//Gets the number of living architect Creeps
-function getNumArchitects(creepList){
-  var architects = _.filter(creepList, (creep) => creep.memory.role == 'architect');
-  var aL = architects.length;
-  if(Memory.roles.numArchitects != aL){
-    Memory.roles.numArchitects = aL;
-    console.log('Architects: ' + aL);
-  }
-  return aL;
-}
-
-//Gets the number of living miner Creeps
-function getNumMiners(creepList){
-  var miners = _.filter(creepList, (creep) => creep.memory.role == 'miner');
-  var mL = miners.length;
-  if(Memory.roles.numMiners != mL){
-    Memory.roles.numMiners = mL;
-    console.log('Miners: ' + mL);
-  }
-  return mL;
-}
-
-//Gets the number of living hauler Creeps
-function getNumHaulers(creepList){
-  var haulers = _.filter(creepList, (creep) => creep.memory.role == 'hauler');
-  var haulL = haulers.length;
-  if(Memory.roles.numHaulers != haulL){
-    Memory.roles.numHaulers = haulL;
-    console.log('Haulers: ' + haulL);
-  }
-  return haulL;
-}
-
-function getNumFeeders(creepList){
-  var feeders = _.filter(creepList, (creep) => creep.memory.role == 'feeder');
-  var feedL = feeders.length;
-  if(Memory.roles.numFeeders != feedL){
-    Memory.roles.numFeeders = feedL;
-    console.log('Haulers: ' + feedL);
-  }
-  return feedL;
-}
+var modMemory = require('module.memory');
 
 //main loop
 module.exports.loop = function () {
 
   //Only initialize if it hasnt been done (or it was manually set to false)
   if(Memory.initialized!==true){
-    initialize();
+    modMemory.init();
   }
 
   //Loop to check each room that is visible to the script
-  for(var roomName in Game.rooms){
+  for(var roomName in Memory.rooms){
     var room = Game.rooms[roomName];
-
-    if(Memory.fortify && (!room.controller.safeMode || room.controller.safeMode<1000)){
-      Memory.fortify = false;
-    }
 
     //Creep lists in each room, comparing lengths shows if there are 'others'
     var allCreepList = room.find(FIND_CREEPS);
@@ -178,38 +41,18 @@ module.exports.loop = function () {
     var allStructs = room.find(FIND_MY_STRUCTURES);
     var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
 
-    //calculates the breakdown of creeps by roles
-    /* var h  = getNumHarvesters(myCreepList);
-    var u = getNumUpgraders(myCreepList);
-    var b = getNumBuilders(myCreepList);
-    var r = getNumRepair(myCreepList);
-    var a = getNumArchitects(myCreepList);
-    var m = getNumMiners(myCreepList);
-    var ha = getNumHaulers(myCreepList);
-    var f = getNumFeeders(myCreepList);
-    Memory.roles.numCreeps = h + u + b + r + a + m + ha + f;
-    */
+    for(var tower in towers){
+      if(Memory.rooms[roomName].towers[tower.id] === null){
+        modMemory.initTower(tower);
+      }
+    }
 
     //Clear dead creeps from memory
     modCommon.clearDead();
 
-    //Vars for Memory Assignment
-    var numH = 0;
-    var numU = 0;
-    var numB = 0;
-    var numA = 0;
-    var numR = 0;
-    var numHA = 0;
-    var numM = 0;
-    var numF = 0;
-    var numG = 0;
-    var numGH = 0;
-    var numMER = 0;
-
     //assign the right run method to each creep based on its role
     for(var name in myCreepList) {
         var creep = myCreepList[name];
-
 
         //Has the non-military creeps retreat
         //Mining creeps are considered military - like the supply line
@@ -219,34 +62,27 @@ module.exports.loop = function () {
         }
         //If there are no enemies, run the appropriate role method
         else if(creep.memory.role == 'harvester') {
-          numH++;
           roleHarvester.run(creep);
 
         }
         else if(creep.memory.role == 'upgrader') {
-          numU++;
           roleUpgrader.run(creep);
 
         }
         else if(creep.memory.role == 'builder'){
-          numB++;
           roleBuilder.run(creep);
 
         }
         else if(creep.memory.role == 'repair'){
-          numR++;
           roleRepair.run(creep);
         }
         else if(creep.memory.role == 'architect'){
-          numA++;
           roleArchitect.run(creep);
         }
         else if(creep.memory.role == 'miner'){
-          numM++;
           roleMiner.run(creep);
         }
         else if(creep.memory.role == 'hauler'){
-          numHA++;
           if(creep.room.storage){
             roleHauler.run(creep);
           }else {
@@ -254,80 +90,61 @@ module.exports.loop = function () {
           }
         }
         else if(creep.memory.role == 'feeder'){
-          numF++;
           roleFeeder.run(creep);
         }
         else if(creep.memory.role == 'geo'){
-          numG++;
           roleGeoMiner.run(creep);
         }
         else if(creep.memory.role == 'geoH'){
-          numGH++;
           roleGeoHauler.run(creep);
         }
         else if(creep.memory.role == 'merchant'){
-          numMER++;
           roleMerchant.run(creep);
         }
     }
 
-    /*
-    Memory.roles.numHarvesters = numH;
-    Memory.roles.numBuilders = numB;
-    Memory.roles.numUpgraders = numU;
-    Memory.roles.numRepair = numR;
-    Memory.roles.numArchitects = numA;
-    Memory.roles.numMiners = numM;
-    Memory.roles.numHaulers = numHA;
-    Memory.roles.numFeeders = numF;
-    Memory.roles.numGeo = numG;
-    Memory.roles.numGeoH = numGH;
-    Memory.roles.numMerchant = numMER;
-    Memory.roles.numCreeps = numH+numB+numU+numA+numM+numHA+numF+numG+numGH+numMER;
-    */
-
     //determine if new creeps need to be spawned and pick an appropriate spawner
     //Spawn logic is in a seperate module
-    if(Memory.roles.numCreeps < modSpawning.maxCreeps){
-        for(var spawn in Game.spawns){
-          var spawner = Game.spawns[spawn];
-          var controllerLvl= spawner.room.controller.level;
-          var energyCapacity = spawner.room.energyCapacityAvailable;
-          modSpawning.spawn(spawner,energyCapacity,controllerLvl);
-
-        }
+    if(Memory.rooms[roomName].roles.numCreeps < modSpawning.maxCreeps){
+      if(Game.time%modConstants.spawnFrequency===0)
+        modSpawning.enqueueAllNeeded(roomName);
+      modSpawning.spawn(roomName);
     }
 
     var control = room.controller;
 
     if(enemyPresent && modCommon.playerAttack(allCreepList) && !(control.safeMode || control.safeModeCooldown) && control.safeModeAvailable > 0 ){
       control.activateSafeMode();
-      Memory.fortify = true;
       Game.notify(modCommon.linkRoomAtTick(room,Game.time,"Activated Safe Mode"),0);
     }
 
-    //Variable to keep track of which enemy to shoot
-    var target = Game.getObjectById(Memory.towersMem.target);
+    var newEnemy = true;
 
-    var newEnemy = Memory.towersMem.mode !== "attack";
 
-    //Notify the user on enemies or switch to healing and repairing
-    if(enemyPresent){
-      Memory.towersMem.mode = "attack";
-      if(newEnemy){
-        Game.notify(modCommon.linkRoomAtTick(room, Game.time, "EnemyFound"),60);
+
+    for(var towerId in Memory.rooms[roomName].towers){
+      if(Memory.rooms[roomName].towers[towerId].mode === "attack")
+        newEnemy = false;
+      var towerObj = Game.getObjectById(towerId);
+      if(enemyPresent){
+        Memory.rooms[roomName].towers[towerId].mode = "attack";
+        var targetID =   Memory.rooms[roomName].towers[towerId].target;
+        var target = null;
+        try{
+          target = Game.getObjectById(targetID);
+        }catch(err){
+          console.log(err.name + "\n" + err.message);
+        }
+        if(!target){
+          modStructures.pickTargets(room.controller, allCreepList);
+        }
+      }else{ //TODO check for injured creeps and set to heal
+        Memory.rooms[roomName].towers[towerId].mode = "repair";
       }
-    }else{
-      Memory.towersMem.mode = "heal";
+      modStructures.runTower(towerObj,allCreepList);
     }
 
-    //Run through the towers, picking a target if needed
-    for(var towerName in towers){
-      var t = towers[towerName];
-      if(enemyPresent && (target===null || target.room !== t.room)){
-        modStructures.pickTargets(t.room.controller, allCreepList);
-      }
-      modStructures.runTower(t,allCreepList);
-    }
+    if(enemyPresent && newEnemy)
+      Game.notify(modCommon.linkRoomAtTick(room, Game.time, "EnemyFound"),60);
   }
 };
