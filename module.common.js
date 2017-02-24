@@ -208,6 +208,8 @@ var modCommon = {
 
   //Function to move useing a stored path
   move:function(creep,pos){
+    var opts = {};
+    opts.maxOps = modConstants.maxPathCPU * 1000;
     var emptyPath = false;
     var creepPath = creep.memory.path;
     var destX = -1;
@@ -222,8 +224,9 @@ var modCommon = {
       emptyPath = true;
     }
 
-    if(emptyPath || (lastObj && (pos.x !== destX || pos.y !== destY))){
-      creep.memory.path = creep.pos.findPathTo(pos);
+    if(emptyPath){
+      var pathObj = PathFinder.search(creep.pos, pos, opts);
+      creep.memory.path = pathObj.path;
     }
     creep.moveByPath(creep.memory.path);
   },
