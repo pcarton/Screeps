@@ -15,29 +15,45 @@ var roleStructures = {
   },
 
   heal:function(tower, allCreepList){
-    var injured = modCommon.findInjured(allCreepList); //TODO add this to mem so it runs less often
-    if(injured.length){
-      tower.heal(injured[0]);
-    }else{
-      //TODO add target to that tower's memory
-      //TODO check if same target is in memory of another tower first
-      var damagedStructs;
-      if(Memory.fortify){
-        damagedStructs= modCommon.findToFixArr(tower.room);
-        if(!damagedStructs.length && Memory.fortify){
-          damagedStructs = modCommon.findToFortify(tower.room);
-        }
+    var toFix = Memory.rooms[tower.room.name].towers[tower.id].target;
+    var mode = Memory.rooms[tower.room.name].towers[tower.id].mode;
+    if(toFix === null){
+      var injured = modCommon.findInjured(allCreepList); //TODO add this to mem so it runs less often
+      if(injured.length){
+        tower.heal(injured[0]);
       }else{
-        damagedStructs= modCommon.findToFixArr(tower.room);
+        //TODO add target to that tower's memory
+        //TODO check if same target is in memory of another tower first
+        var damagedStructs;
+        if(Memory.fortify){
+          damagedStructs= modCommon.findToFixArr(tower.room);
+          if(!damagedStructs.length && Memory.fortify){
+            damagedStructs = modCommon.findToFortify(tower.room);
+          }
+        }else{
+          damagedStructs= modCommon.findToFixArr(tower.room);
+        }
+
+        toFix = tower.pos.findClosestByRange(damagedStructs);
+
+        if(toFix!==null){
+          tower.repair(toFix);
+        }
       }
-
-      toFix = tower.pos.findClosestByRange(damagedStructs);
-
-
-      if(toFix!==null){
-        tower.repair(toFix);
-      }
+    }else if( mode==="repair" ){
+      tower.repair(toFix);
+      if(!modCommon.stillToFix(toFix))
+        toFix = null;
+    }else if(mode==="heal"){
+      tower.heal(toFix);
+      if(toFix.hits===toFix.hitsMax)
+        toFix = null;
     }
+
+    Memory.rooms[tower.room.name].towers[tower].target = toFix;
+
+
+
   },
 
   runTower:function(tower, allCreepList){

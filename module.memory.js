@@ -42,8 +42,7 @@ var defaultRoom = {
 };
 var defaultTower = {
   target:null,
-  mode:"attack",
-  fixe:null
+  mode:"attack"
 };
 
 var modMemory = {
