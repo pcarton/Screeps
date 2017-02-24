@@ -80,6 +80,7 @@ var modCommon = {
       if(!Game.creeps[i]) {
           var job = Memory.creeps[i].role;
           this.decrementCreepNum(job);
+          modSpawning.enqueuByJob(job,Memory.creeps[i].room);
           delete Memory.creeps[i];
       }
     }
