@@ -339,6 +339,29 @@ var modSpawning = {
     Memory.rooms[roomName].spawnQ.unshift(obj);
   },
 
+  enqueuByJob: function(creepType,roomName){
+    if(creepType==="harvester" && this.needHarvester(roomName))
+      enqueueHarvester(roomName);
+    if(creepType==="upgrader" && this.needUpgrader(roomName))
+      enqueueUpgrader(roomName);
+    if(creepType==="builder" && this.needBuilder(roomName))
+      enqueueBuilder(roomName);
+    if(creepType==="repair" && this.needRepair(roomName))
+      enqueueRepair(roomName);
+    if(creepType==="architect" && this.needArchitect(roomName))
+      enqueueArchitect(roomName);
+    if(creepType==="miner" && this.needMiner(roomName))
+      enqueueMiner(roomName);
+    if(creepType==="hauler" && this.needHauler(roomName))
+      enqueueHauler(roomName);
+    if(creepType==="feeder" && this.needFeeder(roomName))
+      enqueueFeeder(roomName);
+    if(creepType==="geo" && this.needGeoMiner(roomName))
+      enqueueGeoMiner(roomName);
+    if(creepType==="merchant" && this.needMerchant(roomName)) 
+      enqueueMerchant(roomName);
+  },
+
   //TODO call this and spawn() from main
   enqueueAllNeeded(roomName){
     if(this.needHarvester(roomName)) enqueueHarvester(roomName);
