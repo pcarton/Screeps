@@ -54,13 +54,13 @@ var modMemory = {
     Memory.rooms[roomName] = defaultRoom;
     //TODO any other things go here
     Memory.rooms[roomName].initialized = true;
-  }, //TODO init room with all room info
+  },
   initCreep:function(creep, creepType){}, //TODO init creep with data currently down in modSpawning
   initTower:function(tower){
     var roomName = tower.room.name;
     var towerID = tower.id;
     Memory.rooms[roomName].towers[tower.id] = defaultTower;
-  }, //TODO init tower with individual aspects (currently global)
+  }, 
   getSpawnQ:function(roomName){
     return Memory.rooms[roomName].spawnQ;
   },
