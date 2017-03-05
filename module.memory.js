@@ -3,7 +3,7 @@
 var defaultCreep = {
   role:"none",
   path:null,
-
+  dest:null,
 };
 var defaultRoom = {
   roles: {
