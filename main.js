@@ -41,6 +41,10 @@ module.exports.loop = function () {
     var allStructs = room.find(FIND_MY_STRUCTURES);
     var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
 
+    if(allStructs.lenth <=0){
+      //TODO add builders/upgraders to spawn queue in nearest controlled room
+    }
+
     for(var tower in towers){
       if(Memory.rooms[roomName].towers[tower.id] === null){
         modMemory.initTower(tower);
