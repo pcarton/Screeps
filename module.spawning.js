@@ -299,26 +299,26 @@ var modSpawning = {
     Memory.rooms[roomName].spawnQ.unshift(obj);
   },
 
-  enqueuByJob: function(creepType,roomName){
-    if(creepType==="harvester" && this.needHarvester(roomName))
+  enqueuByJob: function(creepType,roomName,override){
+    if(creepType==="harvester" && (this.needHarvester(roomName) || override))
       enqueueHarvester(roomName);
-    if(creepType==="upgrader" && this.needUpgrader(roomName))
+    if(creepType==="upgrader" && (this.needUpgrader(roomName) || override))
       enqueueUpgrader(roomName);
-    if(creepType==="builder" && this.needBuilder(roomName))
+    if(creepType==="builder" && (this.needBuilder(roomName) || override))
       enqueueBuilder(roomName);
-    if(creepType==="repair" && this.needRepair(roomName))
+    if(creepType==="repair" && (this.needRepair(roomName) || override))
       enqueueRepair(roomName);
-    if(creepType==="architect" && this.needArchitect(roomName))
+    if(creepType==="architect" && (this.needArchitect(roomName) || override))
       enqueueArchitect(roomName);
-    if(creepType==="miner" && this.needMiner(roomName))
+    if(creepType==="miner" && (this.needMiner(roomName) || override))
       enqueueMiner(roomName);
-    if(creepType==="hauler" && this.needHauler(roomName))
+    if(creepType==="hauler" && (this.needHauler(roomName) || override))
       enqueueHauler(roomName);
-    if(creepType==="feeder" && this.needFeeder(roomName))
+    if(creepType==="feeder" && (this.needFeeder(roomName) || override))
       enqueueFeeder(roomName);
-    if(creepType==="geo" && this.needGeoMiner(roomName))
+    if(creepType==="geo" && (this.needGeoMiner(roomName) || override))
       enqueueGeoMiner(roomName);
-    if(creepType==="merchant" && this.needMerchant(roomName))
+    if(creepType==="merchant" && (this.needMerchant(roomName) || override))
       enqueueMerchant(roomName);
   },
 
