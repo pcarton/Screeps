@@ -161,12 +161,7 @@ var modSpawning = {
   */
   enqueueHarvester:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'harvester',
-      selfHarvest:true,
-      source:"",
-      military:true
-    };
+    var memoryObj = modMemory.getInitalCreepMem("harvester");
 
     var harvesterObj = {
       description:"Harvester",
@@ -180,13 +175,9 @@ var modSpawning = {
     Memory.rooms[roomName].spawnQ.unshift(harvesterObj);
   },
 
-  //TODO finish the rest of the enqueues
   enqueueUpgrader:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'upgrader',
-      selfHarvest:false
-    };
+    var memoryObj = modMemory.getInitalCreepMem("upgrader");
 
     var obj = {
       description:"Upgrader",
@@ -202,10 +193,7 @@ var modSpawning = {
   },
   enqueueBuilder:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'builder',
-      selfHarvest:false
-    };
+    var memoryObj = modMemory.getInitalCreepMem("builder");
 
     var obj = {
       description:"Builder",
@@ -218,12 +206,7 @@ var modSpawning = {
   },
   enqueueRepair:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'repair',
-      selfHarvest:true,
-      toFix:'',
-      military:true
-    };
+    var memoryObj = modMemory.getInitalCreepMem("repair");
 
     var obj = {
       description:"Repair",
@@ -239,10 +222,7 @@ var modSpawning = {
   }, //Attacks?
   enqueueArchitect:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'architect',
-      selfHarvest:false
-    };
+    var memoryObj = modMemory.getInitalCreepMem("architect");
 
     var obj = {
       description:"Architect",
@@ -255,12 +235,7 @@ var modSpawning = {
   },
   enqueueMiner:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'miner',
-      source:"",
-      dropOff:"",
-      military:true
-    };
+    var memoryObj = modMemory.getInitalCreepMem("miner");
 
     var obj = {
       description:"Miner",
@@ -273,11 +248,7 @@ var modSpawning = {
   },
   enqueueHauler:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'hauler',
-      dropOff:"",
-      military:true
-    };
+    var memoryObj = modMemory.getInitalCreepMem("hauler");
 
     var obj = {
       description:"Hauler",
@@ -290,10 +261,7 @@ var modSpawning = {
   },
   enqueueFeeder:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'feeder',
-      military:true
-    };
+    var memoryObj = modMemory.getInitalCreepMem("feeder");
 
     var obj = {
       description:"Feeder",
@@ -306,11 +274,7 @@ var modSpawning = {
   },
   enqueueGeoMiner:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'geo',
-      mineral:"",
-      dropOff:""
-    };
+    var memoryObj = modMemory.getInitalCreepMem("geo");
 
     var obj = {
       description:"Mineral Miner",
@@ -323,11 +287,7 @@ var modSpawning = {
   },
   enqueueMerchant:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = {
-      role:'merchant',
-      terminal:"",
-      storage:""
-    };
+    var memoryObj = modMemory.getInitalCreepMem("merchant");
 
     var obj = {
       description:"Merchant",
@@ -358,7 +318,7 @@ var modSpawning = {
       enqueueFeeder(roomName);
     if(creepType==="geo" && this.needGeoMiner(roomName))
       enqueueGeoMiner(roomName);
-    if(creepType==="merchant" && this.needMerchant(roomName)) 
+    if(creepType==="merchant" && this.needMerchant(roomName))
       enqueueMerchant(roomName);
   },
 
