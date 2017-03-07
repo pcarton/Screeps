@@ -36,6 +36,9 @@ var defaultRoom = {
   fortify: false,
   towers:[],
   sourceIDs:[],
+  signMsg:"",
+  //TODO extend the creep prototype and add signing based on this memory value
+  //http://support.screeps.com/hc/en-us/articles/203013212-Creep#signController
   initialized:false, //Set to true when init is run
 
 };
