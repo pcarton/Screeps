@@ -1,5 +1,3 @@
-//TODO have easy memory access and structure here
-
 var defaultCreep = {
   role:"none",
   path:null,

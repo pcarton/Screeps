@@ -62,7 +62,6 @@ module.exports.loop = function () {
         //Mining creeps are considered military - like the supply line
         if(!room.controller.safeMode && enemyPresent && creep.memory.military !== true){
           modCommon.retreat(creep);
-          //TODO make Memory role count not get overwritten
         }
         //If there are no enemies, run the appropriate role method
         else if(creep.memory.role == 'harvester') {
@@ -142,7 +141,7 @@ module.exports.loop = function () {
         if(!target){
           modStructures.pickTargets(room.controller, allCreepList);
         }
-      }else{ //TODO check for injured creeps and set to heal
+      }else{ //TODO check for injured creeps and set to heal, maybe room variable that triggers on hit
         Memory.rooms[roomName].towers[towerId].mode = "repair";
       }
       modStructures.runTower(towerObj,allCreepList);

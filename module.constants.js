@@ -1,5 +1,3 @@
-//TODO put all of the constants that apply globally here
-
 var modConstants = {
 
   //Function to determine a modifier for the room used to calculate numbers of creeps
