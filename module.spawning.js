@@ -63,7 +63,7 @@ var modSpawning = {
 
     var minerals = (_.filter(spawner.room.find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
 
-    var toSell = false;//!minerals && (modCommon.whatStore(spawner.room.storage) != RESOURCE_ENERGY);
+    var toSell = !minerals && (modCommon.whatStore(spawner.room.storage) != RESOURCE_ENERGY);
 
     if(spawnTier1){
         //make sure there is energy and the spawner isnt already working, then spawn harvesters, upgrader, and repair in that priority
