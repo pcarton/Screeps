@@ -1,8 +1,16 @@
 var bodyObj = require('module.bodyTypes');
 var modManual ={
   spawn:function(type, tier, room){
-    var body = bodyObj.getBody(type, tier);
-    //TODO spawn it in the room with an inactive spawner
+    var memoryObj = modMemory.getInitalCreepMem(type);
+
+    var obj = {
+      description:"Manual-"+type,
+      body: null,
+      name: undefined,
+      memory:memoryObj
+    };
+    obj.body = bodyObj.getBody(type, tier);
+    Memory.rooms[room.name].spawnQ.unshift(obj); //unshift it so it is priority
   }
 };
 module.exports = modManual;
