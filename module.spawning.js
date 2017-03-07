@@ -3,8 +3,7 @@ var bodyObj = require('module.bodyTypes');
 var modCommon = require('module.common');
 var modConstants = require('module.constants');
 var modMemory = require('module.memory');
-//TODO queue system
-//Change max upgraders to 1 and just increase work parts
+//TODO Change max upgraders to 1 and just increase work parts
 
 var modSpawning = {
 
@@ -189,7 +188,7 @@ var modSpawning = {
       obj.memory.selfHarvest = true;
     }
     obj.body = bodyObj.getBody('upgrader',tier);
-    Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms[roomName].spawnQ.push(obj);
   },
   enqueueBuilder:function(roomName){
     var tier = this.calcTier(roomName);
@@ -270,7 +269,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('feeder',tier);
-    Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms[roomName].spawnQ.push(obj);
   },
   enqueueGeoMiner:function(roomName){
     var tier = this.calcTier(roomName);
@@ -283,7 +282,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('geo',tier);
-    Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms[roomName].spawnQ.push(obj);
   },
   enqueueMerchant:function(roomName){
     var tier = this.calcTier(roomName);
@@ -296,7 +295,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('merchant',tier);
-    Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms[roomName].spawnQ.push(obj);
   },
 
   enqueuByJob: function(creepType,roomName,override){
@@ -322,7 +321,6 @@ var modSpawning = {
       enqueueMerchant(roomName);
   },
 
-  //TODO call this and spawn() from main
   enqueueAllNeeded(roomName){
     if(this.needHarvester(roomName)) enqueueHarvester(roomName);
     if(this.needUpgrader(roomName)) enqueueUpgrader(roomName);
