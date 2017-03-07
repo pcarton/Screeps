@@ -89,6 +89,10 @@ var roleMerchant = {
         toLoad = order.remainingAmount;
       }
 
+      if(toLoad === 0 && modCommon.getResourceCount(terminal.store, resourceType) <= 1000){
+        toLoad = 1000;
+      }
+
       var resourceType = creep.memory.toLoad.resourceType;
       if(toLoad>0){
         if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) == resourceType){
