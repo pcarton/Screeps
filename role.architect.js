@@ -1,11 +1,9 @@
 var modCommon = require('module.common');
 
-//TODO make build extractor when unlocked - need flag currently
 var roleArchitect = {
 
   //Function to determin if there are buildable structures that need to be
   //assigned a construction site (marked by named flags)
-  //TODO finish this method for through controllerLvl 8
   ableToBuild:function(controllerLvl, structureType){
     var wallBool = (structureType.substring(0,4)==="Wall");
     var containerBool = (structureType.substring(0,9)==="Container" || structureType.substring(0,7)==="DropOff" || structureType.substring(0,8)==="GDropOff" || structureType.substring(0,7)==="Deliver");
@@ -25,7 +23,12 @@ var roleArchitect = {
       case 7:
         return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal");
       case 8:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal");
+        var extensionsBool =  structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4";
+
+        var towerBool = structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType === "Tower4";
+
+        return (wallBool || extensionsBool || containerBool || towerBool || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal");
+
       default:
         return false;
     }
@@ -97,7 +100,6 @@ var roleArchitect = {
     }
   },
 
-  //TODO implement these methods and use it
   markExtractor:function(flag){
       flag.room.createConstructionSite(flag.pos, STRUCTURE_EXTRACTOR);
   },
@@ -136,9 +138,6 @@ var roleArchitect = {
       var structureType = structureType;
       var wallBool = (structureType.substring(0,4)==="Wall");
       var containerBool = (structureType.substring(0,9)==="Container" || structureType.substring(0,7)==="DropOff" || structureType.substring(0,8)==="GDropOff" || structureType.substring(0,7)==="Deliver");
-      //TODO autoBuilds like extractor
-
-      //then flag builds after
       if(containerBool){
         this.markContainer(flag);
         if(structureType.substring(0,9) === "Container"){
