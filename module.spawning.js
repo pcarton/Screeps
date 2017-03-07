@@ -370,7 +370,7 @@ var modSpawning = {
         var toSpawn = queue.shift();
         if(toSpawn !== undefined && bodyObj.calcCost(toSpawn.body)<=available){
           var creep = spawn.createCreep(toSpawn.body,toSpawn.name,toSpawn.memory);
-          console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep);
+          console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep + "\n" + JSON.stringify(creep));
         }
       }
     }
