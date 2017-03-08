@@ -8,7 +8,7 @@ var modSpawning = {
 
   //These return booleans
   needHarvester:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
 
     var LTMin = roles.numHarvesters < roles.maxHarvesters;
     var tier = this.calcTier(roomName);
@@ -17,7 +17,7 @@ var modSpawning = {
   },
 
   needUpgrader:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
@@ -29,7 +29,7 @@ var modSpawning = {
   },
 
   needBuilder:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
@@ -44,20 +44,20 @@ var modSpawning = {
   },
 
   needRepair:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
-      var numTowers = Memory.rooms[roomName].towers.length;
+      var numTowers = Memory.rooms.roomName.towers.length;
       var LTMin = roles.numRepair < (roles.maxRepair - numTowers);
       return LTMin;
     }
   },
 
   needArchitect:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
@@ -70,20 +70,20 @@ var modSpawning = {
   },
 
   needMiner:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
       return false;
     }else{
       var tier = this.calcTier(roomName);
-      var sources = Memory.rooms[roomName].sourceIDs.length;
+      var sources = Memory.rooms.roomName.sourceIDs.length;
       var LTMin = roles.numMiners < sources;
       return (tier >= 4) && LTMin;
     }
   },
   needHauler:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
@@ -96,7 +96,7 @@ var modSpawning = {
   },
 
   needFeeder:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
@@ -109,7 +109,7 @@ var modSpawning = {
   },
 
   needGeoMiner:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
@@ -126,7 +126,7 @@ var modSpawning = {
   },
 
   needMerchant:function(roomName){
-    var roles = Memory.rooms[roomName].roles;
+    var roles = Memory.rooms.roomName.roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     if(notEnoughHarvest){
@@ -170,7 +170,7 @@ var modSpawning = {
     harvesterObj.body = bodyObj.getBody('harvester',tier);
     //Using unshift() to add to front, basic priority
     //Only use this for miners/harvesters
-    Memory.rooms[roomName].spawnQ.unshift(harvesterObj);
+    Memory.rooms.roomName.spawnQ.unshift(harvesterObj);
   },
 
   enqueueUpgrader:function(roomName){
@@ -187,7 +187,7 @@ var modSpawning = {
       obj.memory.selfHarvest = true;
     }
     obj.body = bodyObj.getBody('upgrader',tier);
-    Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms.roomName.spawnQ.push(obj);
   },
   enqueueBuilder:function(roomName){
     var tier = this.calcTier(roomName);
@@ -200,7 +200,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('builder',tier);
-    Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms.roomName.spawnQ.push(obj);
   },
   enqueueRepair:function(roomName){
     var tier = this.calcTier(roomName);
@@ -216,7 +216,7 @@ var modSpawning = {
       obj.memory.selfHarvest = true;
     }
     obj.body = bodyObj.getBody('repair',tier);
-    Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms.roomName.spawnQ.push(obj);
   }, //Attacks?
   enqueueArchitect:function(roomName){
     var tier = this.calcTier(roomName);
@@ -229,7 +229,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('architect',tier);
-    Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms.roomName.spawnQ.push(obj);
   },
   enqueueMiner:function(roomName){
     var tier = this.calcTier(roomName);
@@ -242,7 +242,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('miner',tier);
-    Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms.roomName.spawnQ.unshift(obj);
   },
   enqueueHauler:function(roomName){
     var tier = this.calcTier(roomName);
@@ -255,7 +255,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('hauler',tier);
-    Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms.roomName.spawnQ.unshift(obj);
   },
   enqueueFeeder:function(roomName){
     var tier = this.calcTier(roomName);
@@ -268,7 +268,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('feeder',tier);
-    Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms.roomName.spawnQ.push(obj);
   },
   enqueueGeoMiner:function(roomName){
     var tier = this.calcTier(roomName);
@@ -281,7 +281,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('geo',tier);
-    Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms.roomName.spawnQ.push(obj);
   },
   enqueueMerchant:function(roomName){
     var tier = this.calcTier(roomName);
@@ -294,7 +294,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody('merchant',tier);
-    Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms.roomName.spawnQ.push(obj);
   },
 
   enqueueAssist:function(roomName, creepType, toAssist){
@@ -310,7 +310,7 @@ var modSpawning = {
       memory:memoryObj
     };
     obj.body = bodyObj.getBody(creepType,tier);
-    Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms.roomName.spawnQ.push(obj);
   },
 
   enqueuByJob: function(creepType,roomName,override){
@@ -351,8 +351,8 @@ var modSpawning = {
 
   //Returns a number between 1 and highest tier inclusive
   calcTier:function(roomName){
-    var energyCapacity = Memory.rooms[roomName].energyCapacityAvailable;
-    var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
+    var energyCapacity = Memory.rooms.roomName.energyCapacityAvailable;
+    var notEnoughHarvest = (Memory.rooms.roomName.roles.numHarvesters <= 0) && (Memory.rooms.roomName.roles.numMiners <= 0);
 
     var spawnTier1 = (energyCapacity<modConstants.tier2EnergyMin);
     var spawnTier2 = (energyCapacity<modConstants.tier3EnergyMin);
@@ -373,8 +373,8 @@ var modSpawning = {
 
   //dequeue and spawn
   spawn:function(roomName){
-    var available = Memory.rooms[roomName].energyAvailable;
-    var queue = Memory.rooms[roomName].spawnQ;
+    var available = Memory.rooms.roomName.energyAvailable;
+    var queue = Memory.rooms.roomName.spawnQ;
     if(queue.length > 0){
       var spawners = Game.rooms[roomName].find(FIND_STRUCTURES, {
         filter: (structure) => {

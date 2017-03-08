@@ -74,51 +74,51 @@ var modUtil = {
   //Decrementes the number of that creep in the memory storage
   decrementCreepNum:function(creepType,roomName){
     if(creepType==="harvester"){
-      --Memory.rooms[roomName].roles.numHarvesters;
+      --Memory.rooms.roomName.roles.numHarvesters;
     }else if(creepType === "upgrader"){
-      --Memory.rooms[roomName].roles.numUpgraders;
+      --Memory.rooms.roomName.roles.numUpgraders;
     }else if(creepType === "builder"){
-      --Memory.rooms[roomName].roles.numBuilders;
+      --Memory.rooms.roomName.roles.numBuilders;
     }else if(creepType === "repair"){
-      --Memory.rooms[roomName].roles.numRepair;
+      --Memory.rooms.roomName.roles.numRepair;
     }else if (creepType === "architect"){
-      --Memory.rooms[roomName].roles.numArchitects;
+      --Memory.rooms.roomName.roles.numArchitects;
     }else if(creepType === "miner"){
-      --Memory.rooms[roomName].roles.numMiners;
+      --Memory.rooms.roomName.roles.numMiners;
     }else if(creepType === "hauler"){
-      --Memory.rooms[roomName].roles.numHaulers;
+      --Memory.rooms.roomName.roles.numHaulers;
     }else if(creepType === "feeder"){
-      --Memory.rooms[roomName].roles.numFeeders;
+      --Memory.rooms.roomName.roles.numFeeders;
     }else if(creepType === "geo"){
-      --Memory.rooms[roomName].roles.numGeo;
+      --Memory.rooms.roomName.roles.numGeo;
     }else if(creepType === "geoH"){
-      --Memory.rooms[roomName].roles.numGeoH;
+      --Memory.rooms.roomName.roles.numGeoH;
     }else if(creepType === "merchant"){
-      --Memory.rooms[roomName].roles.numMerchant;
+      --Memory.rooms.roomName.roles.numMerchant;
     }
-    --Memory.rooms[roomName].roles.numCreeps;
+    --Memory.rooms.roomName.roles.numCreeps;
   },
 
   //Incrementes the number of that creep in the memory storage
   incrementCreepNum:function(creepType,roomName){
     if(creepType==="harvester"){
-      ++Memory.rooms[roomName].roles.numHarvesters;
+      ++Memory.rooms.roomName.roles.numHarvesters;
     }else if(creepType === "upgrader"){
-      ++Memory.rooms[roomName].roles.numUpgraders;
+      ++Memory.rooms.roomName.roles.numUpgraders;
     }else if(creepType === "builder"){
-      ++Memory.rooms[roomName].roles.numBuilders;
+      ++Memory.rooms.roomName.roles.numBuilders;
     }else if(creepType === "repair"){
-      ++Memory.rooms[roomName].roles.numRepair;
+      ++Memory.rooms.roomName.roles.numRepair;
     }else if (creepType === "architect"){
-      ++Memory.rooms[roomName].roles.numArchitects;
+      ++Memory.rooms.roomName.roles.numArchitects;
     }else if(creepType === "miner"){
-      ++Memory.rooms[roomName].roles.numMiners;
+      ++Memory.rooms.roomName.roles.numMiners;
     }else if(creepType === "hauler"){
-      ++Memory.rooms[roomName].roles.numHaulers;
+      ++Memory.rooms.roomName.roles.numHaulers;
     }else if(creepType === "feeder"){
-      ++Memory.rooms[roomName].roles.numFeeders;
+      ++Memory.rooms.roomName.roles.numFeeders;
     }
-    ++Memory.rooms[roomName].roles.numCreeps;
+    ++Memory.rooms.roomName.roles.numCreeps;
   },
 
 

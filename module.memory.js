@@ -57,17 +57,17 @@ var modMemory = {
     Memory.initialized = true;
   },
   initRoom:function(roomName){
-    Memory.rooms[roomName] = defaultRoom;
+    Memory.rooms.roomName = defaultRoom;
     //TODO any other things go here (like Tower init)
-    Memory.rooms[roomName].initialized = true;
+    Memory.rooms.roomName.initialized = true;
   },
   initTower:function(tower){
     var roomName = tower.room.name;
     var towerID = tower.id;
-    Memory.rooms[roomName].towers[tower.id] = defaultTower;
+    Memory.rooms.roomName.towers[tower.id] = defaultTower;
   },
   getSpawnQ:function(roomName){
-    return Memory.rooms[roomName].spawnQ;
+    return Memory.rooms.roomName.spawnQ;
   },
   changeCreepNum:function(roomName,creepType,num,set){}, //creepType - creepJob to change, num, num to add or set to, set - bool, true to set, false to add
   getInitalCreepMem(creepType){
