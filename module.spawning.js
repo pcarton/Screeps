@@ -220,7 +220,7 @@ var modSpawning = {
     }
     obj.body = bodyObj.getBody('repair',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
-    Memory.rooms[roomName].roles.numRepair = Memory.rooms[roomName].roles.NumRepair + 1;
+    Memory.rooms[roomName].roles.numRepair = Memory.rooms[roomName].roles.numRepair + 1;
   }, //Attacks?
   enqueueArchitect:function(roomName){
     var tier = this.calcTier(roomName);
