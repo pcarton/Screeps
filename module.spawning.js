@@ -315,38 +315,38 @@ var modSpawning = {
 
   enqueuByJob: function(creepType,roomName,override){
     if(creepType==="harvester" && (this.needHarvester(roomName) || override))
-      enqueueHarvester(roomName);
+     this.enqueueHarvester(roomName);
     if(creepType==="upgrader" && (this.needUpgrader(roomName) || override))
-      enqueueUpgrader(roomName);
+     this.enqueueUpgrader(roomName);
     if(creepType==="builder" && (this.needBuilder(roomName) || override))
-      enqueueBuilder(roomName);
+     this.enqueueBuilder(roomName);
     if(creepType==="repair" && (this.needRepair(roomName) || override))
-      enqueueRepair(roomName);
+     this.enqueueRepair(roomName);
     if(creepType==="architect" && (this.needArchitect(roomName) || override))
-      enqueueArchitect(roomName);
+     this.enqueueArchitect(roomName);
     if(creepType==="miner" && (this.needMiner(roomName) || override))
-      enqueueMiner(roomName);
+     this.enqueueMiner(roomName);
     if(creepType==="hauler" && (this.needHauler(roomName) || override))
-      enqueueHauler(roomName);
+     this.enqueueHauler(roomName);
     if(creepType==="feeder" && (this.needFeeder(roomName) || override))
-      enqueueFeeder(roomName);
+     this.enqueueFeeder(roomName);
     if(creepType==="geo" && (this.needGeoMiner(roomName) || override))
-      enqueueGeoMiner(roomName);
+     this.enqueueGeoMiner(roomName);
     if(creepType==="merchant" && (this.needMerchant(roomName) || override))
-      enqueueMerchant(roomName);
+     this.enqueueMerchant(roomName);
   },
 
   enqueueAllNeeded(roomName){
-    if(this.needHarvester(roomName)) enqueueHarvester(roomName);
-    if(this.needUpgrader(roomName)) enqueueUpgrader(roomName);
-    if(this.needBuilder(roomName)) enqueueBuilder(roomName);
-    if(this.needRepair(roomName)) enqueueRepair(roomName);
-    if(this.needArchitect(roomName)) enqueueArchitect(roomName);
-    if(this.needMiner(roomName)) enqueueMiner(roomName);
-    if(this.needHauler(roomName)) enqueueHauler(roomName);
-    if(this.needFeeder(roomName)) enqueueFeeder(roomName);
-    if(this.needGeoMiner(roomName)) enqueueGeoMiner(roomName);
-    if(this.needMerchant(roomName)) enqueueMerchant(roomName);
+    if(this.needHarvester(roomName))this.enqueueHarvester(roomName);
+    if(this.needUpgrader(roomName))this.enqueueUpgrader(roomName);
+    if(this.needBuilder(roomName))this.enqueueBuilder(roomName);
+    if(this.needRepair(roomName))this.enqueueRepair(roomName);
+    if(this.needArchitect(roomName))this.enqueueArchitect(roomName);
+    if(this.needMiner(roomName))this.enqueueMiner(roomName);
+    if(this.needHauler(roomName))this.enqueueHauler(roomName);
+    if(this.needFeeder(roomName))this.enqueueFeeder(roomName);
+    if(this.needGeoMiner(roomName))this.enqueueGeoMiner(roomName);
+    if(this.needMerchant(roomName))this.enqueueMerchant(roomName);
   },
 
   //Returns a number between 1 and highest tier inclusive
