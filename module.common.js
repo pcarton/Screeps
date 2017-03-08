@@ -217,7 +217,7 @@ var modCommon = {
     var controlLvl = room.controller.level;
     var modifier = Math.max(Math.pow(10,controlLvl-3),10);
 
-    var fixeArrPriority = room.find(FIND_STRUCTURES, {filter: function(object){
+    var fixeArrPriority = room.find(FIND_MY_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < 3000);
       var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < 5000)&& (object.hitsMax-object.hits>0);
       var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 100000);
@@ -225,12 +225,12 @@ var modCommon = {
       return brokenRoad || brokenRamp || brokenCont || brokenWall;
     }});
 
-    var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
+    var fixeArr = room.find(FIND_MY_STRUCTURES, {filter: function(object){
       var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+buffer))&& (object.hitsMax-object.hits>0);
       return brokenRamp;
     }});
 
-    var fixeArr2 = room.find(FIND_STRUCTURES, {filter: function(object){
+    var fixeArr2 = room.find(FIND_MY_STRUCTURES, {filter: function(object){
       var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier+modConstants.structBuffer)) && (object.hitsMax-object.hits>0);
       return brokenWall;
     }});
@@ -247,7 +247,7 @@ var modCommon = {
 
   findToFortify: function(room){
     // use  '|| object.structureType ===STRUCTURE_RAMPART' ?
-    var fortArr = room.find(FIND_STRUCTURES, {filter: function(object){
+    var fortArr = room.find(FIND_MY_STRUCTURES, {filter: function(object){
       return (object.structureType ===STRUCTURE_WALL || object.structureType === STRUCTURE_RAMPART) && (object.hits < 100000) && (object.hitsMax-object.hits>0);
     }});
 
