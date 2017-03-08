@@ -52,7 +52,8 @@ var modSpawning = {
     }else{
       var numTowers = Memory.rooms[roomName].towers.length;
       var LTMin = roles.numRepair < (roles.maxRepair - numTowers);
-      return LTMin;
+      var toRepair = modCommon.findToFixArr(Game.rooms[roomName]).length>0;
+      return LTMin && toRepair;
     }
   },
 
