@@ -1,6 +1,7 @@
 //Modules
 var modSpawning = require('module.spawning');
 var modCommon = require('module.common');
+var modUtil = require('module.utility');
 var modStructures = require('module.structures');
 var modMemory = require('module.memory');
 var modAssist = require('module.assist');
@@ -53,7 +54,7 @@ module.exports.loop = function () {
     }
 
     //Clear dead creeps from memory
-    modCommon.clearDead();
+    modUtil.clearDead();
 
     //assign the right run method to each creep based on its role
     for(var name in myCreepList) {
@@ -70,7 +71,7 @@ module.exports.loop = function () {
         }
         //If there are no enemies, run the appropriate role method
         else{
-          modCommon.runCreep(creep);
+          modUtil.runCreep(creep);
         }
     }
 
