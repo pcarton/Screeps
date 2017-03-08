@@ -136,7 +136,7 @@ var modSpawning = {
       var LTMin = roles.numMerchant < 1;
 
       var minerals = (_.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
-      var toSell = modCommon.whatStore(Game.rooms[roomName].storage) != RESOURCE_ENERGY;
+      var toSell = Game.rooms[roomName].storage && modCommon.whatStore(Game.rooms[roomName].storage) != RESOURCE_ENERGY;
 
       return !minerals && toSell && (tier >= 4) && LTMin;
     }
