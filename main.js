@@ -24,9 +24,10 @@ module.exports.loop = function () {
 
     //Al the structures in the room that are controlled by the player
     var allStructs = room.find(FIND_MY_STRUCTURES);
+    var allConstruct = room.find(FIND_MY_CONSTRUCTION_SITES);
     var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
 
-    if(allStructs.lenth <=0){
+    if(allStructs.length <=0 && allConstruct.length<=0){
       //Find the nearest room to this new one and spawn an assist builder and upgrader
       var dist = -1;
       var otherRoom = null;
