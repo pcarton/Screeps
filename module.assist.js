@@ -1,4 +1,4 @@
-//TODO room assist module: have one room send creeps to work in a new
+//Room assist module: have one room send creeps to work in a new
 //room and recycle themselves at end of life to jump start the room
 var modConstants = require('module.constants');
 var modCommon = require('module.common');

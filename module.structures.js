@@ -22,7 +22,6 @@ var roleStructures = {
       if(injured.length){
         tower.heal(injured[0]);
       }else{
-        //TODO add target to that tower's memory
         //TODO check if same target is in memory of another tower first
         var damagedStructs;
         if(Memory.fortify){

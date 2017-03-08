@@ -3,7 +3,6 @@ var bodyObj = require('module.bodyTypes');
 var modCommon = require('module.common');
 var modConstants = require('module.constants');
 var modMemory = require('module.memory');
-//TODO Change max upgraders to 1 and just increase work parts
 
 var modSpawning = {
 
