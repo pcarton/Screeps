@@ -27,7 +27,22 @@ module.exports.loop = function () {
     var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
 
     if(allStructs.lenth <=0){
-      //TODO add builders/upgraders to spawn queue in nearest controlled room
+      //Find the nearest room to this new one and spawn an assist builder and upgrader
+      var dist = -1;
+      var otherRoom = null;
+      for(var roomNameClose in Game.rooms){
+        if(roomNameClose !== roomName){
+          var tempDist = Game.map.getResourceType(roomName, roomNameClose);
+          if(dist === -1 || tempDist < dist){
+            dist = tempDist;
+            otherRoom = roomNameClose;
+          }
+        }
+      }
+      if(otherRoom !== null){
+        modSpawning.enqueueAssist(otherRoom, 'builder', roomName);
+        modSpawning.enqueueAssist(otherRoom, 'upgrader', roomName);
+      }
     }
 
     for(var tower in towers){

@@ -298,6 +298,22 @@ var modSpawning = {
     Memory.rooms[roomName].spawnQ.push(obj);
   },
 
+  enqueueAssist:function(roomName, creepType, toAssist){
+    var tier = this.calcTier(roomName);
+    var memoryObj = modMemory.getInitalCreepMem(creepType);
+    memoryObj.assist = toAssist;
+    memoryObj.selfHarvest =true;
+
+    var obj = {
+      description:"Assist-" + creepType,
+      body: null,
+      name: undefined,
+      memory:memoryObj
+    };
+    obj.body = bodyObj.getBody(creepType,tier);
+    Memory.rooms[roomName].spawnQ.push(obj);
+  },
+
   enqueuByJob: function(creepType,roomName,override){
     if(creepType==="harvester" && (this.needHarvester(roomName) || override))
       enqueueHarvester(roomName);
