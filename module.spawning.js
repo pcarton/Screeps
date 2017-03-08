@@ -373,7 +373,7 @@ var modSpawning = {
 
   //dequeue and spawn
   spawn:function(roomName){
-    var available = Memory.rooms[roomName].energyAvailable;
+    var available = Game.rooms[roomName].energyAvailable;
     var queue = Memory.rooms[roomName].spawnQ;
     if(queue.length > 0){
       var spawners = Game.rooms[roomName].find(FIND_STRUCTURES, {
@@ -386,6 +386,8 @@ var modSpawning = {
         if(toSpawn !== undefined && bodyObj.calcCost(toSpawn.body)<=available){
           var creep = spawn.createCreep(toSpawn.body,toSpawn.name,toSpawn.memory);
           console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep + "\n" + JSON.stringify(creep));
+        }else{
+            queue.unshift(toSpawn);
         }
       }
     }
