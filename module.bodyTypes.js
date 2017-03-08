@@ -49,7 +49,29 @@ var bodyObj = {
   calcCost:function(bodyObj){
     var total = 0;
     for(var part in bodyObj){
-      total = total + costMap[part];
+      switch(part){
+        case MOVE, CARRY:
+          total = total + 50;
+          break;
+        case WORK:
+          total = total + 100;
+          break;
+        case ATTACK:
+          total = total + 80;
+          break;
+        case RANGED_ATTACK:
+          total = total + 150;
+          break;
+        case HEAL:
+          total = total + 250;
+          break;
+        case CLAIM:
+          total = total + 600;
+          break;
+        case TOUGH:
+          total = total + 10;
+          break;
+      }
     }
     return total;
   },
