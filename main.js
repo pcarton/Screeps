@@ -5,6 +5,7 @@ var modUtil = require('module.utility');
 var modStructures = require('module.structures');
 var modMemory = require('module.memory');
 var modAssist = require('module.assist');
+var modConstants = require('module.constants');
 
 //main loop
 module.exports.loop = function () {
