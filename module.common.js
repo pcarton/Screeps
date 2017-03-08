@@ -14,6 +14,7 @@ var roleArchitect = require('role.architect');
 var roleFeeder = require('role.feeder');
 var roleMerchant = require('role.merchant');
 var roleJuniorHauler = require('role.juniorHauler');
+var roleSettler = require('role.settler');
 
 var modCommon = {
 
@@ -54,6 +55,8 @@ var modCommon = {
     }
     else if(creep.memory.role == 'merchant'){
       roleMerchant.run(creep);
+    }else if(creep.memory.role == 'settler'){
+      roleSettler.run(creep);
     }
   },
 
