@@ -50,6 +50,7 @@ var defaultTower = {
 var modMemory = {
 
   init:function(){
+    Memory.rooms = {};
     for(var roomName in Game.rooms){
       this.initRoom(roomName);
     }
