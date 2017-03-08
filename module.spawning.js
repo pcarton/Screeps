@@ -327,6 +327,7 @@ var modSpawning = {
     var memoryObj = modMemory.getInitalCreepMem(creepType);
     memoryObj.assist = toAssist;
     memoryObj.selfHarvest =true;
+    memoryObj.room = toAssist;
 
     var obj = {
       description:"Assist-" + creepType,

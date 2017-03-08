@@ -9,7 +9,7 @@ var modAssist = {
   run:function(creep){
     var controllerPos = Game.rooms[creep.memory.roomName].controller.pos;
 
-    if(creep.memory.roomName !== creep.room.name){
+    if(creep.memory.room !== creep.room.name){
       modCommon.move(creep,controllerPos);
     }else if(creep.ticksToLive <= modConstants.nearDeath){
       var spawn =creep.pos.findClosestByPath(FIND_STRUCTURES, {
