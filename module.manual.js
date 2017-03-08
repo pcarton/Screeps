@@ -1,7 +1,8 @@
 var bodyObj = require('module.bodyTypes');
 var modManual ={
-  spawn:function(type, tier, roomName){
+  spawn:function(type, tier, roomName, pos){
     var memoryObj = modMemory.getInitalCreepMem(type);
+    memoryObj.dest = pos;
 
     var obj = {
       description:"Manual-"+type,
