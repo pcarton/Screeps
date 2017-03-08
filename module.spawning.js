@@ -381,11 +381,12 @@ var modSpawning = {
           return (structure.structureType === STRUCTURE_SPAWN && !structure.spawning);
         }
       });
-      for(var spawn in spawners){
+      for(var spawnNum in spawners){
+        var spawn = spawners[spawnNum];
         var toSpawn = queue.shift();
-        if(toSpawn !== undefined && bodyObj.calcCost(toSpawn.body)<=available){
+        if(toSpawn !== undefined && spawn.canCreateCreep(toSpawn.body,toSpawn.name) === OK){
           var creep = spawn.createCreep(toSpawn.body,toSpawn.name,toSpawn.memory);
-          console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep + "\n" + JSON.stringify(creep));
+          console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep + "\n" + JSON.stringify(toSpawn.body));
         }else{
             queue.unshift(toSpawn);
         }
