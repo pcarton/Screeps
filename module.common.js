@@ -1,64 +1,6 @@
 var modConstants = require('module.constants');
-var modSpawning = require('module.spawning');
-
-//Roles
-var roleHarvester = require('role.harvester');
-var roleMiner = require('role.miner');
-var roleHauler = require('role.hauler');
-var roleGeoMiner = require('role.geoMiner');
-var roleGeoHauler = require('role.geoHauler');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleRepair = require('role.repair');
-var roleArchitect = require('role.architect');
-var roleFeeder = require('role.feeder');
-var roleMerchant = require('role.merchant');
-var roleJuniorHauler = require('role.juniorHauler');
-var roleSettler = require('role.settler');
 
 var modCommon = {
-
-  runCreep: function(creep){
-    if(creep.memory.role == 'harvester') {
-      roleHarvester.run(creep);
-    }
-    else if(creep.memory.role == 'upgrader') {
-      roleUpgrader.run(creep);
-    }
-    else if(creep.memory.role == 'builder'){
-      roleBuilder.run(creep);
-    }
-    else if(creep.memory.role == 'repair'){
-      roleRepair.run(creep);
-    }
-    else if(creep.memory.role == 'architect'){
-      roleArchitect.run(creep);
-    }
-    else if(creep.memory.role == 'miner'){
-      roleMiner.run(creep);
-    }
-    else if(creep.memory.role == 'hauler'){
-      if(creep.room.storage){
-        roleHauler.run(creep);
-      }else {
-        roleJuniorHauler.run(creep);
-      }
-    }
-    else if(creep.memory.role == 'feeder'){
-      roleFeeder.run(creep);
-    }
-    else if(creep.memory.role == 'geo'){
-      roleGeoMiner.run(creep);
-    }
-    else if(creep.memory.role == 'geoH'){
-      roleGeoHauler.run(creep);
-    }
-    else if(creep.memory.role == 'merchant'){
-      roleMerchant.run(creep);
-    }else if(creep.memory.role == 'settler'){
-      roleSettler.run(creep);
-    }
-  },
 
   getFatigue: function(creep){
     var body = creep.body;
@@ -130,68 +72,6 @@ var modCommon = {
         }
       }
     }
-  },
-
-  //Function to remove 'dead' creeps from the memory to conserve space
-  clearDead: function(){
-    for(var i in Memory.creeps) {
-      if(!Game.creeps[i]) {
-          var job = Memory.creeps[i].role;
-          this.decrementCreepNum(job);
-          modSpawning.enqueuByJob(job,Memory.creeps[i].room);
-          delete Memory.creeps[i];
-      }
-    }
-  },
-
-  //Decrementes the number of that creep in the memory storage
-  decrementCreepNum:function(creepType){
-    if(creepType==="harvester"){
-      --Memory.roles.numHarvesters;
-    }else if(creepType === "upgrader"){
-      --Memory.roles.numUpgraders;
-    }else if(creepType === "builder"){
-      --Memory.roles.numBuilders;
-    }else if(creepType === "repair"){
-      --Memory.roles.numRepair;
-    }else if (creepType === "architect"){
-      --Memory.roles.numArchitects;
-    }else if(creepType === "miner"){
-      --Memory.roles.numMiners;
-    }else if(creepType === "hauler"){
-      --Memory.roles.numHaulers;
-    }else if(creepType === "feeder"){
-      --Memory.roles.numFeeders;
-    }else if(creepType === "geo"){
-      --Memory.roles.numGeo;
-    }else if(creepType === "geoH"){
-      --Memory.roles.numGeoH;
-    }else if(creepType === "merchant"){
-      --Memory.roles.numMerchant;
-    }
-    --Memory.roles.numCreeps;
-  },
-
-  //Incrementes the number of that creep in the memory storage
-  incrementCreepNum:function(creepType){
-    if(creepType==="harvester"){
-      ++Memory.roles.numHarvesters;
-    }else if(creepType === "upgrader"){
-      ++Memory.roles.numUpgraders;
-    }else if(creepType === "builder"){
-      ++Memory.roles.numBuilders;
-    }else if(creepType === "repair"){
-      ++Memory.roles.numRepair;
-    }else if (creepType === "architect"){
-      ++Memory.roles.numArchitects;
-    }else if(creepType === "miner"){
-      ++Memory.roles.numMiners;
-    }else if(creepType === "hauler"){
-      ++Memory.roles.numHaulers;
-    }else if(creepType === "feeder"){
-      ++Memory.roles.numFeeders;
-    }
-    ++Memory.roles.numCreeps;
   },
 
   stillToFix:function(object){
