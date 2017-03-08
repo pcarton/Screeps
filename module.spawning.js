@@ -171,6 +171,7 @@ var modSpawning = {
     //Using unshift() to add to front, basic priority
     //Only use this for miners/harvesters
     Memory.rooms[roomName].spawnQ.unshift(harvesterObj);
+    Memory.rooms[roomName].roles.numHarvesters = Memory.rooms[roomName].roles.numHarvesters + 1;
   },
 
   enqueueUpgrader:function(roomName){
@@ -188,6 +189,7 @@ var modSpawning = {
     }
     obj.body = bodyObj.getBody('upgrader',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms[roomName].roles.numUpgraders = Memory.rooms[roomName].roles.numUpgraders + 1;
   },
   enqueueBuilder:function(roomName){
     var tier = this.calcTier(roomName);
@@ -201,6 +203,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('builder',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms[roomName].roles.numBuilders = Memory.rooms[roomName].roles.numBuilders + 1;
   },
   enqueueRepair:function(roomName){
     var tier = this.calcTier(roomName);
@@ -217,6 +220,7 @@ var modSpawning = {
     }
     obj.body = bodyObj.getBody('repair',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms[roomName].roles.numRepair = Memory.rooms[roomName].roles.NumRepair + 1;
   }, //Attacks?
   enqueueArchitect:function(roomName){
     var tier = this.calcTier(roomName);
@@ -230,6 +234,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('architect',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms[roomName].roles.numArchitects = Memory.rooms[roomName].roles.numArchitects + 1;
   },
   enqueueMiner:function(roomName){
     var tier = this.calcTier(roomName);
@@ -243,6 +248,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('miner',tier);
     Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms[roomName].roles.numMiners = Memory.rooms[roomName].roles.numMiners + 1;
   },
   enqueueHauler:function(roomName){
     var tier = this.calcTier(roomName);
@@ -256,6 +262,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('hauler',tier);
     Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms[roomName].roles.numHaulers = Memory.rooms[roomName].roles.numHaulers + 1;
   },
   enqueueFeeder:function(roomName){
     var tier = this.calcTier(roomName);
@@ -269,6 +276,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('feeder',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms[roomName].roles.numFeeders = Memory.rooms[roomName].roles.numFeeders + 1;
   },
   enqueueGeoMiner:function(roomName){
     var tier = this.calcTier(roomName);
@@ -282,6 +290,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('geo',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms[roomName].roles.numGeo = Memory.rooms[roomName].roles.numGeo + 1;
   },
   enqueueMerchant:function(roomName){
     var tier = this.calcTier(roomName);
@@ -295,6 +304,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('merchant',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms[roomName].roles.numMerchant = Memory.rooms[roomName].roles.numMerchant + 1;
   },
 
   enqueueAssist:function(roomName, creepType, toAssist){
