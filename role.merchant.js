@@ -56,6 +56,7 @@ var roleMerchant = {
     var order;
     var toLoad = creep.memory.toLoad.amount;
 
+    //Get the objects from their IDs
     if(!creep.memory.terminal || creep.memory.terminal === ""){
       this.assignTerminal(creep);
     }
@@ -64,7 +65,6 @@ var roleMerchant = {
     }catch(err){
       console.log(err.name + "\n" + err.message);
     }
-
 
     if(!creep.memory.storage || creep.memory.storage === ""){
       this.assignStorage(creep);
@@ -85,13 +85,20 @@ var roleMerchant = {
       console.log(err.name + "\n" + err.message);
     }
 
+
+    //If the order exists
     if(order){
+
+      //Check that we do not overfill the terminal
       if(order.remainingAmount<toLoad){
         toLoad = order.remainingAmount;
       }
 
+      //Get the type of resource we need to handle
       var resourceType = creep.memory.toLoad.resourceType;
-      if(toLoad>0){
+
+      //If there are still resources to load
+      if(toLoad>0 || modCommon.getResourceCount(storage.store, resourceType) === 0){
         if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) == resourceType){
           //put the resource in the terminal and decrease toLoad
           var tryTransfer = creep.transfer(terminal, resourceType);
@@ -112,8 +119,9 @@ var roleMerchant = {
             modCommon.move(creep,storage.pos);
           }
         }
+      //If the resources have been loaded
       }else{
-        var amountToTrade = modCommon.getResourceCount(terminal.store, resourceType); //the amount of resource to trade, get the amount in the terminal
+        var amountToTrade = Math.min(modCommon.getResourceCount(terminal.store, resourceType), order.remainingAmount); //the amount of resource to trade
         var energyInTerminal = modCommon.getResourceCount(terminal.store, RESOURCE_ENERGY); //amount of energy in the terminal
         var energyCost = Game.market.calcTransactionCost(amountToTrade, creep.room.name, order.roomName);
 
