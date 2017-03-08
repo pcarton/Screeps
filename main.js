@@ -1,24 +1,9 @@
-//Requires for the other roles and modules
-
-//Roles
-var roleHarvester = require('role.harvester');
-var roleMiner = require('role.miner');
-var roleHauler = require('role.hauler');
-var roleGeoMiner = require('role.geoMiner');
-var roleGeoHauler = require('role.geoHauler');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleRepair = require('role.repair');
-var roleArchitect = require('role.architect');
-var roleFeeder = require('role.feeder');
-var roleMerchant = require('role.merchant');
-var roleJuniorHauler = require('role.juniorHauler');
-
 //Modules
 var modSpawning = require('module.spawning');
 var modCommon = require('module.common');
 var modStructures = require('module.structures');
 var modMemory = require('module.memory');
+var modAssist = require('module.assist');
 
 //main loop
 module.exports.loop = function () {
@@ -63,46 +48,13 @@ module.exports.loop = function () {
         if(!room.controller.safeMode && enemyPresent && creep.memory.military !== true){
           modCommon.retreat(creep);
         }
+        //if the creep is to assist
+        else if(creep.memory.assist){
+          modAssist.run(creep);
+        }
         //If there are no enemies, run the appropriate role method
-        else if(creep.memory.role == 'harvester') {
-          roleHarvester.run(creep);
-
-        }
-        else if(creep.memory.role == 'upgrader') {
-          roleUpgrader.run(creep);
-
-        }
-        else if(creep.memory.role == 'builder'){
-          roleBuilder.run(creep);
-
-        }
-        else if(creep.memory.role == 'repair'){
-          roleRepair.run(creep);
-        }
-        else if(creep.memory.role == 'architect'){
-          roleArchitect.run(creep);
-        }
-        else if(creep.memory.role == 'miner'){
-          roleMiner.run(creep);
-        }
-        else if(creep.memory.role == 'hauler'){
-          if(creep.room.storage){
-            roleHauler.run(creep);
-          }else {
-            roleJuniorHauler.run(creep);
-          }
-        }
-        else if(creep.memory.role == 'feeder'){
-          roleFeeder.run(creep);
-        }
-        else if(creep.memory.role == 'geo'){
-          roleGeoMiner.run(creep);
-        }
-        else if(creep.memory.role == 'geoH'){
-          roleGeoHauler.run(creep);
-        }
-        else if(creep.memory.role == 'merchant'){
-          roleMerchant.run(creep);
+        else{
+          modCommon.runCreep(creep);
         }
     }
 

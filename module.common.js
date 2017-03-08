@@ -1,7 +1,61 @@
 var modConstants = require('module.constants');
 var modSpawning = require('module.spawning');
 
+//Roles
+var roleHarvester = require('role.harvester');
+var roleMiner = require('role.miner');
+var roleHauler = require('role.hauler');
+var roleGeoMiner = require('role.geoMiner');
+var roleGeoHauler = require('role.geoHauler');
+var roleUpgrader = require('role.upgrader');
+var roleBuilder = require('role.builder');
+var roleRepair = require('role.repair');
+var roleArchitect = require('role.architect');
+var roleFeeder = require('role.feeder');
+var roleMerchant = require('role.merchant');
+var roleJuniorHauler = require('role.juniorHauler');
+
 var modCommon = {
+
+  runCreep: function(creep){
+    if(creep.memory.role == 'harvester') {
+      roleHarvester.run(creep);
+    }
+    else if(creep.memory.role == 'upgrader') {
+      roleUpgrader.run(creep);
+    }
+    else if(creep.memory.role == 'builder'){
+      roleBuilder.run(creep);
+    }
+    else if(creep.memory.role == 'repair'){
+      roleRepair.run(creep);
+    }
+    else if(creep.memory.role == 'architect'){
+      roleArchitect.run(creep);
+    }
+    else if(creep.memory.role == 'miner'){
+      roleMiner.run(creep);
+    }
+    else if(creep.memory.role == 'hauler'){
+      if(creep.room.storage){
+        roleHauler.run(creep);
+      }else {
+        roleJuniorHauler.run(creep);
+      }
+    }
+    else if(creep.memory.role == 'feeder'){
+      roleFeeder.run(creep);
+    }
+    else if(creep.memory.role == 'geo'){
+      roleGeoMiner.run(creep);
+    }
+    else if(creep.memory.role == 'geoH'){
+      roleGeoHauler.run(creep);
+    }
+    else if(creep.memory.role == 'merchant'){
+      roleMerchant.run(creep);
+    }
+  },
 
   getFatigue: function(creep){
     var body = creep.body;
