@@ -23,5 +23,5 @@ A collection of my scripts for the game Screeps.
   + The tiers are when different bodies of creeps spawn, or at Tier 4 when a new type takes over a job. This is based on the amount of energy available in the room. Reverts temporarily in order to spawn harvesters if needed.
 
 4. Explanation of Memory -
-  + Most max number are stored in *Memory.rooms.roomName.roles* and *Memory.rooms.roomName.towersMem* is where the tower target and mode is stored.
+  + Most max number are stored in *Memory.rooms[roomName].roles* and *Memory.rooms[roomName].towersMem* is where the tower target and mode is stored.
   + initialized the first time the script is run, or when the *Memory.initialized* value is false.

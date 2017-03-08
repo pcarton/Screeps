@@ -49,7 +49,7 @@ module.exports.loop = function () {
     }
 
     for(var tower in towers){
-      if(Memory.rooms.roomName.towers[tower.id] === null){
+      if(Memory.rooms[roomName].towers[tower.id] === null){
         modMemory.initTower(tower);
       }
     }
@@ -78,7 +78,7 @@ module.exports.loop = function () {
 
     //determine if new creeps need to be spawned and pick an appropriate spawner
     //Spawn logic is in a seperate module
-    if(Memory.rooms.roomName.roles.numCreeps < modSpawning.maxCreeps){
+    if(Memory.rooms[roomName].roles.numCreeps < modSpawning.maxCreeps){
       if(Game.time%modConstants.spawnFrequency===0)
         modSpawning.enqueueAllNeeded(roomName);
       modSpawning.spawn(roomName);
@@ -95,13 +95,13 @@ module.exports.loop = function () {
 
 
 
-    for(var towerId in Memory.rooms.roomName.towers){
-      if(Memory.rooms.roomName.towers[towerId].mode === "attack")
+    for(var towerId in Memory.rooms[roomName].towers){
+      if(Memory.rooms[roomName].towers[towerId].mode === "attack")
         newEnemy = false;
       var towerObj = Game.getObjectById(towerId);
       if(enemyPresent){
-        Memory.rooms.roomName.towers[towerId].mode = "attack";
-        var targetID =   Memory.rooms.roomName.towers[towerId].target;
+        Memory.rooms[roomName].towers[towerId].mode = "attack";
+        var targetID =   Memory.rooms[roomName].towers[towerId].target;
         var target = null;
         try{
           target = Game.getObjectById(targetID);
@@ -112,7 +112,7 @@ module.exports.loop = function () {
           modStructures.pickTargets(room.controller, allCreepList);
         }
       }else{ //TODO check for injured creeps and set to heal, maybe room variable that triggers on hit
-        Memory.rooms.roomName.towers[towerId].mode = "repair";
+        Memory.rooms[roomName].towers[towerId].mode = "repair";
       }
       modStructures.runTower(towerObj,allCreepList);
     }
