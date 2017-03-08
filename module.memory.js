@@ -3,6 +3,7 @@ var defaultCreep = {
   path:null,
   dest:null,
   assist:"", //set to roomName of assisted room
+  room:"",
 };
 var defaultRoom = {
   roles: {

@@ -165,6 +165,7 @@ var modSpawning = {
   enqueueHarvester:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("harvester");
+    memoryObj.room = roomName;
 
     var harvesterObj = {
       description:"Harvester",
@@ -182,6 +183,7 @@ var modSpawning = {
   enqueueUpgrader:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("upgrader");
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Upgrader",
@@ -199,6 +201,7 @@ var modSpawning = {
   enqueueBuilder:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("builder");
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Builder",
@@ -213,6 +216,7 @@ var modSpawning = {
   enqueueRepair:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("repair");
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Repair",
@@ -230,6 +234,7 @@ var modSpawning = {
   enqueueArchitect:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("architect");
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Architect",
@@ -244,6 +249,7 @@ var modSpawning = {
   enqueueMiner:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("miner");
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Miner",
@@ -258,6 +264,7 @@ var modSpawning = {
   enqueueHauler:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("hauler");
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Hauler",
@@ -272,6 +279,7 @@ var modSpawning = {
   enqueueFeeder:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("feeder");
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Feeder",
@@ -286,6 +294,7 @@ var modSpawning = {
   enqueueGeoMiner:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("geo");
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Mineral Miner",
@@ -300,6 +309,7 @@ var modSpawning = {
   enqueueMerchant:function(roomName){
     var tier = this.calcTier(roomName);
     var memoryObj = modMemory.getInitalCreepMem("merchant");
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Merchant",
