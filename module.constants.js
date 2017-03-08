@@ -15,6 +15,7 @@ var modConstants = {
   spawnFrequency: 15, //in ticks
   maxCreeps: Memory.maxCreeps,
   maxPathCPU: 0.5 ,
+  nearDeath:50, //ticks until death
 
 
 };
