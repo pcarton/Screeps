@@ -44,6 +44,8 @@ var roleArchitect = {
     flag.room.createConstructionSite(x-1, y, STRUCTURE_EXTENSION);
     flag.room.createConstructionSite(x, y+1, STRUCTURE_EXTENSION);
     flag.room.createConstructionSite(x, y-1, STRUCTURE_EXTENSION);
+
+    flag.memory.marked = true;
   },
 
   //Function to mark the pattern of 5 extensions that are granted at
@@ -62,16 +64,20 @@ var roleArchitect = {
     flag.room.createConstructionSite(x, y+1, STRUCTURE_EXTENSION);
     flag.room.createConstructionSite(x+1, y+1, STRUCTURE_EXTENSION);
     flag.room.createConstructionSite(x+2, y+1, STRUCTURE_EXTENSION);
+
+    flag.memory.marked = true;
   },
 
   // marks a container site
   markContainer:function(flag){
-      flag.room.createConstructionSite(flag.pos, STRUCTURE_CONTAINER);
+    flag.room.createConstructionSite(flag.pos, STRUCTURE_CONTAINER);
+    flag.memory.marked = true;
   },
 
   //marks a tower site
   markTower: function(flag){
       flag.room.createConstructionSite(flag.pos, STRUCTURE_TOWER);
+      flag.memory.marked = true;
   },
 
   //marks wall sites starting at the flag, going in the specified
@@ -85,38 +91,46 @@ var roleArchitect = {
         for(i=0; i<=len; i++){
           flag.room.createConstructionSite(x, y-i, STRUCTURE_WALL);
         }
+        flag.memory.marked = true;
     }else if(direction === "D"){
       for(i=0; i<=len; i++){
         flag.room.createConstructionSite(x,y+i, STRUCTURE_WALL);
       }
+      flag.memory.marked = true;
     }else if(direction === "R"){
       for(i=0; i<=len; i++){
         flag.room.createConstructionSite(x+i,y, STRUCTURE_WALL);
       }
+      flag.memory.marked = true;
     }else if(direction === "L"){
       for(i=0; i<=len; i++){
         flag.room.createConstructionSite(x-i,+y, STRUCTURE_WALL);
       }
+      flag.memory.marked = true;
     }
   },
 
   markExtractor:function(flag){
       flag.room.createConstructionSite(flag.pos, STRUCTURE_EXTRACTOR);
+      flag.memory.marked = true;
   },
   markTerminal:function(flag){
       flag.room.createConstructionSite(flag.pos, STRUCTURE_TERMINAL);
+      flag.memory.marked = true;
   },
   markStorage:function(flag){
       flag.room.createConstructionSite(flag.pos, STRUCTURE_STORAGE);
+      flag.memory.marked = true;
   },
   markLink:function(flag){
       flag.room.createConstructionSite(flag.pos, STRUCTURE_LINK);
+      flag.memory.marked = true;
   },
 
   /** @param {Creep} creep **/
   run: function(creep) {
     var controllerLvl = creep.room.controller.level;
-    var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => this.ableToBuild(controllerLvl, flag.name));
+    var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => this.ableToBuild(controllerLvl, flag.name && !flag.memory.marked));
     if(creep.memory.working && flags.length<1) {
         creep.memory.working = false;
         creep.memory.path = null;
@@ -136,7 +150,7 @@ var roleArchitect = {
       }
     }else{
       var flag = flags[0];
-      var structureType = structureType;
+      var structureType = flag.name;
       var wallBool = (structureType.substring(0,4)==="Wall");
       var containerBool = (structureType.substring(0,9)==="Container" || structureType.substring(0,7)==="DropOff" || structureType.substring(0,8)==="GDropOff" || structureType.substring(0,7)==="Deliver");
       if(containerBool){
