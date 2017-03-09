@@ -146,7 +146,7 @@ var roleArchitect = {
       Memory.rooms[roomName].roles.numArchitects = Memory.rooms[roomName].roles.numArchitects - 1;
       Memory.rooms[roomName].roles.numBuilders = Memory.rooms[roomName].roles.numBuilders + 1;
       creep.memory.role = 'builder';
-      if(controllerLvl<=1){
+      if(!creep.room.storage){
         creep.memory.selfHarvest = true;
       }
     }else{
