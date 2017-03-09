@@ -68,7 +68,7 @@ var modSpawning = {
     if(notEnoughHarvest){
       return false;
     }else{
-      var flags = _.filter(Game.rooms[roomName].find(FIND_FLAGS), (flag) => roleArchitect.ableToBuild(Game.rooms[roomName].controller.level, flag.name));
+      var flags = _.filter(Game.rooms[roomName].find(FIND_FLAGS), (flag) => roleArchitect.ableToBuild(Game.rooms[roomName].controller.level, flag));
 
       return flags.length && roles.numArchitects < 1;
     }

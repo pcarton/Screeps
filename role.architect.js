@@ -4,7 +4,8 @@ var roleArchitect = {
 
   //Function to determin if there are buildable structures that need to be
   //assigned a construction site (marked by named flags)
-  ableToBuild:function(controllerLvl, structureType){
+  ableToBuild:function(controllerLvl, flag){
+    var structureType = flag.name;
     var wallBool = (structureType.substring(0,4)==="Wall");
     var containerBool = (structureType.substring(0,9)==="Container" || structureType.substring(0,7)==="DropOff" || structureType.substring(0,8)==="GDropOff" || structureType.substring(0,7)==="Deliver");
     var marked = flag.memory.marked;
@@ -131,7 +132,7 @@ var roleArchitect = {
   /** @param {Creep} creep **/
   run: function(creep) {
     var controllerLvl = creep.room.controller.level;
-    var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => this.ableToBuild(controllerLvl, flag.name));
+    var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => this.ableToBuild(controllerLvl, flag));
     if(creep.memory.working && flags.length<1) {
         creep.memory.working = false;
         creep.memory.path = null;
