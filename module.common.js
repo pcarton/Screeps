@@ -162,8 +162,8 @@ var modCommon = {
     }
 
     if(emptyPath){
-      var pathObj = PathFinder.search(creep.pos, pos, opts);
-      creep.memory.path = pathObj.path;
+      var pathObj = creep.pos.findPathTo(pos, opts);
+      creep.memory.path = Room.serializePath(pathObj);
     }
     creep.moveByPath(creep.memory.path);
   },
