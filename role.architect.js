@@ -7,27 +7,28 @@ var roleArchitect = {
   ableToBuild:function(controllerLvl, structureType){
     var wallBool = (structureType.substring(0,4)==="Wall");
     var containerBool = (structureType.substring(0,9)==="Container" || structureType.substring(0,7)==="DropOff" || structureType.substring(0,8)==="GDropOff" || structureType.substring(0,7)==="Deliver");
+    var marked = flag.memory.marked;
     switch(controllerLvl){
       case 1:
-        return containerBool;
+        return containerBool && !marked;
       case 2:
-        return (wallBool || structureType === "Extensions1" || containerBool);
+        return (wallBool || structureType === "Extensions1" || containerBool) && !marked;
       case 3:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || containerBool || structureType === "Tower1");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || containerBool || structureType === "Tower1") && !marked;
       case 4:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || containerBool || structureType === "Tower1" || structureType === "Storage");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || containerBool || structureType === "Tower1" || structureType === "Storage") && !marked;
       case 5:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link" || structureType === "Storage");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link" || structureType === "Storage") && !marked;
       case 6:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal") && !marked;
       case 7:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal");
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal") && !marked;
       case 8:
         var extensionsBool =  structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4";
 
         var towerBool = structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType === "Tower4";
 
-        return (wallBool || extensionsBool || containerBool || towerBool || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal");
+        return (wallBool || extensionsBool || containerBool || towerBool || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal") && !marked;
 
       default:
         return false;
@@ -130,7 +131,7 @@ var roleArchitect = {
   /** @param {Creep} creep **/
   run: function(creep) {
     var controllerLvl = creep.room.controller.level;
-    var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => this.ableToBuild(controllerLvl, flag.name) && !flag.memory.marked);
+    var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => this.ableToBuild(controllerLvl, flag.name));
     if(creep.memory.working && flags.length<1) {
         creep.memory.working = false;
         creep.memory.path = null;
