@@ -11,7 +11,7 @@ var defaultRoom = {
       numHarvesters:0,
       maxHarvesters:1,
       numUpgraders:0,
-      maxUpgraders:0,
+      maxUpgraders:1,
       numBuilders:0,
       maxBuilders:1,
       numRepair:0,
