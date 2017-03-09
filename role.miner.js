@@ -3,6 +3,7 @@ var modCommon = require('module.common');
 var roleMiner = {
 
   assignSource:function(creep){
+    var roomName = creep.room.name;
     var sources = creep.room.find(FIND_SOURCES);
     for(var sIndex in sources){
       var s = sources[sIndex];
@@ -18,7 +19,7 @@ var roleMiner = {
         creep.memory.source = gID;
       }
     }
-    Memory.roles.maxMiners = sources.length;
+    Memory.rooms[roomName].roles.maxMiners = sources.length;
   },
 
   assignDropOff:function(creep){

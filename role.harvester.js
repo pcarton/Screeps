@@ -5,6 +5,7 @@ var roleHarvester = {
 
   assignSource:function(creep){
     var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => flag.name.substring(0,1)==="S");
+    var roomName = creep.room.name;
     var maxHarvesters = 0;
     for(var fName in flags){
       var f = flags[fName];
@@ -21,7 +22,7 @@ var roleHarvester = {
         creep.memory.source = gID;
       }
     }
-    Memory.roles.maxHarvesters = maxHarvesters;
+    Memory.rooms[roomName].roles.maxHarvesters = maxHarvesters;
   },
 
   /** @param {Creep} creep **/

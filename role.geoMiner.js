@@ -3,6 +3,7 @@ var modCommon = require('module.common');
 var roleGeoMiner = {
 
   assignMineral:function(creep){
+    var roomName = creep.room.name;
     var minerals = creep.room.find(FIND_MINERALS);
     for(var mIndex in minerals){
       var m = minerals[mIndex];
@@ -18,7 +19,7 @@ var roleGeoMiner = {
         creep.memory.mineral = gID;
       }
     }
-    Memory.roles.maxGeo = minerals.length;
+    Memory.rooms[roomName].roles.maxGeo = minerals.length;
   },
 
   assignDropOff:function(creep){

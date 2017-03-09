@@ -6,6 +6,7 @@ var modCommon = require('module.common');
 //priority from first to last(energy): Spawn/Extensions - Tower - Deliver flags - Storage
 var roleHauler = {
   assignDropOff:function(creep){
+    var roomName = creep.room.name;
     var flags = creep.room.find(FIND_FLAGS, {
         filter: (flag) => flag.name.substring(0,8)=="GDropOff"
     });
@@ -26,7 +27,7 @@ var roleHauler = {
         }
       }
     }
-    Memory.roles.maxHaulers = flags.length;
+    Memory.rooms[roomName].roles.maxHaulers = flags.length;
   },
 
   findCloseDeliver(creep){
