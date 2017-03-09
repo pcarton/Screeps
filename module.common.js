@@ -118,7 +118,7 @@ var modCommon = {
       return brokenWall;
     }});
 
-    if((room.storage.store && room.storage.store.energy < modConstants.roomEnergyBuffer) || fixeArrPriority.length>0){
+    if((room.storage && room.storage.store.energy < modConstants.roomEnergyBuffer) || fixeArrPriority.length>0){
       return fixeArrPriority;
     }else if(fixeArr.length>0){
       return fixeArr;
