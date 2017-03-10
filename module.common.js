@@ -146,7 +146,8 @@ var modCommon = {
   //Function to move useing a stored path
   move:function(creep,pos){
     var opts = {};
-    opts.maxOps = modConstants.maxPathCPU * 1000;
+    opts.ignoreCreeps = true;
+    opts.serialize = true;
     var emptyPath = false;
     var creepPath = creep.memory.path;
     var destX = -1;
@@ -162,10 +163,13 @@ var modCommon = {
     }
 
     if(emptyPath){
-      var pathObj = creep.pos.findPathTo(pos, opts);
-      creep.memory.path = Room.serializePath(pathObj);
+      creep.memory.path = creep.pos.findPathTo(pos, opts);
     }
-    creep.moveByPath(creep.memory.path);
+    var result = creep.moveByPath(creep.memory.path);
+    if(result === -5){
+      creep.memory.path = null;
+    }
+    return result;
   },
 
   playerAttack:function(allCreepList){
