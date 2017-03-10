@@ -9,11 +9,12 @@ var modSpawning = {
   //These return booleans
   needHarvester:function(roomName){
     var roles = Memory.rooms[roomName].roles;
+    var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
     var LTMin = roles.numHarvesters < roles.maxHarvesters;
     var tier = this.calcTier(roomName);
 
-    return LTMin && tier<=3;
+    return (LTMin || notEnoughHarvest) && tier<=3;
   },
 
   needUpgrader:function(roomName){
