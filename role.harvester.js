@@ -38,7 +38,6 @@ var roleHarvester = {
         creep.memory.currentlyHarvester = true;
     }
 
-    var cH = creep.memory.currentlyHarvester;
     if(!creep.memory.working){
           var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
           if(dropped){
@@ -75,30 +74,25 @@ var roleHarvester = {
               return (structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
             }
           });
-          if(cH && p1) {
+          if(p1) {
               if(creep.transfer(p1, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 modCommon.move(creep,p1.pos);
               }else{
                 creep.memory.path = null;
               }
-          }else if(cH && p2){
+          }else if(p2){
             if(creep.transfer(p2, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
               modCommon.move(creep,p2.pos);
             }else{
               creep.memory.path = null;
             }
-          }else if(cH && p3){
+          }else if(p3){
             if(creep.transfer(p3, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
               modCommon.move(creep,p3.pos);
             }else{
               creep.memory.path = null;
             }
           }else{
-            //If storage is full, Build to not waste time
-            if(creep.memory.currentlyHarvester){
-              creep.memory.currentlyHarvester = false;
-              creep.memory.path = null;
-            }
             roleBuilder.run(creep);
           }
       }
