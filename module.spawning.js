@@ -165,14 +165,14 @@ var modSpawning = {
   */
   enqueueHarvester:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("harvester");
-    memoryObj.room = roomName;
+    var memoryObjH = modMemory.getInitalCreepMem("harvester");
+    memoryObjH.room = roomName;
 
     var harvesterObj = {
       description:"Harvester",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjH
     };
     harvesterObj.body = bodyObj.getBody('harvester',tier);
     //Using unshift() to add to front, basic priority
@@ -183,14 +183,14 @@ var modSpawning = {
 
   enqueueUpgrader:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("upgrader");
-    memoryObj.room = roomName;
+    var memoryObjU = modMemory.getInitalCreepMem("upgrader");
+    memoryObjU.room = roomName;
 
     var obj = {
       description:"Upgrader",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjU
     };
     if(tier === 1){
       obj.memory.selfHarvest = true;
@@ -201,14 +201,14 @@ var modSpawning = {
   },
   enqueueBuilder:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("builder");
-    memoryObj.room = roomName;
+    var memoryObjB = modMemory.getInitalCreepMem("builder");
+    memoryObjB.room = roomName;
 
     var obj = {
       description:"Builder",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjB
     };
     obj.body = bodyObj.getBody('builder',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
@@ -216,14 +216,14 @@ var modSpawning = {
   },
   enqueueRepair:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("repair");
-    memoryObj.room = roomName;
+    var memoryObjR = modMemory.getInitalCreepMem("repair");
+    memoryObjR.room = roomName;
 
     var obj = {
       description:"Repair",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjR
     };
     if(tier === 1){
       obj.memory.selfHarvest = true;
@@ -234,14 +234,14 @@ var modSpawning = {
   }, //Attacks?
   enqueueArchitect:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("architect");
-    memoryObj.room = roomName;
+    var memoryObjA = modMemory.getInitalCreepMem("architect");
+    memoryObjA.room = roomName;
 
     var obj = {
       description:"Architect",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjA
     };
     obj.body = bodyObj.getBody('architect',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
@@ -249,14 +249,14 @@ var modSpawning = {
   },
   enqueueMiner:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("miner");
-    memoryObj.room = roomName;
+    var memoryObjM = modMemory.getInitalCreepMem("miner");
+    memoryObjM.room = roomName;
 
     var obj = {
       description:"Miner",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjM
     };
     obj.body = bodyObj.getBody('miner',tier);
     Memory.rooms[roomName].spawnQ.unshift(obj);
@@ -264,14 +264,14 @@ var modSpawning = {
   },
   enqueueHauler:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("hauler");
-    memoryObj.room = roomName;
+    var memoryObjHa = modMemory.getInitalCreepMem("hauler");
+    memoryObjHa.room = roomName;
 
     var obj = {
       description:"Hauler",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjHa
     };
     obj.body = bodyObj.getBody('hauler',tier);
     Memory.rooms[roomName].spawnQ.unshift(obj);
@@ -279,14 +279,14 @@ var modSpawning = {
   },
   enqueueFeeder:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("feeder");
-    memoryObj.room = roomName;
+    var memoryObjF = modMemory.getInitalCreepMem("feeder");
+    memoryObjF.room = roomName;
 
     var obj = {
       description:"Feeder",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjF
     };
     obj.body = bodyObj.getBody('feeder',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
@@ -294,14 +294,14 @@ var modSpawning = {
   },
   enqueueGeoMiner:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("geo");
-    memoryObj.room = roomName;
+    var memoryObjGm = modMemory.getInitalCreepMem("geo");
+    memoryObjGm.room = roomName;
 
     var obj = {
       description:"Mineral Miner",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjGm
     };
     obj.body = bodyObj.getBody('geo',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
@@ -309,14 +309,14 @@ var modSpawning = {
   },
   enqueueMerchant:function(roomName){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem("merchant");
-    memoryObj.room = roomName;
+    var memoryObjMer = modMemory.getInitalCreepMem("merchant");
+    memoryObjMer.room = roomName;
 
     var obj = {
       description:"Merchant",
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjMer
     };
     obj.body = bodyObj.getBody('merchant',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
@@ -325,16 +325,16 @@ var modSpawning = {
 
   enqueueAssist:function(roomName, creepType, toAssist){
     var tier = this.calcTier(roomName);
-    var memoryObj = modMemory.getInitalCreepMem(creepType);
-    memoryObj.assist = toAssist;
-    memoryObj.selfHarvest =true;
-    memoryObj.room = toAssist;
+    var memoryObjAssist = modMemory.getInitalCreepMem(creepType);
+    memoryObjAssist.assist = toAssist;
+    memoryObjAssist.selfHarvest =true;
+    memoryObjAssist.room = toAssist;
 
     var obj = {
       description:"Assist-" + creepType,
       body: null,
       name: undefined,
-      memory:memoryObj
+      memory:memoryObjAssist
     };
     obj.body = bodyObj.getBody(creepType,tier);
     Memory.rooms[roomName].spawnQ.push(obj);
