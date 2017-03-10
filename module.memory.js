@@ -121,7 +121,8 @@ var modMemory = {
       memoryObj.role = 'merchant';
       memoryObj.terminal = "";
       memoryObj.storage = "";
-    }else if(creepTpe === "settler"){
+    }
+    else if(creepTpe === "settler"){
       memoryObj.role = 'settler';
     }
 
