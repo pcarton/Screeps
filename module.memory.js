@@ -118,8 +118,8 @@ var modMemory = {
       memoryObj.terminal = "";
       memoryObj.storage = "";
       var toLoad = {};
-      toLoad.amount = 1000;
-      toLoad.resource = "";
+      toLoad.amount = 0;
+      toLoad.resource = RESOURCE_ENERGY;
       memoryObj.toLoad = toLoad;
     }
     else if(creepTpe === "settler"){
