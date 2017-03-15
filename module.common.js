@@ -35,6 +35,7 @@ var modCommon = {
   getEn: function(creep){
     var maxTicks = 50;
     //Priority 1 is dropped energy, since it detiorates
+    //TODO find why creeps will pick up compounds
     var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
     if(dropped && dropped.resourceType === RESOURCE_ENERGY){
       var dist;
