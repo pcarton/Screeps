@@ -87,6 +87,7 @@ var roleMerchant = {
 
 
     //If the order exists
+    //TODO trace this code to find infinite fill bug
     if(order){
 
       //Check that we do not overfill the terminal
