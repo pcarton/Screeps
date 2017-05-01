@@ -7,6 +7,24 @@ var modMemory = require('module.memory');
 var modAssist = require('module.assist');
 var modConstants = require('module.constants');
 
+
+//Function to remove 'dead' creeps from the memory to conserve space
+function clearDead(){
+  for(var i in Memory.creeps) {
+    if(!Game.creeps[i]) {
+      try{
+        var job = Memory.creeps[i].role;
+        var roomName = Memory.creeps[i].room;
+        this.decrementCreepNum(job,roomName);
+        modSpawning.enqueuByJob(job,Memory.creeps[i].room);
+      }catch(exception){
+
+      }
+      delete Memory.creeps[i];
+    }
+  }
+}
+
 //main loop
 module.exports.loop = function () {
 
@@ -55,7 +73,7 @@ module.exports.loop = function () {
     }
 
     //Clear dead creeps from memory
-    modUtil.clearDead();
+    clearDead();
 
     //assign the right run method to each creep based on its role
     for(var name in myCreepList) {
