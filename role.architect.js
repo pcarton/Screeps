@@ -1,4 +1,5 @@
 var modCommon = require('module.common');
+var modUtil = require('module.utility');
 
 var roleArchitect = {
 
@@ -144,8 +145,8 @@ var roleArchitect = {
 
     if(!creep.memory.working){
       var roomName = creep.room.name;
-      Memory.rooms[roomName].roles.numArchitects = Memory.rooms[roomName].roles.numArchitects - 1;
-      Memory.rooms[roomName].roles.numBuilders = Memory.rooms[roomName].roles.numBuilders + 1;
+      modUtil.decrementCreepNum("architect");
+      modUtil.incrementCreepNum("builder");
       creep.memory.role = 'builder';
       if(!creep.room.storage){
         creep.memory.selfHarvest = true;
