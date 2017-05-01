@@ -147,18 +147,12 @@ var modCommon = {
   //Function to move useing a stored path
   move:function(creep,pos){
     var opts = {};
-    opts.ignoreCreeps = true;
+    opts.ignoreCreeps = false;
     opts.serialize = true;
     var emptyPath = false;
     var creepPath = creep.memory.path;
-    if(creepPath && creepPath.length>0){
-      //new code here?
-    }else{
-      emptyPath = true;
-    }
-
-    if(emptyPath){
-      creep.memory.path = creep.pos.findPathTo(pos, opts);
+    if(!creepPath){
+        creep.memory.path = creep.pos.findPathTo(pos, opts);
     }
     var result = creep.moveByPath(creep.memory.path);
     if(result !== 0){
