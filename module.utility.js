@@ -121,6 +121,12 @@ var modUtil = {
       ++Memory.rooms[roomName].roles.numHaulers;
     }else if(creepType === "feeder"){
       ++Memory.rooms[roomName].roles.numFeeders;
+    }else if(creepType === "geo"){
+      --Memory.rooms[roomName].roles.numGeo;
+    }else if(creepType === "geoH"){
+      --Memory.rooms[roomName].roles.numGeoH;
+    }else if(creepType === "merchant"){
+      --Memory.rooms[roomName].roles.numMerchant;
     }
     ++Memory.rooms[roomName].roles.numCreeps;
   },
