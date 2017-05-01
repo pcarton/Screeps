@@ -3,6 +3,7 @@ var bodyObj = require('module.bodyTypes');
 var modCommon = require('module.common');
 var modConstants = require('module.constants');
 var modMemory = require('module.memory');
+var modUtil = require('module.utility');
 
 var modSpawning = {
 
@@ -185,7 +186,7 @@ var modSpawning = {
     //Using unshift() to add to front, basic priority
     //Only use this for miners/harvesters
     Memory.rooms[roomName].spawnQ.unshift(harvesterObj);
-    incrementCreepNum("harvester");
+    modUtil.incrementCreepNum("harvester");
   },
 
   enqueueUpgrader:function(roomName){
@@ -204,7 +205,7 @@ var modSpawning = {
     }
     obj.body = bodyObj.getBody('upgrader',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
-    incrementCreepNum("upgrader");
+    modUtil.incrementCreepNum("upgrader");
   },
   enqueueBuilder:function(roomName){
     var tier = this.calcTier(roomName);
@@ -219,7 +220,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('builder',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
-    incrementCreepNum("builder");
+    modUtil.incrementCreepNum("builder");
   },
   enqueueRepair:function(roomName){
     var tier = this.calcTier(roomName);
@@ -237,7 +238,7 @@ var modSpawning = {
     }
     obj.body = bodyObj.getBody('repair',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
-    incrementCreepNum("repair");
+    modUtil.incrementCreepNum("repair");
   }, //Attacks?
   enqueueArchitect:function(roomName){
     var tier = this.calcTier(roomName);
@@ -252,7 +253,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('architect',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
-    incrementCreepNum("architect");
+    modUtil.incrementCreepNum("architect");
   },
   enqueueMiner:function(roomName){
     var tier = this.calcTier(roomName);
@@ -267,7 +268,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('miner',tier);
     Memory.rooms[roomName].spawnQ.unshift(obj);
-    incrementCreepNum("miner");
+    modUtil.incrementCreepNum("miner");
   },
   enqueueHauler:function(roomName){
     var tier = this.calcTier(roomName);
@@ -282,7 +283,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('hauler',tier);
     Memory.rooms[roomName].spawnQ.unshift(obj);
-    incrementCreepNum("hauler");
+    modUtil.incrementCreepNum("hauler");
   },
   enqueueFeeder:function(roomName){
     var tier = this.calcTier(roomName);
@@ -297,7 +298,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('feeder',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
-    incrementCreepNum("feeder");
+    modUtil.incrementCreepNum("feeder");
   },
   enqueueGeoMiner:function(roomName){
     var tier = this.calcTier(roomName);
@@ -311,7 +312,7 @@ var modSpawning = {
       memory:memoryObjGm
     };
     obj.body = bodyObj.getBody('geo',tier);
-    incrementCreepNum("geo");
+    modUtil.incrementCreepNum("geo");
   },
   enqueueMerchant:function(roomName){
     var tier = this.calcTier(roomName);
@@ -326,7 +327,7 @@ var modSpawning = {
     };
     obj.body = bodyObj.getBody('merchant',tier);
     Memory.rooms[roomName].spawnQ.push(obj);
-    incrementCreepNum("merchant");
+    modUtil.incrementCreepNum("merchant");
   },
 
   enqueueAssist:function(roomName, creepType, toAssist){
