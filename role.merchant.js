@@ -95,14 +95,12 @@ var roleMerchant = {
         toLoad = order.remainingAmount;
       }
 
-<<<<<<< HEAD
+
       //Get the type of resource we need to handle
-=======
       if(toLoad === 0 && modCommon.getResourceCount(terminal.store, resourceType) <= 1000){
         toLoad = 1000;
       }
-
->>>>>>> refs/remotes/origin/master
+      
       var resourceType = creep.memory.toLoad.resourceType;
 
       //If there are still resources to load
