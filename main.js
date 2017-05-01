@@ -12,14 +12,11 @@ var modConstants = require('module.constants');
 function clearDead(){
   for(var i in Memory.creeps) {
     if(!Game.creeps[i]) {
-      try{
-        var job = Memory.creeps[i].role;
-        var roomName = Memory.creeps[i].room;
-        modUtil.decrementCreepNum(job,roomName);
-        modSpawning.enqueuByJob(job,Memory.creeps[i].room);
-      }catch(exception){
+      var job = Memory.creeps[i].role;
+      var roomName = Memory.creeps[i].room;
+      modUtil.decrementCreepNum(job,roomName);
+      modSpawning.enqueuByJob(job,roomName);
 
-      }
       delete Memory.creeps[i];
     }
   }
