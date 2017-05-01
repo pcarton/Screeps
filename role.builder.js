@@ -18,6 +18,11 @@ var roleBuilder = {
         }
 
         if(creep.memory.working) {
+          var bTargets0 = creep.room.find(FIND_CONSTRUCTION_SITES, {filter:     function(object){
+            var isExtension =  object.structureType === STRUCTURE_EXTENSION;
+            return isExtension;
+          }
+          });
           var bTargets1 = creep.room.find(FIND_CONSTRUCTION_SITES, {filter:     function(object){
             var isTower =  object.structureType === STRUCTURE_TOWER;
             var isWall = object.structureType === STRUCTURE_WALL;
@@ -31,7 +36,11 @@ var roleBuilder = {
               return !isTower && !isWall;
             }
             });
-          if(bTargets1.length) {
+          if(bTargets0.length) {
+              if(creep.build(bTargets0[0]) == ERR_NOT_IN_RANGE) {
+                modCommon.move(creep,bTargets0[0].pos);
+              }
+          }else if(bTargets1.length) {
               if(creep.build(bTargets1[0]) == ERR_NOT_IN_RANGE) {
                 modCommon.move(creep,bTargets1[0].pos);
               }
