@@ -1,5 +1,3 @@
-var modSpawning = require('module.spawning');
-
 //Roles
 var roleHarvester = require('role.harvester');
 var roleMiner = require('role.miner');
@@ -55,23 +53,6 @@ var modUtil = {
       roleMerchant.run(creep);
     }else if(creep.memory.role == 'settler'){
       roleSettler.run(creep);
-    }
-  },
-
-  //Function to remove 'dead' creeps from the memory to conserve space
-  clearDead: function(){
-    for(var i in Memory.creeps) {
-      if(!Game.creeps[i]) {
-        try{
-          var job = Memory.creeps[i].role;
-          var roomName = Memory.creeps[i].room;
-          this.decrementCreepNum(job,roomName);
-          modSpawning.enqueuByJob(job,Memory.creeps[i].room);
-        }catch(exception){
-
-        }
-        delete Memory.creeps[i];
-      }
     }
   },
 
