@@ -41,7 +41,7 @@ var modSpawning = {
       var construct = Game.rooms[roomName].find(FIND_MY_CONSTRUCTION_SITES).length;
       var LTMin = roles.numBuilders < roles.maxBuilders;
       var noArch = roles.numArchitects === 0;
-      return (tier > 1) && construct && LTMin && noArch;
+      return construct && LTMin && noArch;
     }
   },
 
