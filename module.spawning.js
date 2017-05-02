@@ -385,7 +385,7 @@ var modSpawning = {
 
   //Returns a number between 1 and highest tier inclusive
   calcTier:function(roomName){
-    var energyCapacity = Memory.rooms[roomName].energyCapacityAvailable;
+    var energyCapacity = Game.rooms[roomName].energyCapacityAvailable;
     var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
 
     var spawnTier1 = (energyCapacity<modConstants.tier2EnergyMin);
