@@ -52,10 +52,12 @@ var modMemory = {
   initTower:function(tower){
     var roomName = tower.room.name;
     var towerID = tower.id;
-    Memory.rooms[roomName].towers[tower.id] = {
+    var array = Memory.rooms[roomName].towers;
+    array[tower.id] = {
       target:null,
       mode:"attack"
     };
+    Memory.rooms[roomName].towers = array;
   },
   getSpawnQ:function(roomName){
     return Memory.rooms[roomName].spawnQ;
