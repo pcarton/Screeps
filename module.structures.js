@@ -49,7 +49,7 @@ var roleStructures = {
         toFix = null;
     }
 
-    Memory.rooms[tower.room.name].towers[tower].target = toFix;
+    Memory.rooms[tower.room.name].towers[tower.id].target = toFix;
   },
 
   runTower:function(tower, allCreepList){
