@@ -38,7 +38,7 @@ var modMemory = {
       spawnQ:[],
       conservation: false,
       fortify: false,
-      towers:[],
+      towers:{},
       sourceIDs:[],
       signMsg:"",
       //TODO extend the creep prototype and add signing based on this memory value
@@ -52,12 +52,10 @@ var modMemory = {
   initTower:function(tower){
     var roomName = tower.room.name;
     var towerID = tower.id;
-    var array = Memory.rooms[roomName].towers;
-    array[tower.id] = {
+    Memory.rooms[roomName].towers[tower.id]={
       target:null,
       mode:"attack"
     };
-    Memory.rooms[roomName].towers = array;
   },
   getSpawnQ:function(roomName){
     return Memory.rooms[roomName].spawnQ;
