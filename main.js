@@ -64,8 +64,8 @@ module.exports.loop = function () {
     }
 
     for(var tower in towers){
-      if(Memory.rooms[roomName].towers[tower.id] === null){
-        modMemory.initTower(tower);
+      if(!Memory.rooms[roomName].towers[tower.id]){
+        modMemory.initTower(towers[tower]);
       }
     }
 
