@@ -39,6 +39,9 @@ var roleFeeder = {
     });
     var p3 = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,p3Flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER && struct.store[RESOURCE_ENERGY] < struct.storeCapacity)[0];
     var deliver = null;
+    if(p3Flag && !p3){
+      p3Flag.memory.marked = false;
+    }
     if(p1){
       deliver = p1;
     }else if(p2){
