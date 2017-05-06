@@ -164,12 +164,13 @@ var modCommon = {
 
   playerAttack:function(allCreepList){
     //priority Targets
-    var pTargets = _.filter(allCreepList, (creep) => (creep.owner && !( creep.owner.username == "PCarton" || creep.owner.username == 'Invader')));
-    /*
+    var pTargets = _.filter(allCreepList, (creep) => (creep.owner && !( creep.owner.username == "PCarton" || creep.owner.username == 'Invader') && creep.body));
     var attackers = [];
     for(var creepName in pTargets){
       var owner = pTargets[creepName].owner;
-      if(attackers.indexOf(owner) >-1)
+      var bodies = pTargets[creepName].body;
+      var justAttack = _.filter(body, (part)=>(part.type==ATTACK || part.type==RANGED_ATTACK));
+      if(attackers.indexOf(owner) >-1 && justAttack.length>0)
         attackers.push(owner);
     }
     if(attackers.length > 0){
@@ -177,8 +178,6 @@ var modCommon = {
     }else{
       return null;
     }
-    */
-    return (pTargets.length>0);
   },
 
   findInjured:function(allCreepList){
