@@ -165,6 +165,7 @@ var modCommon = {
   playerAttack:function(allCreepList){
     //priority Targets
     var pTargets = _.filter(allCreepList, (creep) => (creep.owner && !( creep.owner.username == "PCarton" || creep.owner.username == 'Invader')));
+    /*
     var attackers = [];
     for(var creepName in pTargets){
       var owner = pTargets[creepName].owner;
@@ -176,6 +177,8 @@ var modCommon = {
     }else{
       return null;
     }
+    */
+    return (pTargets.length>0);
   },
 
   findInjured:function(allCreepList){
