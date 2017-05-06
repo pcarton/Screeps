@@ -149,7 +149,7 @@ var modCommon = {
   move:function(creep,pos){
     var opts = {};
     opts.ignoreCreeps = false;
-    opts.serialize = true;
+    opts.serialize = false;
     var emptyPath = false;
     var creepPath = creep.memory.path;
     if(!creepPath){
