@@ -169,7 +169,7 @@ var modCommon = {
     for(var creepName in pTargets){
       var owner = pTargets[creepName].owner;
       var bodies = pTargets[creepName].body;
-      var justAttack = _.filter(body, (part)=>(part.type==ATTACK || part.type==RANGED_ATTACK));
+      var justAttack = _.filter(bodies, (part)=>(part.type==ATTACK || part.type==RANGED_ATTACK));
       if(attackers.indexOf(owner) >-1 && justAttack.length>0)
         attackers.push(owner);
     }
