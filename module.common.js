@@ -164,13 +164,13 @@ var modCommon = {
 
   playerAttack:function(allCreepList){
     //priority Targets
-    var pTargets = _.filter(allCreepList, (creep) => (creep.owner && !( creep.owner.username == "PCarton" || creep.owner.username == 'Invader') && creep.body));
+    var pTargets = _.filter(allCreepList, (creep) => !creep.my);
     var attackers = [];
     for(var creepName in pTargets){
       var owner = pTargets[creepName].owner;
       var bodies = pTargets[creepName].body;
       var justAttack = _.filter(bodies, (part)=>(part.type==ATTACK || part.type==RANGED_ATTACK));
-      if(attackers.indexOf(owner) >-1 && justAttack.length>0)
+      if(!attackers.includes(owner))
         attackers.push(owner);
     }
     if(attackers.length > 0){
