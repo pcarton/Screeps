@@ -8,10 +8,11 @@ var roleArchitect = {
     var structureType = flag.name;
     var wallBool = (structureType.substring(0,4)==="Wall");
     var containerBool = (structureType.substring(0,9)==="Container" || structureType.substring(0,7)==="DropOff" || structureType.substring(0,8)==="GDropOff" || structureType.substring(0,7)==="Deliver");
+    var containerBoolEarly = (structureType.substring(0,9)==="Container" ||  structureType.substring(0,7)==="Deliver");
     var marked = flag.memory.marked;
     switch(controllerLvl){
       case 1:
-        return containerBool && !marked;
+        return containerBoolEarly && !marked;
       case 2:
         return (wallBool || structureType === "Extensions1" || containerBool) && !marked;
       case 3:
