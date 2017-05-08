@@ -33,7 +33,7 @@ module.exports.loop = function () {
   //Loop to check each room that is visible to the script
   for(var roomName in Memory.rooms){
     var room = Game.rooms[roomName];
-
+    
     //Creep lists in each room, comparing lengths shows if there are 'others'
     var allCreepList = room.find(FIND_CREEPS);
     var myCreepList = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username ==="PCarton"));
