@@ -69,11 +69,14 @@ var roleHarvester = {
                     return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity) || (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
                   }
                 });
-          var p3 = creep.pos.findClosestByPath(FIND_STRUCTURES,{
-            filter: (structure) => {
-              return (structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
+
+          var p3Flag = creep.pos.findClosestByPath(FIND_FLAGS,{
+            filter: (flag) => {
+              return (flag.name.substring(0,9)==="Container" || flag.name.substring(0,7)==="DropOff" || flag.name.substring(0,7)==="Deliver");
             }
           });
+          var p3Arr = creep.room.lookForAt(LOOK_STRUCTURES, p3Flag);
+          var p3 = _.filter(p3Arr, (object) => object.structureType == STRUCTURE_CONTAINER)[0];
           if(p1) {
               if(creep.transfer(p1, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 modCommon.move(creep,p1.pos);
