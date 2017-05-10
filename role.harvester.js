@@ -105,7 +105,7 @@ var roleHarvester = {
             }
           }else if(p4){
             if(creep.transfer(p4, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-              modCommon.move(creep,p3.pos);
+              modCommon.move(creep,p4.pos);
             }else{
               creep.memory.path = null;
             }
