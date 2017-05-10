@@ -174,7 +174,7 @@ var modCommon = {
         attackers.push(owner);
     }
     if(attackers.length > 0){
-      return attackers;
+      return attackers[0]; //TODO turn this into a string of all attackers;
     }else{
       return null;
     }
