@@ -53,7 +53,8 @@ var roleStructures = {
   },
 
   runTower:function(tower, allCreepList){
-    if(Memory.towersMem.mode === "attack"){
+    var mode = Memory.rooms[tower.room.name].towers[tower.id].mode;
+    if(mode === "attack"){
       this.attack(tower);
     }else if(tower.energy > 300){
       this.heal(tower,allCreepList);
