@@ -77,14 +77,14 @@ var roleHarvester = {
           if(p3Flag && !p3){
             p3Flag.memory.marked = false;
           }
-          
+
           var p4Flag = creep.pos.findClosestByPath(FIND_FLAGS,{
             filter: (flag) => {
               return (flag.name.substring(0,9)==="Container" || flag.name.substring(0,7)==="DropOff" || flag.name.substring(0,7)==="Deliver");
             }
           });
-          var p4Arr = creep.room.lookForAt(LOOK_STRUCTURES, p3Flag);
-          var p4 = _.filter(p3Arr, (object) => object.structureType == STRUCTURE_CONTAINER)[0];
+          var p4Arr = creep.room.lookForAt(LOOK_STRUCTURES, p4Flag);
+          var p4 = _.filter(p4Arr, (object) => object.structureType == STRUCTURE_CONTAINER)[0];
           if(p1) {
               if(creep.transfer(p1, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 modCommon.move(creep,p1.pos);
