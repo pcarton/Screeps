@@ -15,7 +15,7 @@ function clearDead(){
       var job = Memory.creeps[i].role;
       var roomName = Memory.creeps[i].room;
       modUtil.decrementCreepNum(job,roomName);
-      modSpawning.enqueuByJob(job,roomName);
+      modSpawning.enqueuByJob(job,roomName,false);
 
       delete Memory.creeps[i];
     }
@@ -33,7 +33,7 @@ module.exports.loop = function () {
   //Loop to check each room that is visible to the script
   for(var roomName in Memory.rooms){
     var room = Game.rooms[roomName];
-    
+
     //Creep lists in each room, comparing lengths shows if there are 'others'
     var allCreepList = room.find(FIND_CREEPS);
     var myCreepList = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username ==="PCarton"));
