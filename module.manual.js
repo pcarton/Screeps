@@ -7,6 +7,7 @@ var modManual ={
     var obj = {
       description:"Manual-"+type,
       body: null,
+      role: type,
       name: undefined,
       memory:memoryObj
     };
