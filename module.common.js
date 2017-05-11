@@ -148,12 +148,14 @@ var modCommon = {
   //Function to move useing a stored path
   move:function(creep,pos){
     var opts = {};
+    var posStr = pos.roomName+":"+pos.x+","+pos.y;
     opts.ignoreCreeps = false;
     opts.serialize = true;
     var emptyPath = false;
     var creepPath = creep.memory.path;
-    if(!creepPath){
+    if(!creepPath || creep.memory.dest != posStr){
         creep.memory.path = creep.pos.findPathTo(pos, opts);
+        creep.memory.dest = posStr;
     }
     var result = creep.moveByPath(creep.memory.path);
     if(result !== 0){
