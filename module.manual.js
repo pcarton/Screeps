@@ -1,3 +1,4 @@
+var modMemory = require("module.memory");
 var bodyObj = require('module.bodyTypes');
 var modManual ={
   spawn:function(type, tier, roomName, pos){
