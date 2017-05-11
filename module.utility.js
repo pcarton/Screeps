@@ -58,6 +58,9 @@ var modUtil = {
 
   //Decrementes the number of that creep in the memory storage
   decrementCreepNum:function(creepType,roomName){
+    if(!roomName){
+      return;
+    }
     if(creepType==="harvester"){
       --Memory.rooms[roomName].roles.numHarvesters;
     }else if(creepType === "upgrader"){
