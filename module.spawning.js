@@ -72,7 +72,7 @@ var modSpawning = {
     }else{
       var flags = _.filter(Game.rooms[roomName].find(FIND_FLAGS), (flag) => roleArchitect.ableToBuild(Game.rooms[roomName].controller.level, flag));
 
-      return flags.length && roles.numArchitects < 1;
+      return flags.length >0 && roles.numArchitects < 1;
     }
   },
 
