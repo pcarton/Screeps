@@ -14,9 +14,10 @@ function clearDead(){
     if(!Game.creeps[i]) {
       var job = Memory.creeps[i].role;
       var roomName = Memory.creeps[i].room;
-      modUtil.decrementCreepNum(job,roomName);
-      modSpawning.enqueuByJob(job,roomName,false);
-
+      if(roomName){
+        modUtil.decrementCreepNum(job,roomName);
+        modSpawning.enqueuByJob(job,roomName,false);
+      }
       delete Memory.creeps[i];
     }
   }
