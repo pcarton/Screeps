@@ -10,11 +10,12 @@ var modManual ={
       body: null,
       role: type,
       name: undefined,
+      room: roomName,
       memory:memoryObj
     };
     obj.body = bodyObj.getBody(type, tier);
     Memory.rooms[roomName].spawnQ.unshift(obj); //unshift it so it is priority
     return "Scheduled";
-  }  
+  }
 };
 module.exports = modManual;
