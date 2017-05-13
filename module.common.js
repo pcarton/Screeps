@@ -65,9 +65,9 @@ var modCommon = {
         }
       //Finally, the creep will harvest if it can
       }else if(creep.memory.selfHarvest){
-        var sources = creep.pos.findClosestByPath(FIND_SOURCES);
-        if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-          modCommon.move(creep, sources);
+        var source = creep.pos.findClosestByPath(FIND_SOURCES);
+        if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+          modCommon.move(creep, source);
         }else{
           creep.memory.path = null;
         }
