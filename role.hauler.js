@@ -25,6 +25,8 @@ var roleHauler = {
         if(!thisAssigned && creep.memory.dropOff === ""){
           creep.memory.dropOff = gID;
         }
+      }else{
+        flag.memory.marked = false;
       }
     }
     Memory.rooms[roomName].roles.maxHaulers = flags.length;
