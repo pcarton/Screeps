@@ -74,7 +74,8 @@ var roleHarvester = {
               filter: (flag) => flag.name.substring(0,7)=="Deliver"
           });
           var p3 = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,p3Flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER && struct.store[RESOURCE_ENERGY] < struct.storeCapacity)[0];
-          if(p3Flag && !p3){
+          var construct = creep.room.lookForAt(LOOK_CONSTRUCTION_SITES,p3Flag);
+          if(p3Flag && !p3 && construct.length === 0){
             p3Flag.memory.marked = false;
           }
 
