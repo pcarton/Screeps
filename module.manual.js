@@ -18,6 +18,79 @@ var modManual ={
     Memory.rooms[roomName].spawnQ.unshift(obj); //unshift it so it is priority
     modUtil.incrementCreepNum(type,roomName);
     return "Scheduled";
+  },
+  recountCreeps:function(roomName){
+    var roles = Memory.rooms[roomName].roles;
+    var gameCreeps = _.filter(Game.creeps, (creep) => creep.room.name == roomName);
+    var spawnQ = Memory.rooms[roomName].spawnQ;
+
+    roles.numCreeps = gameCreeps.length + spawnQ.length;
+    roles.numHarvesters = 0;
+    roles.numUpgraders =0;
+    roles.numBuilders = 0;
+    roles.numRepair = 0;
+    roles.numArchitects = 0;
+    roles.numMiners = 0;
+    roles.numHaulers = 0;
+    roles.numFeeders = 0;
+    roles.numGeo = 0;
+    roles.numGeoH = 0;
+    roles.numMerchant = 0;
+
+    for(var c in gameCreeps){
+      var creep = gameCreeps[c];
+      if(creep.memory.role == 'harvester') {
+        roles.numHarvesters++;
+      }else if(creep.memory.role == 'upgrader') {
+        roles.numUpgraders++;
+      }else if(creep.memory.role == 'builder'){
+        roles.numBuilders++;
+      }else if(creep.memory.role == 'repair'){
+        roles.numRepair++;
+      }else if(creep.memory.role == 'architect'){
+        roles.numArchitects++;
+      }else if(creep.memory.role == 'miner'){
+        roles.numMiners++;
+      }else if(creep.memory.role == 'hauler'){
+        roles.numHaulers++;
+      }else if(creep.memory.role == 'feeder'){
+        roles.numFeeders++;
+      }else if(creep.memory.role == 'geo'){
+        roles.numGeo++;
+      }else if(creep.memory.role == 'geoH'){
+        roles.numGeoH++;
+      }else if(creep.memory.role == 'merchant'){
+        roles.numMerchant++;
+      }
+    }
+
+    for(var s in spawnQ){
+      var spawnee = spawnQ[s];
+      if(spawnee.role == 'harvester') {
+        roles.numHarvesters++;
+      }else if(spawnee.role == 'upgrader') {
+        roles.numUpgraders++;
+      }else if(spawnee.role == 'builder'){
+        roles.numBuilders++;
+      }else if(spawnee.role == 'repair'){
+        roles.numRepair++;
+      }else if(spawnee.role == 'architect'){
+        roles.numArchitects++;
+      }else if(spawnee.role == 'miner'){
+        roles.numMiners++;
+      }else if(spawnee.role == 'hauler'){
+        roles.numHaulers++;
+      }else if(spawnee.role == 'feeder'){
+        roles.numFeeders++;
+      }else if(spawnee.role == 'geo'){
+        roles.numGeo++;
+      }else if(spawnee.role == 'geoH'){
+        roles.numGeoH++;
+      }else if(spawnee.role == 'merchant'){
+        roles.numMerchant++;
+      }
+    }
+
   }
 };
 module.exports = modManual;
