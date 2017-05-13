@@ -34,21 +34,13 @@ var roleHauler = {
   },
 
   findCloseDeliver(creep){
-    var p1 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => {
-                return ((structure.structureType == STRUCTURE_EXTENSION ||
-                        structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
-            }
-    });
     var p4 = creep.pos.findClosestByRange(FIND_STRUCTURES,{
       filter: (structure) => {
         return (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
       }
     });
     var deliver = null;
-    if(p1){
-      deliver = p1;
-    }else if(p4){
+    if(p4){
       deliver = p4;
     }
     return deliver;
