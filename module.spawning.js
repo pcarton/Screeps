@@ -92,13 +92,14 @@ var modSpawning = {
   needHauler:function(roomName){
     var roles = Memory.rooms[roomName].roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
+    var miners = roles.numMiners > 0;
 
     if(notEnoughHarvest){
       return false;
     }else{
       var tier = this.calcTier(roomName);
       var LTMin = roles.numHaulers < roles.maxHaulers;
-      return (tier >= 4) && LTMin;
+      return (tier >= 4) && LTMin && miners;
     }
   },
 
