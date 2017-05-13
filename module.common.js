@@ -149,6 +149,9 @@ var modCommon = {
   move:function(creep,pos){
     var opts = {};
     var posStr = pos.roomName+":"+pos.x+","+pos.y;
+    if(pos.roomName === undefined || pos.x === undefined || pos.y === undefined){
+      posStr = null;
+    }
     opts.ignoreCreeps = false;
     opts.serialize = true;
     var emptyPath = false;
