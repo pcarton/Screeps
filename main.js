@@ -19,6 +19,7 @@ function clearDead(){
         modSpawning.enqueuByJob(job,roomName,false);
       }
       delete Memory.creeps[i];
+      console.log("Removed creep "+i+" (a "+job+") from memory");
     }
   }
 }
