@@ -122,8 +122,8 @@ var modSpawning = {
       var tier = this.calcTier(roomName);
       var LTMin = roles.numGeo < 1;
 
-      var extractor = _.filter(Game.rooms[roomName].find(FIND_STRUCTURES), (structure) => structure.structureType === STRUCTURE_EXTRACTOR);
-      var minerals = (_.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
+      var extractor = _.filter(Game.rooms[roomName].find(FIND_STRUCTURES), (structure) => structure.structureType === STRUCTURE_EXTRACTOR).length >0;
+      var minerals = _.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length> 0;
 
       return (tier >=4) && LTMin && extractor && minerals;
     }
@@ -309,6 +309,7 @@ var modSpawning = {
       memory:memoryObjGm
     };
     obj.body = bodyObj.getBody('geo',tier);
+    Memory.rooms[roomName].spawnQ.push(obj);
     modUtil.incrementCreepNum("geo",roomName);
   },
   enqueueMerchant:function(roomName){
