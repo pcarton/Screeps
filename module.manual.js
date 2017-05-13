@@ -1,5 +1,6 @@
 var modMemory = require("module.memory");
 var bodyObj = require('module.bodyTypes');
+var modUtil = require('module.utility');
 var modManual ={
   spawn:function(type, tier, roomName, pos){
     var memoryObj = modMemory.getInitalCreepMem(type);
@@ -15,6 +16,7 @@ var modManual ={
     };
     obj.body = bodyObj.getBody(type, tier);
     Memory.rooms[roomName].spawnQ.unshift(obj); //unshift it so it is priority
+    modUtil.incrementCreepNum(type,roomName);
     return "Scheduled";
   }
 };
