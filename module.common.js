@@ -148,15 +148,17 @@ var modCommon = {
   //Function to move useing a stored path
   move:function(creep,pos){
     var opts = {};
-    var posStr = pos.roomName+":"+pos.x+","+pos.y;
+    var posStr = null;
     if(pos.roomName === undefined || pos.x === undefined || pos.y === undefined){
       posStr = null;
+    }else{
+      posStr = pos.roomName+":"+pos.x+","+pos.y;
     }
     opts.ignoreCreeps = false;
     opts.serialize = true;
     var emptyPath = false;
     var creepPath = creep.memory.path;
-    if(!creepPath || creep.memory.dest != posStr){
+    if(!creepPath || creep.memory.dest != posStr || posStr === null){
         creep.memory.path = creep.pos.findPathTo(pos, opts);
         creep.memory.dest = posStr;
     }
