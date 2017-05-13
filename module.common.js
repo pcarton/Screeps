@@ -158,7 +158,7 @@ var modCommon = {
         creep.memory.dest = posStr;
     }
     var result = creep.moveByPath(creep.memory.path);
-    if(result != OK){
+    if(result != OK && result != ERR_TIRED){
       creep.memory.path = null;
     }
     return result;
