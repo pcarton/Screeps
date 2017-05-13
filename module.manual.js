@@ -5,7 +5,7 @@ var modManual ={
   spawn:function(type, tier, roomName, pos){
     var memoryObj = modMemory.getInitalCreepMem(type);
     memoryObj.dest = pos;
-    meoryObj.room = roomName;
+    memoryObj.room = roomName;
 
     var obj = {
       description:"Manual-"+type,
