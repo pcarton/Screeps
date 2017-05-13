@@ -1,5 +1,4 @@
 var modCommon = require('module.common');
-var roleHarvester = require('role.harvester');
 var roleMiner = {
 
   assignSource:function(creep){
@@ -66,7 +65,6 @@ var roleMiner = {
           dPos = dropOff.pos;
         }else{
           this.assignDropOff(creep);
-          roleHarvester.run(creep);
           return;
         }
       }
