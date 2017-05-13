@@ -160,6 +160,7 @@ var modCommon = {
     var result = creep.moveByPath(creep.memory.path);
     if(result != OK && result != ERR_TIRED){
       creep.memory.path = null;
+      console.log("Move error: "+result);
     }
     return result;
   },
