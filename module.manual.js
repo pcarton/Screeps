@@ -91,6 +91,39 @@ var modManual ={
       }
     }
 
+  },
+
+  clearQueue:function(roomName){
+    var roles = Memory.rooms[roomName].roles;
+    var spawnQ = Memory.rooms[roomName].spawnQ;
+
+    for(var s in spawnQ){
+      var spawnee = spawnQ[s];
+      if(spawnee.role == 'harvester') {
+        roles.numHarvesters--;
+      }else if(spawnee.role == 'upgrader') {
+        roles.numUpgraders--;
+      }else if(spawnee.role == 'builder'){
+        roles.numBuilders--;
+      }else if(spawnee.role == 'repair'){
+        roles.numRepair--;
+      }else if(spawnee.role == 'architect'){
+        roles.numArchitects--;
+      }else if(spawnee.role == 'miner'){
+        roles.numMiners--;
+      }else if(spawnee.role == 'hauler'){
+        roles.numHaulers--;
+      }else if(spawnee.role == 'feeder'){
+        roles.numFeeders--;
+      }else if(spawnee.role == 'geo'){
+        roles.numGeo--;
+      }else if(spawnee.role == 'geoH'){
+        roles.numGeoH--;
+      }else if(spawnee.role == 'merchant'){
+        roles.numMerchant--;
+      }
+      spawnQ.splice(s,1);
+    }
   }
 };
 module.exports = modManual;
