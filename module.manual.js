@@ -5,13 +5,13 @@ var modManual ={
   spawn:function(type, tier, roomName, pos){
     var memoryObj = modMemory.getInitalCreepMem(type);
     memoryObj.dest = pos;
+    meoryObj.room = roomName;
 
     var obj = {
       description:"Manual-"+type,
       body: null,
       role: type,
       name: undefined,
-      room: roomName,
       memory:memoryObj
     };
     obj.body = bodyObj.getBody(type, tier);
