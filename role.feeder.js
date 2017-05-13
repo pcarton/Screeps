@@ -28,12 +28,11 @@ var roleFeeder = {
                         structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
             }
     });
-    var p2Raw = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+    var p2 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => {
               return (structure.structureType == STRUCTURE_TOWER && structure.energy < (structure.energyCapacity-100));
             }
           });
-    var p2 = _.sortBy(p2Raw,['energy','pos']);
     var p3Flag = creep.pos.findClosestByRange(FIND_FLAGS, {
         filter: (flag) => flag.name.substring(0,7)=="Deliver"
     });
