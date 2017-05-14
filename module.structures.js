@@ -67,7 +67,7 @@ var roleStructures = {
     var pTargets = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username !=="PCarton"));
     if(pTargets){
       if(pTargets.length){
-        Memory.rooms[tower.room.name].towers[tower.id] = pTargets[0].id;
+        Memory.rooms[tower.room.name].towers[tower.id].target = pTargets[0].id;
       }
     }else{
       var targets = controller.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
