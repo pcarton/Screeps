@@ -369,13 +369,13 @@ var modSpawning = {
   },
 
   enqueueAllNeeded(roomName){
+    if(this.needMiner(roomName))this.enqueueMiner(roomName);
+    if(this.needHauler(roomName))this.enqueueHauler(roomName);
     if(this.needHarvester(roomName))this.enqueueHarvester(roomName);
     if(this.needUpgrader(roomName))this.enqueueUpgrader(roomName);
     if(this.needBuilder(roomName))this.enqueueBuilder(roomName);
     if(this.needRepair(roomName))this.enqueueRepair(roomName);
     if(this.needArchitect(roomName))this.enqueueArchitect(roomName);
-    if(this.needMiner(roomName))this.enqueueMiner(roomName);
-    if(this.needHauler(roomName))this.enqueueHauler(roomName);
     if(this.needFeeder(roomName))this.enqueueFeeder(roomName);
     if(this.needGeoMiner(roomName))this.enqueueGeoMiner(roomName);
     if(this.needMerchant(roomName))this.enqueueMerchant(roomName);
