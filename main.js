@@ -83,6 +83,9 @@ module.exports.loop = function () {
         if(!room.controller.safeMode && enemyPresent && creep.memory.military !== true){
           modCommon.retreat(creep);
         }
+        if(creep.ticksToLive == 1){
+          creep.say("Goodbye, cruel world!",false);
+        }
         //if the creep is to assist
         else if(creep.memory.assist){
           modAssist.run(creep);
