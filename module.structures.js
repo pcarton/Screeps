@@ -8,7 +8,7 @@ var roleStructures = {
   },
 
   attack:function(tower){
-    var enemy= Game.getObjectById(Memory.towersMem.target);
+    var enemy= Game.getObjectById(Memory.rooms[tower.room.name].towers[tower.id].target);
     if(enemy){
       tower.attack(enemy);
     }
