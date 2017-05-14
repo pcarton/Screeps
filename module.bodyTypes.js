@@ -29,6 +29,10 @@ var merchantBody = [MOVE,CARRY];
 
 //TODO Higher tier(s) for lvl 6,7,8
 
+//Tier 5
+var u5Body = [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE];
+var b5Body = [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE];
+var soldierBody = [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE, MOVE, MOVE, MOVE, RANGED_ATTACK, RANGED_ATTACK];
 //NonTiered
 var settlerBody = [CLAIM,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE];
 
@@ -97,6 +101,8 @@ var bodyObj = {
             return u3Body;
           case 4:
             return u4Body;
+          case 5:
+            return u5Body;
         }
       }else if(role === 'builder' || role === 'architect'){
         switch(tier){
@@ -107,6 +113,8 @@ var bodyObj = {
           case 3:
           case 4:
             return b3Body;
+          case 5:
+            return b5Body;
         }
       }else if(role === 'repair'){
         switch(tier){
