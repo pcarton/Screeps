@@ -175,7 +175,7 @@ var modCommon = {
     var pTargets = _.filter(allCreepList, (creep) => !creep.my);
     var attackers = [];
     for(var creepName in pTargets){
-      var owner = pTargets[creepName].owner;
+      var owner = pTargets[creepName].owner.username;
       if(owner != "Invader"){
         var bodies = pTargets[creepName].body;
         var justAttack = _.filter(bodies, (part)=>(part.type==ATTACK || part.type==RANGED_ATTACK));
