@@ -130,7 +130,7 @@ module.exports.loop = function () {
           console.log(err.name + "\n" + err.message);
         }
         if(!target){
-          modStructures.pickTargets(room.controller, allCreepList);
+          modStructures.pickTargets(Game.getObjectById(towerId), allCreepList);
         }
       }else{ //TODO check for injured creeps and set to heal, maybe room variable that triggers on hit
         Memory.rooms[roomName].towers[towerId].mode = "repair";

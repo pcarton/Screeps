@@ -62,12 +62,12 @@ var roleStructures = {
 
   },
 
-  pickTargets:function(controller, allCreepList){
+  pickTargets:function(tower, allCreepList){
     //priority Targets
     var pTargets = _.filter(allCreepList, (creep) => (creep.owner && creep.owner.username !=="PCarton"));
     if(pTargets){
       if(pTargets.length){
-        Memory.towersMem.target = pTargets[0].id;
+        Memory.rooms[tower.room.name].towers[tower.id] = pTargets[0].id;
       }
     }else{
       var targets = controller.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
