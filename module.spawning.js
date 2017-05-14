@@ -80,7 +80,7 @@ var modSpawning = {
     var roles = Memory.rooms[roomName].roles;
 
     var tier = this.calcTier(roomName);
-    var sources = Memory.rooms[roomName].sourceIDs.length;
+    //var sources = Memory.rooms[roomName].sourceIDs.length; TODO use this memory address
     var LTMin = roles.numMiners < roles.maxMiners;
     return (tier >= 4) && LTMin;
 
