@@ -107,7 +107,7 @@ var modSpawning = {
       return false;
     }else{
       var storage = Game.rooms[roomName].storage !== undefined;
-      var LTMin = roles.numFeeders < roles.maxFeeders;
+      var LTMin = roles.numFeeders < (roles.maxFeeders + roles.numGeo);
       return storage && LTMin;
     }
   },
