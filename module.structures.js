@@ -72,7 +72,7 @@ var roleStructures = {
     }else{
       var targets = controller.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
       if(targets.length>0){
-        Memory.towersMem.target = targets[0].id;
+        Memory.rooms[tower.room.name].towers[tower.id].target = targets[0].id;
       }
     }
   }
