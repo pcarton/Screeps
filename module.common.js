@@ -88,7 +88,7 @@ var modCommon = {
 
     if(room.storage.store.energy < modConstants.roomEnergyBuffer){
       return brokenRoad || brokenRamp || brokenCont || brokenWall;
-    }else if(fixeArr.length>0){
+    }else if(brokenRamp2){
       return brokenRamp2;
     }else {
       return brokenWall2;
