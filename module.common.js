@@ -154,7 +154,7 @@ var modCommon = {
     }else{
       posStr = pos.roomName+":"+pos.x+","+pos.y;
     }
-    opts.ignoreCreeps = true;
+    opts.ignoreCreeps = false;
     opts.serialize = true;
     var emptyPath = false;
     var creepPath = creep.memory.path;
