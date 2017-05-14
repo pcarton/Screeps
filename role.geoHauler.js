@@ -13,6 +13,7 @@ var roleHauler = {
     for(var flagIndex in flags){
       var flag = flags[flagIndex];
       var dropOff = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,flag), (struct)=> struct.structureType === STRUCTURE_CONTAINER || struct.structureType === STRUCTURE_LINK)[0];
+      var construct = creep.room.lookForAt(LOOK_CONSTRUCTION_SITES,flag);
       if(dropOff){
         var gID = dropOff.id;
         var thisAssigned = false;
@@ -25,6 +26,8 @@ var roleHauler = {
         if(!thisAssigned && creep.memory.dropOff === ""){
           creep.memory.dropOff = gID;
         }
+      }else if(construct.length === 0 ){
+        flag.memory.marked = false;
       }
     }
     Memory.rooms[roomName].roles.maxHaulers = flags.length;
