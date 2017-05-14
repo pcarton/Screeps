@@ -51,26 +51,26 @@ var modCommon = {
           creep.memory.path = null;
         }
       }
-    }else{
-      //Next priority is the closest container or storage
-      var storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-        filter: (object)=>((object.structureType === STRUCTURE_CONTAINER) || (object.structureType === STRUCTURE_STORAGE)) && (object.store[RESOURCE_ENERGY] > creep.carryCapacity)
-      });
-      if(storage!==null){
-        var getEnergy = creep.withdraw(storage, RESOURCE_ENERGY, creep.carryCapacity-creep.carry);
-        if(getEnergy===ERR_NOT_IN_RANGE) {
-            modCommon.move(creep, storage);
-        }else{
-          creep.memory.path = null;
-        }
-      //Finally, the creep will harvest if it can
-      }else if(creep.memory.selfHarvest){
-        var source = creep.pos.findClosestByPath(FIND_SOURCES);
-        if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-          modCommon.move(creep, source);
-        }else{
-          creep.memory.path = null;
-        }
+      return;
+    }
+    //Next priority is the closest container or storage
+    var storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+      filter: (object)=>((object.structureType === STRUCTURE_CONTAINER) || (object.structureType === STRUCTURE_STORAGE)) && (object.store[RESOURCE_ENERGY] > creep.carryCapacity)
+    });
+    if(storage!==null){
+      var getEnergy = creep.withdraw(storage, RESOURCE_ENERGY, creep.carryCapacity-creep.carry);
+      if(getEnergy===ERR_NOT_IN_RANGE) {
+          modCommon.move(creep, storage);
+      }else{
+        creep.memory.path = null;
+      }
+    //Finally, the creep will harvest if it can
+    }else if(creep.memory.selfHarvest){
+      var source = creep.pos.findClosestByPath(FIND_SOURCES);
+      if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+        modCommon.move(creep, source);
+      }else{
+        creep.memory.path = null;
       }
     }
   },
