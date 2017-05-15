@@ -179,7 +179,7 @@ var modCommon = {
       if(owner != "Invader"){
         var bodies = pTargets[creepName].body;
         var justAttack = _.filter(bodies, (part)=>(part.type==ATTACK || part.type==RANGED_ATTACK));
-        if(!attackers.includes(owner))
+        if(justAttack.length > 0 && !attackers.includes(owner))
           attackers.push(owner);
       }
     }
