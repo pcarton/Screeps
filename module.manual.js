@@ -127,7 +127,7 @@ var modManual ={
       roles.numCreeps--;
     }
 
-    spawnQ = [];
+    Memory.rooms[roomName].spawnQ = [];
   }
 };
 module.exports = modManual;
