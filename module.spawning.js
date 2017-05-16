@@ -168,8 +168,10 @@ var modSpawning = {
         memory:memoryObj
       };
   */
-  enqueueHarvester:function(roomName){
-    var tier = this.calcTier(roomName);
+  enqueueHarvester:function(roomName, tier){
+    if(!tier){
+      tier = this.calcTier(roomName);
+    }
     var memoryObjH = modMemory.getInitalCreepMem("harvester");
     memoryObjH.room = roomName;
 
@@ -421,6 +423,9 @@ var modSpawning = {
           console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep + "\n" + JSON.stringify(toSpawn.body));
         }else{
             queue.unshift(toSpawn);
+            if(queue.length == Memory.rooms[roomName].roles.numCreeps){
+              enqueueHarvester(roomName,1);
+            }
         }
       }
     }
