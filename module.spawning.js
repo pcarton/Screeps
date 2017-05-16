@@ -423,7 +423,7 @@ var modSpawning = {
           console.log("Room "+roomName+": Spawning "+toSpawn.description+": "+creep + "\n" + JSON.stringify(toSpawn.body));
         }else{
             queue.unshift(toSpawn);
-            if(queue.length == Memory.rooms[roomName].roles.numCreeps){
+            if(queue.length == Memory.rooms[roomName].roles.numCreeps && !spawn.spawning){
               enqueueHarvester(roomName,1);
             }
         }
