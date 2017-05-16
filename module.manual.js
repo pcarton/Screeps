@@ -68,27 +68,27 @@ var modManual ={
 
     for(var s in spawnQ){
       var spawnee = spawnQ[s];
-      if(spawnee.role == 'harvester') {
+      if(spawnee.memory.role == 'harvester') {
         roles.numHarvesters++;
-      }else if(spawnee.role == 'upgrader') {
+      }else if(spawnee.memory.role == 'upgrader') {
         roles.numUpgraders++;
-      }else if(spawnee.role == 'builder'){
+      }else if(spawnee.memory.role == 'builder'){
         roles.numBuilders++;
-      }else if(spawnee.role == 'repair'){
+      }else if(spawnee.memory.role == 'repair'){
         roles.numRepair++;
-      }else if(spawnee.role == 'architect'){
+      }else if(spawnee.memory.role == 'architect'){
         roles.numArchitects++;
-      }else if(spawnee.role == 'miner'){
+      }else if(spawnee.memory.role == 'miner'){
         roles.numMiners++;
-      }else if(spawnee.role == 'hauler'){
+      }else if(spawnee.memory.role == 'hauler'){
         roles.numHaulers++;
-      }else if(spawnee.role == 'feeder'){
+      }else if(spawnee.memory.role == 'feeder'){
         roles.numFeeders++;
-      }else if(spawnee.role == 'geo'){
+      }else if(spawnee.memory.role == 'geo'){
         roles.numGeo++;
-      }else if(spawnee.role == 'geoH'){
+      }else if(spawnee.memory.role == 'geoH'){
         roles.numGeoH++;
-      }else if(spawnee.role == 'merchant'){
+      }else if(spawnee.memory.role == 'merchant'){
         roles.numMerchant++;
       }
     }
@@ -101,27 +101,27 @@ var modManual ={
 
     for(var s in spawnQ){
       var spawnee = spawnQ[s];
-      if(spawnee.role == 'harvester') {
+      if(spawnee.memory.role == 'harvester') {
         roles.numHarvesters--;
-      }else if(spawnee.role == 'upgrader') {
+      }else if(spawnee.memory.role == 'upgrader') {
         roles.numUpgraders--;
-      }else if(spawnee.role == 'builder'){
+      }else if(spawnee.memory.role == 'builder'){
         roles.numBuilders--;
-      }else if(spawnee.role == 'repair'){
+      }else if(spawnee.memory.role == 'repair'){
         roles.numRepair--;
-      }else if(spawnee.role == 'architect'){
+      }else if(spawnee.memory.role == 'architect'){
         roles.numArchitects--;
-      }else if(spawnee.role == 'miner'){
+      }else if(spawnee.memory.role == 'miner'){
         roles.numMiners--;
-      }else if(spawnee.role == 'hauler'){
+      }else if(spawnee.memory.role == 'hauler'){
         roles.numHaulers--;
-      }else if(spawnee.role == 'feeder'){
+      }else if(spawnee.memory.role == 'feeder'){
         roles.numFeeders--;
-      }else if(spawnee.role == 'geo'){
+      }else if(spawnee.memory.role == 'geo'){
         roles.numGeo--;
-      }else if(spawnee.role == 'geoH'){
+      }else if(spawnee.memory.role == 'geoH'){
         roles.numGeoH--;
-      }else if(spawnee.role == 'merchant'){
+      }else if(spawnee.memory.role == 'merchant'){
         roles.numMerchant--;
       }
     }
