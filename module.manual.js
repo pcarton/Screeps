@@ -122,9 +122,9 @@ var modManual ={
       }else if(spawnee.role == 'merchant'){
         roles.numMerchant--;
       }
-      roles.numCreeps--;
-      spawnQ.splice(s,1);
     }
+    roles.numCreeps = 0;
+    spawnQ = [];
   }
 };
 module.exports = modManual;
