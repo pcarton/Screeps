@@ -107,9 +107,13 @@ module.exports.loop = function () {
     var control = room.controller;
     var enemy = modCommon.playerAttack(allCreepList);
 
-    if(enemyPresent && enemy && (!control.safeMode && !control.safeModeCooldown) && (control.safeModeAvailable > 0 )){
-      control.activateSafeMode();
-      Game.notify(modCommon.linkRoomAtTick(room,Game.time,"Activated Safe Mode(Player Attack by:"+enemy+")"),0);
+    if(enemyPresent && enemy){
+      if((!control.safeMode && !control.safeModeCooldown) &&  (control.safeModeAvailable > 0 )){
+        control.activateSafeMode();
+        Game.notify(modCommon.linkRoomAtTick(room,Game.time,"Activated Safe Mode(Player Attack by:"+enemy+")"),0);
+      }else{
+        Game.notify(modCommon.linkRoomAtTick(room,Game.time,"Player Attack by:"+enemy),0);
+      }
     }
 
     var newEnemy = true;
