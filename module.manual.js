@@ -124,8 +124,9 @@ var modManual ={
       }else if(spawnee.memory.role == 'merchant'){
         roles.numMerchant--;
       }
+      roles.numCreeps--;
     }
-    roles.numCreeps = 0;
+
     spawnQ = [];
   }
 };
