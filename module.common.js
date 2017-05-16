@@ -197,100 +197,29 @@ var modCommon = {
   },
 
   whatCarry:function(creep){
-    var resourceType;
-
     var creepCarry = creep.carry;
-    if(creepCarry.energy>0){
-      resourceType = RESOURCE_ENERGY;
-    }else if(creepCarry.power>0){
-      resourceType = RESOURCE_POWER;
-    }else if(creepCarry.H>0){
-      resourceType = RESOURCE_HYDROGEN;
-    }else if(creepCarry.O>0){
-      resourceType = RESOURCE_OXYGEN;
-    }else if(creepCarry.U>0){
-      resourceType = RESOURCE_UTRIUM;
-    }else if(creepCarry.L>0){
-      resourceType = RESOURCE_LEMERGIUM;
-    }else if(creepCarry.K>0){
-      resourceType = RESOURCE_KEANIUM;
-    }else if(creepCarry.Z>0){
-      resourceType = RESOURCE_ZYNTHIUM;
-    }else if(creepCarry.X>0){
-      resourceType = RESOURCE_CATALYST;
-    }else if(creepCarry.G>0){
-      resourceType = RESOURCE_GHODIUM;
-    }else{
-      resourceType = RESOURCE_ENERGY;
+    for(var type in creepCarry){
+      if(creepCarry[type]>0){
+        return type;
+      }
     }
-
-    return resourceType;
+    return null;
   },
 
   whatStore:function(struct){
-    var resourceType;
-
     var structStore = struct.store;
-    if(structStore.power>0){
-      resourceType = RESOURCE_POWER;
-    }else if(structStore.H>0){
-      resourceType = RESOURCE_HYDROGEN;
-    }else if(structStore.O>0){
-      resourceType = RESOURCE_OXYGEN;
-    }else if(structStore.U>0){
-      resourceType = RESOURCE_UTRIUM;
-    }else if(structStore.L>0){
-      resourceType = RESOURCE_LEMERGIUM;
-    }else if(structStore.K>0){
-      resourceType = RESOURCE_KEANIUM;
-    }else if(structStore.Z>0){
-      resourceType = RESOURCE_ZYNTHIUM;
-    }else if(structStore.X>0){
-      resourceType = RESOURCE_CATALYST;
-    }else if(structStore.G>0){
-      resourceType = RESOURCE_GHODIUM;
-    }else{
-      resourceType = RESOURCE_ENERGY;
+    for(var type in structStore){
+      if(structStore[type]>0){
+        return type;
+      }
     }
-
-    return resourceType;
+    return null;
   },
 
   getResourceCount:function(storeObj, resourceType){
     var count;
-    switch(resourceType){
-      case RESOURCE_ENERGY:
-        count = storeObj.energy;
-        break;
-      case RESOURCE_POWER:
-        count = storeObj.power;
-        break;
-      case RESOURCE_HYDROGEN:
-        count = storeObj.H;
-        break;
-      case RESOURCE_OXYGEN:
-        count = storeObj.O;
-        break;
-      case RESOURCE_UTRIUM:
-        count = storeObj.U;
-        break;
-      case RESOURCE_LEMERGIUM:
-        count = storeObj.L;
-        break;
-      case RESOURCE_KEANIUM:
-        count = storeObj.K;
-        break;
-      case RESOURCE_ZYNTHIUM:
-        count = storeObj.Z;
-        break;
-      case RESOURCE_CATALYST:
-        count = storeObj.X;
-        break;
-      case RESOURCE_GHODIUM:
-        count = storeObj.G;
-        break;
-      default:
-        count = 0;
+    if(storeObj){
+      count = storeObj[resourceType];
     }
     return count;
   },
