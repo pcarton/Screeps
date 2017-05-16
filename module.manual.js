@@ -39,28 +39,30 @@ var modManual ={
 
     for(var c in gameCreeps){
       var creep = gameCreeps[c];
-      if(creep.memory.role == 'harvester') {
-        roles.numHarvesters++;
-      }else if(creep.memory.role == 'upgrader') {
-        roles.numUpgraders++;
-      }else if(creep.memory.role == 'builder'){
-        roles.numBuilders++;
-      }else if(creep.memory.role == 'repair'){
-        roles.numRepair++;
-      }else if(creep.memory.role == 'architect'){
-        roles.numArchitects++;
-      }else if(creep.memory.role == 'miner'){
-        roles.numMiners++;
-      }else if(creep.memory.role == 'hauler'){
-        roles.numHaulers++;
-      }else if(creep.memory.role == 'feeder'){
-        roles.numFeeders++;
-      }else if(creep.memory.role == 'geo'){
-        roles.numGeo++;
-      }else if(creep.memory.role == 'geoH'){
-        roles.numGeoH++;
-      }else if(creep.memory.role == 'merchant'){
-        roles.numMerchant++;
+      if(creep.room.name == roomName){
+        if(creep.memory.role == 'harvester') {
+          roles.numHarvesters++;
+        }else if(creep.memory.role == 'upgrader') {
+          roles.numUpgraders++;
+        }else if(creep.memory.role == 'builder'){
+          roles.numBuilders++;
+        }else if(creep.memory.role == 'repair'){
+          roles.numRepair++;
+        }else if(creep.memory.role == 'architect'){
+          roles.numArchitects++;
+        }else if(creep.memory.role == 'miner'){
+          roles.numMiners++;
+        }else if(creep.memory.role == 'hauler'){
+          roles.numHaulers++;
+        }else if(creep.memory.role == 'feeder'){
+          roles.numFeeders++;
+        }else if(creep.memory.role == 'geo'){
+          roles.numGeo++;
+        }else if(creep.memory.role == 'geoH'){
+          roles.numGeoH++;
+        }else if(creep.memory.role == 'merchant'){
+          roles.numMerchant++;
+        }
       }
     }
 
