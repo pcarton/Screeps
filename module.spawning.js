@@ -296,7 +296,7 @@ var modSpawning = {
       memory:memoryObjF
     };
     obj.body = bodyObj.getBody('feeder',tier);
-    Memory.rooms[roomName].spawnQ.push(obj);
+    Memory.rooms[roomName].spawnQ.unshift(obj);
     modUtil.incrementCreepNum("feeder",roomName);
   },
   enqueueGeoMiner:function(roomName){
