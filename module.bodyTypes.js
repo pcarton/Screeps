@@ -134,7 +134,7 @@ var bodyObj = {
         return feederBody;
       }else if(role === 'soldier'){
         return soliderBody;
-      }else if(role === 'geoMiner'){
+      }else if(role === 'geo'){
         return geoMinerBody;
       }else if(role === 'merchant'){
         return merchantBody;
