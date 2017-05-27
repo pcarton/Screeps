@@ -39,8 +39,8 @@ var roleHarvester = {
     }
 
     if(!creep.memory.working){
-          var dropped = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY);
-          if(dropped){
+        var dropped = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
+        if(dropped && dropped.resourceType === RESOURCE_ENERGY){
             if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
               modCommon.move(creep,dropped.pos);
             }else{
