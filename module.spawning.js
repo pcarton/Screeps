@@ -149,7 +149,8 @@ var modSpawning = {
 
       var toSell = inStore || inTerm;
 
-      return !minerals && toSell && (tier >= 4) && LTMin;
+      //return !minerals && toSell && (tier >= 4) && LTMin;
+      return false;
     }
   },
 
