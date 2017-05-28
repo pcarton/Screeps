@@ -426,7 +426,7 @@ var modSpawning = {
             queue.unshift(toSpawn);
             //console.log("Could not spawn", toSpawn.description, "ERROR:",spawn.canCreateCreep(toSpawn.body,toSpawn.name));
             if(queue.length == Memory.rooms[roomName].roles.numCreeps && !spawn.spawning){
-              enqueueHarvester(roomName,1);
+              this.enqueueHarvester(roomName,1); //FIXME change to have logic for if there are miners but no haulers, etc
             }
         }
       }
