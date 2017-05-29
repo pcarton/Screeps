@@ -392,9 +392,9 @@ var modSpawning = {
     var spawnTier1 = (energyCapacity<modConstants.tier2EnergyMin);
     var spawnTier2 = (energyCapacity<modConstants.tier3EnergyMin);
     var spawnTier3 = (energyCapacity<modConstants.tier4EnergyMin);
-    var spawnTier4 = (energyCapacity>=modConstants.tier4EnergyMin);
-    var spawnTier5 = (energyCapacity>=modConstants.tier5EnergyMin);
-    var spawnTier6 = (energyCapacity>=modConstants.tier6EnergyMin);
+    var spawnTier4 = (energyCapacity<modConstants.tier5EnergyMin);
+    var spawnTier5 = (energyCapacity<modConstants.tier6EnergyMin);
+    var spawnTier6 = (energyCapacity<modConstants.tier7EnergyMin);
     var spawnTier7 = (energyCapacity>=modConstants.tier7EnergyMin);
 
     if(spawnTier1 || notEnoughHarvest){
