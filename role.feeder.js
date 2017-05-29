@@ -81,7 +81,7 @@ var roleFeeder = {
       }
     }else{
       var dropped = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
-      if(dropped && dropped.resourceType === RESOURCE_ENERGY){
+      if(dropped){
         if(creep.pickup(dropped)== ERR_NOT_IN_RANGE){
           modCommon.move(creep,dropped.pos);
         }else{
