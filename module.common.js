@@ -147,27 +147,37 @@ var modCommon = {
 
   //Function to move useing a stored path
   move:function(creep,pos){
-    var opts = {};
-    var posStr = null;
-    if(pos.roomName === undefined || pos.x === undefined || pos.y === undefined){
-      posStr = null;
+    if(creep.pos.x === 0){
+      creep.moveTo(1, creep.pos.y);
+    }else if(creep.pos.x === 49){
+      creep.moveTo(48, creep.pos.y);
+    }else if(creep.pos.y === 49){
+      creep.moveTo(creep.pos.x, 48);
+    }else if(creep.pos.x === 0){
+      creep.moveTo(creep.pos.x, 1);
     }else{
-      posStr = pos.roomName+":"+pos.x+","+pos.y;
+      var opts = {};
+      var posStr = null;
+      if(pos.roomName === undefined || pos.x === undefined || pos.y === undefined){
+        posStr = null;
+      }else{
+        posStr = pos.roomName+":"+pos.x+","+pos.y;
+      }
+      opts.ignoreCreeps = false;
+      opts.serialize = true;
+      var emptyPath = false;
+      var creepPath = creep.memory.path;
+      if(!creepPath || creep.memory.dest != posStr || posStr === null){
+          creep.memory.path = creep.pos.findPathTo(pos, opts);
+          creep.memory.dest = posStr;
+      }
+      var result = creep.moveByPath(creep.memory.path);
+      if(result != OK && result != ERR_TIRED){
+        creep.memory.path = null;
+        //console.log("Move error: "+result);
+      }
+      return result;
     }
-    opts.ignoreCreeps = false;
-    opts.serialize = true;
-    var emptyPath = false;
-    var creepPath = creep.memory.path;
-    if(!creepPath || creep.memory.dest != posStr || posStr === null){
-        creep.memory.path = creep.pos.findPathTo(pos, opts);
-        creep.memory.dest = posStr;
-    }
-    var result = creep.moveByPath(creep.memory.path);
-    if(result != OK && result != ERR_TIRED){
-      creep.memory.path = null;
-      //console.log("Move error: "+result);
-    }
-    return result;
   },
 
   playerAttack:function(allCreepList){
