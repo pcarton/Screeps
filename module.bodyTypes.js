@@ -89,6 +89,9 @@ var bodyObj = {
             return h2Body;
           case 3:
           case 4:
+          case 5:
+          case 6:
+          case 7:
             return h3Body;
         }
       }else if(role === 'upgrader'){
@@ -102,6 +105,8 @@ var bodyObj = {
           case 4:
             return u4Body;
           case 5:
+          case 6:
+          case 7:
             return u5Body;
         }
       }else if(role === 'builder' || role === 'architect'){
@@ -114,6 +119,8 @@ var bodyObj = {
           case 4:
             return b3Body;
           case 5:
+          case 6:
+          case 7:
             return b5Body;
         }
       }else if(role === 'repair'){
@@ -124,6 +131,9 @@ var bodyObj = {
             return r2Body;
           case 3:
           case 4:
+          case 5:
+          case 6:
+          case 7:
             return r3Body;
         }
       }else if(role === 'hauler'){
