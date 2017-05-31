@@ -156,25 +156,22 @@ var modCommon = {
     }else if(creep.pos.y === 0){
       creep.move(BOTTOM);
     }else{
-      var roomName;
       var opts = {};
       var posStr = null;
       if(pos.roomName === undefined || pos.x === undefined || pos.y === undefined){
         posStr = null;
       }else{
         posStr = pos.roomName+":"+pos.x+","+pos.y;
-        roomName = pos.roomName;
       }
-      opts.ignoreCreeps = false;
-      opts.serialize = true;
-      if(pos.roomName == creep.room.name){
-        opts.maxOps = 500;
-      }else{
-        opts.maxOps = 2000;
-      }
-      var emptyPath = false;
       var creepPath = creep.memory.path;
       if(!creepPath || creep.memory.dest != posStr || posStr === null){
+          opts.ignoreCreeps = false;
+          opts.serialize = true;
+          if(pos.roomName == creep.room.name){
+            opts.maxOps = 1000;
+          }else{
+            opts.maxOps = 2000;
+          }
           creep.memory.path = creep.pos.findPathTo(pos, opts);
           creep.memory.dest = posStr;
       }
