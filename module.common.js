@@ -167,12 +167,11 @@ var modCommon = {
       }
       opts.ignoreCreeps = false;
       opts.serialize = true;
-      opts.maxOps = 1000;
-      /*
-      if(roomName && Memory.rooms[roomName].roomBorders && pos.roomName == creep.room.name){
-        opts.avoid = Memory.rooms[roomName].roomBorders;
+      if(pos.roomName == creep.room.name){
+        opts.maxOps = 500;
+      }else{
+        opts.maxOps = 2000;
       }
-      */
       var emptyPath = false;
       var creepPath = creep.memory.path;
       if(!creepPath || creep.memory.dest != posStr || posStr === null){
