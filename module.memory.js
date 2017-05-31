@@ -47,6 +47,7 @@ var modMemory = {
 
     };
     //TODO any other things go here (like Tower init)
+    Memory.rooms[roomName].roomBorders = this.getBorders(roomName);
     Memory.rooms[roomName].initialized = true;
   },
   initTower:function(tower){
@@ -61,7 +62,7 @@ var modMemory = {
     return Memory.rooms[roomName].spawnQ;
   },
   changeCreepNum:function(roomName,creepType,num,set){}, //creepType - creepJob to change, num, num to add or set to, set - bool, true to set, false to add
-  getInitalCreepMem(creepType){
+  getInitalCreepMem:function(creepType){
     var memoryObj ={
       role:"none",
       path:null,
@@ -128,6 +129,17 @@ var modMemory = {
 
     return memoryObj;
   },
+  getBorders:function(roomName){
+    roomBorders = [];
+    for(i = 0; i<50; i++){
+      for(j = 0; j<50; j++){
+        if(i===0 || i===49 || j===0 || j===49){
+          roomBorders.push(RoomPosition(i,j,roomName));
+        }
+      }
+    }
+    return roomBorders;
+  }
 };
 
 module.exports = modMemory;
