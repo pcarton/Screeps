@@ -148,13 +148,13 @@ var modCommon = {
   //Function to move useing a stored path
   move:function(creep,pos){
     if(creep.pos.x === 0){
-      creep.moveTo(1, creep.pos.y);
+      creep.move(RIGHT);
     }else if(creep.pos.x === 49){
-      creep.moveTo(48, creep.pos.y);
+      creep.move(LEFT);
     }else if(creep.pos.y === 49){
-      creep.moveTo(creep.pos.x, 48);
-    }else if(creep.pos.x === 0){
-      creep.moveTo(creep.pos.x, 1);
+      creep.move(UP);
+    }else if(creep.pos.y === 0){
+      creep.move(DOWN);
     }else{
       var opts = {};
       var posStr = null;
