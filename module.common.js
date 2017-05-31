@@ -75,7 +75,7 @@ var modCommon = {
     }
   },
 
-  stillToFix:function(object){    
+  stillToFix:function(object){
     var modifier = Math.max(Math.pow(10,controlLvl-3),10);
     //Priority
     var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < 3000);
@@ -101,7 +101,6 @@ var modCommon = {
   findToFixArr: function(room){
     var controlLvl = room.controller.level;
     var modifier = Math.max(Math.pow(10,controlLvl-3),10);
-    var buffer = modConstants.structBuffer;
 
     var fixeArrPriority = room.find(FIND_STRUCTURES, {filter: function(object){
       var brokenRoad = object.structureType == STRUCTURE_ROAD && (object.hits < 3000);
