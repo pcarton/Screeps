@@ -75,14 +75,15 @@ var modCommon = {
     }
   },
 
-  stillToFix:function(object){
+  stillToFix:function(object){    
+    var modifier = Math.max(Math.pow(10,controlLvl-3),10);
     //Priority
     var brokenRoad = object.structureType ===STRUCTURE_ROAD && (object.hits < 3000);
     var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < 5000)&& (object.hitsMax-object.hits>0);
     var brokenCont = object.structureType ===STRUCTURE_CONTAINER && (object.hits < 100000);
     var brokenWall = object.structureType ===STRUCTURE_WALL && (object.hits < 5000) && (object.hitsMax-object.hits>0);
     //Priority 2
-    var brokenRamp2 = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+buffer))&& (object.hitsMax-object.hits>0);
+    var brokenRamp2 = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+modConstants.structBuffer))&& (object.hitsMax-object.hits>0);
     //Lowest Priority
     var brokenWall2 = object.structureType ===STRUCTURE_WALL && (object.hits < (500*modifier+modConstants.structBuffer)) && (object.hitsMax-object.hits>0);
 
@@ -111,7 +112,7 @@ var modCommon = {
     }});
 
     var fixeArr = room.find(FIND_STRUCTURES, {filter: function(object){
-      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+buffer))&& (object.hitsMax-object.hits>0);
+      var brokenRamp = object.structureType ===STRUCTURE_RAMPART && (object.hits < (500*modifier+modConstants.structBuffer))&& (object.hitsMax-object.hits>0);
       return brokenRamp;
     }});
 
