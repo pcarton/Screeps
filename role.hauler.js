@@ -34,12 +34,15 @@ var roleHauler = {
   },
 
   findCloseDeliver(creep){
-    var p1 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => {
-                return ((structure.structureType == STRUCTURE_EXTENSION ||
-                        structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
-            }
-    });
+    var p1 = null;
+    if(Memory.rooms[creep.room.name].roles.numFeeders < 1){
+      p1 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+              filter: (structure) => {
+                  return ((structure.structureType == STRUCTURE_EXTENSION ||
+                          structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
+              }
+      });
+    }
     var p4 = creep.pos.findClosestByRange(FIND_STRUCTURES,{
       filter: (structure) => {
         return (structure.structureType === STRUCTURE_STORAGE && (structure.store[RESOURCE_ENERGY]<structure.storeCapacity));
