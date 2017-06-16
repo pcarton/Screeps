@@ -47,7 +47,7 @@ module.exports.loop = function () {
     var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
 
     if(allStructs.length <=0 && allConstruct.length<=0){
-      //Find the nearest room to this new one and spawn an assist builder and upgrader
+      //Find the nearest room to this new one and spawn an assist builder and upgrader test
       var dist = -1;
       var otherRoom = null;
       for(var roomNameClose in Game.rooms){
