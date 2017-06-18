@@ -159,32 +159,41 @@ var roleArchitect = {
       if(containerBool){
         this.markContainer(flag);
         if(structureType.substring(0,9) === "Container"){
+          flag.memory = {};
           flag.remove();
         }
       }else if(structureType.substring(0,5) === "Tower"){
           this.markTower(flag);
+          flag.memory = {};
           flag.remove();
       }else if(structureType === "Extensions1" || structureType ==="Extensions2"){
           this.markExtensions1(flag);
+          flag.memory = {};
           flag.remove();
       }else if(structureType === "Extensions3" || structureType ==="Extensions4"){
           this.markExtensions2(flag);
+          flag.memory = {};
           flag.remove();
       }else if(wallBool){
           this.markWall(flag, structureType);
+          flag.memory = {};
           flag.remove();
       }else if(structureType === "Link"){
-        this.markLink(flag);
-        flag.remove();
+          this.markLink(flag);
+          flag.memory = {};
+          flag.remove();
       }else if(structureType === "Storage"){
-        this.markStorage(flag);
-        flag.remove();
+          this.markStorage(flag);
+          flag.memory = {};
+          flag.remove();
       }else if(structureType === "Terminal"){
-        this.markTerminal(flag);
-        flag.remove();
+          this.markTerminal(flag);
+          flag.memory = {};
+          flag.remove();
       }else if(structureType === "Extractor"){
-        this.markExtractor(flag);
-        flag.remove();
+          this.markExtractor(flag);
+          flag.memory = {};
+          flag.remove();
       }
 
     }
