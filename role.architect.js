@@ -4,6 +4,7 @@ var roleArchitect = {
 
   //Function to determin if there are buildable structures that need to be
   //assigned a construction site (marked by named flags)
+  //TODO fix the naming conventions to support multiple rooms
   ableToBuild:function(controllerLvl, flag){
     var structureType = flag.name;
     var wallBool = (structureType.substring(0,4)==="Wall");

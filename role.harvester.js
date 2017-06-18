@@ -98,7 +98,7 @@ var roleHarvester = {
             }else{
               creep.memory.path = null;
             }
-          }else if(p3 && struct.store[RESOURCE_ENERGY] < struct.storeCapacity){
+          }else if(p3 && p3.store[RESOURCE_ENERGY] < p3.storeCapacity){
             if(creep.transfer(p3, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
               modCommon.move(creep,p3.pos);
             }else{

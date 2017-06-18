@@ -50,8 +50,8 @@ var modCommon = {
         }else{
           creep.memory.path = null;
         }
+        return;
       }
-      return;
     }
     //Next priority is the closest container or storage
     var storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {

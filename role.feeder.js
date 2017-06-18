@@ -15,9 +15,15 @@ var roleFeeder = {
     return dropOff;
   },
   findMineralDropOff:function(creep){
-    var dropOffFlag = creep.room.find(FIND_FLAGS, { filter: (object)=>(object.name.substring(0,8) === "GDropOff")});
-    var dropOffArr = creep.room.lookForAt(LOOK_STRUCTURES, dropOffFlag[0]);
+    var dropOffFlag = creep.room.find(FIND_FLAGS, { filter: (object)=>(object.name.substring(0,8) === "GDropOff")})[0];
+    var dropOffArr = creep.room.lookForAt(LOOK_STRUCTURES, dropOffFlag);
     var dropOff = _.filter(dropOffArr, (object) => object.structureType == STRUCTURE_CONTAINER && _.sum(object.store) >= creep.carryCapacity)[0];
+    if(!dropOff){
+      var construct = creep.room.lookForAt(LOOK_CONSTRUCTION_SITES,dropOffFlag);
+      if(construct.length === 0){
+        dropOffFlag.memory.marked = false;
+      }
+    }
     return dropOff;
   },
 
