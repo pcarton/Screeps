@@ -106,9 +106,9 @@ var modSpawning = {
     if(notEnoughHarvest){
       return false;
     }else{
-      var storage = Game.rooms[roomName].storage !== undefined;
+      var tier = this.calcTier(roomName);
       var LTMin = roles.numFeeders < roles.maxFeeders;
-      return storage && LTMin;
+      return (tier>=4) && LTMin;
     }
   },
 
