@@ -282,7 +282,7 @@ var modSpawning = {
       memory:memoryObjHa
     };
     obj.body = bodyObj.getBody('hauler',tier);
-    Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms[roomName].spawnQ.push(obj);
     modUtil.incrementCreepNum("hauler",roomName);
   },
   enqueueFeeder:function(roomName){
