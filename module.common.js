@@ -165,7 +165,8 @@ var modCommon = {
         posStr = pos.roomName+":"+pos.x+","+pos.y;
       }
       var creepPath = creep.memory.path;
-      if(!creepPath || creep.memory.dest != posStr || posStr === null){
+      var reCalc = creep.memory.reCalc;
+      if(!creepPath || creep.memory.dest != posStr || posStr === null || reCalc){
           opts.ignoreCreeps = false;
           opts.serialize = true;
           if(pos.roomName == creep.room.name){
@@ -176,11 +177,18 @@ var modCommon = {
           creep.memory.path = creep.pos.findPathTo(pos, opts);
           creep.memory.dest = posStr;
       }
+      creep.memory.lastPos = creep.pos;
       var result = creep.moveByPath(creep.memory.path);
       if(result != OK && result != ERR_TIRED){
         creep.memory.path = null;
         //console.log("Move error: "+result);
+      }else if(result === OK){
+        if((creep.memory.lastPos === creep.pos) && (creep.fatigue === 0)){
+          creep.memory.reCalc = true;
+        }
+        creep.memory.lastPos = creep.pos;
       }
+
       return result;
     }
   },
