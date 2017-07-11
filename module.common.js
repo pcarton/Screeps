@@ -176,6 +176,7 @@ var modCommon = {
           }
           creep.memory.path = creep.pos.findPathTo(pos, opts);
           creep.memory.dest = posStr;
+          creep.memory.reCalc = false;
       }
       creep.memory.lastPos = creep.pos;
       var result = creep.moveByPath(creep.memory.path);
