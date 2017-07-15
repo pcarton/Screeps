@@ -391,7 +391,7 @@ var modSpawning = {
 
     var spawnTier1 = (energyCapacity<modConstants.tier2EnergyMin);
     var spawnTier2 = (energyCapacity<modConstants.tier3EnergyMin);
-    var spawnTier3 = (energyCapacity<modConstants.tier4EnergyMin || !Game.rooms[roomName].storage || Game.rooms[roomName].storage.energy < modConstants.tier3To4Buffer);
+    var spawnTier3 = (energyCapacity<modConstants.tier4EnergyMin || !Game.rooms[roomName].storage || Game.rooms[roomName].storage.store.energy < modConstants.tier3To4Buffer);
     var spawnTier4 = (energyCapacity<modConstants.tier5EnergyMin);
     var spawnTier5 = (energyCapacity<modConstants.tier6EnergyMin);
     var spawnTier6 = (energyCapacity<modConstants.tier7EnergyMin);
