@@ -19,7 +19,7 @@ var modConstants = {
   maxCreeps: Memory.maxCreeps,
   maxPathCPU: 0.5 ,
   nearDeath:50, //ticks until death
-
+  tier3To4Buffer:10000,
 
 };
 
