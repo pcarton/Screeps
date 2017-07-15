@@ -372,16 +372,16 @@ var modSpawning = {
   },
 
   enqueueAllNeeded(roomName){
-    if(this.needMiner(roomName))this.enqueueMiner(roomName);
-    if(this.needHauler(roomName))this.enqueueHauler(roomName);
-    if(this.needHarvester(roomName))this.enqueueHarvester(roomName);
-    if(this.needUpgrader(roomName))this.enqueueUpgrader(roomName);
-    if(this.needBuilder(roomName))this.enqueueBuilder(roomName);
-    if(this.needRepair(roomName))this.enqueueRepair(roomName);
-    if(this.needArchitect(roomName))this.enqueueArchitect(roomName);
-    if(this.needFeeder(roomName))this.enqueueFeeder(roomName);
-    if(this.needGeoMiner(roomName))this.enqueueGeoMiner(roomName);
-    if(this.needMerchant(roomName))this.enqueueMerchant(roomName);
+    while(this.needMiner(roomName))this.enqueueMiner(roomName);
+    while(this.needHauler(roomName))this.enqueueHauler(roomName);
+    while(this.needHarvester(roomName))this.enqueueHarvester(roomName);
+    while(this.needUpgrader(roomName))this.enqueueUpgrader(roomName);
+    while(this.needBuilder(roomName))this.enqueueBuilder(roomName);
+    while(this.needRepair(roomName))this.enqueueRepair(roomName);
+    while(this.needArchitect(roomName))this.enqueueArchitect(roomName);
+    while(this.needFeeder(roomName))this.enqueueFeeder(roomName);
+    while(this.needGeoMiner(roomName))this.enqueueGeoMiner(roomName);
+    while(this.needMerchant(roomName))this.enqueueMerchant(roomName);
   },
 
   //Returns a number between 1 and highest tier inclusive
