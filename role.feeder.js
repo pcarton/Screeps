@@ -24,7 +24,7 @@ var roleFeeder = {
         dropOffFlag.memory.marked = false;
       }
     }
-    if(_.sum(object.store) >= creep.carryCapacity){
+    if(_.sum(dropOff.store) >= creep.carryCapacity){
       return dropOff;
     }else{
       return null;
