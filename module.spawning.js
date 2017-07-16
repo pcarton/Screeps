@@ -390,9 +390,13 @@ var modSpawning = {
     var energyCapacity = Game.rooms[roomName].energyCapacityAvailable;
     var notEnoughHarvest = (Memory.rooms[roomName].roles.numHarvesters <= 0) && (Memory.rooms[roomName].roles.numMiners <= 0);
 
+    var noFeeders = Memory.rooms[roomName].roles.numFeeders === 0;
+    var noMiners = Memory.rooms[roomName].roles.numMiners === 0;
+    var noHaulers = Memory.rooms[roomName].roles.numHaulers === 0;
+
     var spawnTier1 = (energyCapacity<modConstants.tier2EnergyMin);
     var spawnTier2 = (energyCapacity<modConstants.tier3EnergyMin);
-    var spawnTier3 = (energyCapacity<modConstants.tier4EnergyMin || !Game.rooms[roomName].storage || (Game.rooms[roomName].storage.store.energy < modConstants.tier3To4Buffer && Memory.rooms[roomName].roles.numFeeders === 0));
+    var spawnTier3 = (energyCapacity<modConstants.tier4EnergyMin || !Game.rooms[roomName].storage || (Game.rooms[roomName].storage.store.energy < modConstants.tier3To4Buffer && (noFeeders && noMiners && noHaulers)));
     var spawnTier4 = (energyCapacity<modConstants.tier5EnergyMin);
     var spawnTier5 = (energyCapacity<modConstants.tier6EnergyMin);
     var spawnTier6 = (energyCapacity<modConstants.tier7EnergyMin);
