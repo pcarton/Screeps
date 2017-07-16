@@ -23,7 +23,7 @@ var modMemory = {
           betterHarvesters1:0,
           betterHarvesters2:0,
           numMiners:0,
-          maxMiners:0,
+          maxMiners:1,
           numHaulers:0,
           maxHaulers:1,
           numFeeders:0,
