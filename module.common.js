@@ -158,6 +158,7 @@ var modCommon = {
       creep.move(BOTTOM);
     }else{
       var opts = {};
+      opts.ignore = Game.rooms[pos.roomName].find(FIND_MY_CONSTRUCTION_SITES);
       var posStr = null;
       if(pos.roomName === undefined || pos.x === undefined || pos.y === undefined){
         posStr = null;
