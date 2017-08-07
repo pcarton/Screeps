@@ -27,7 +27,7 @@ var modMemory = {
           numHaulers:0,
           maxHaulers:1,
           numFeeders:0,
-          maxFeeders:1,
+          maxFeeders:2,
           numGeo:0,
           maxGeo:1,
           numGeoH:0,
