@@ -4,6 +4,7 @@ var hBody = [WORK, CARRY, CARRY, MOVE, MOVE];
 var uBody = [WORK, CARRY, CARRY, CARRY, MOVE];
 var bBody = [WORK, CARRY, WORK, MOVE];
 var rBody = [WORK, WORK, CARRY, MOVE];
+var miniHaul = [CARRY,CARRY,CARRY,MOVE,MOVE,MOVE];
 
 //Tier 2
 var h2Body = [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
@@ -137,11 +138,27 @@ var bodyObj = {
             return r3Body;
         }
       }else if(role === 'hauler'){
-        return haulerBody;
+        switch(tier){
+          default:
+            return miniHaul;
+          case 4:
+          case 5:
+          case 6:
+          case 7:
+            return haulerBody;
+        }
       }else if(role === 'miner'){
         return minerBody;
       }else if(role === 'feeder'){
-        return feederBody;
+        switch(tier){
+          default:
+            return miniHaul;
+          case 4:
+          case 5:
+          case 6:
+          case 7:
+            return feederBody;
+        }
       }else if(role === 'soldier'){
         return soliderBody;
       }else if(role === 'geo'){
