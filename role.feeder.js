@@ -23,11 +23,12 @@ var roleFeeder = {
       if(construct.length === 0){
         dropOffFlag.memory.marked = false;
       }
-    }
-    if(_.sum(dropOff.store) >= creep.carryCapacity){
-      return dropOff;
     }else{
-      return null;
+      if(_.sum(dropOff.store) >= creep.carryCapacity){
+        return dropOff;
+      }else{
+        return null;
+      }
     }
   },
 
