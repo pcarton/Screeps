@@ -1,5 +1,4 @@
 var modCommon = require('module.common');
-var roleHauler = require('role.hauler');
 
 var roleUpgrader = {
 
