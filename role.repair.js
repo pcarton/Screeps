@@ -35,7 +35,7 @@ var roleRepair = {
           }
       }else{
         var oldFixe = Game.getObjectById(creep.memory.toFix);
-        if(oldFixe.hits >= oldFixe.hitsMax){
+        if(!oldFixe || oldFixe.hits >= oldFixe.hitsMax){
           creep.memory.toFix = "";
         }else if(creep.repair(oldFixe) == ERR_NOT_IN_RANGE){
           modCommon.move(creep,oldFixe.pos);
