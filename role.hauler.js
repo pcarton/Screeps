@@ -78,7 +78,7 @@ var roleHauler = {
       }
     }
 
-    if(creep.carry.energy > 0){
+    if(creep.carry.energy < creep.carryCapacity){
       dest = this.findCloseDeliver(creep);
       if(dest && creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
