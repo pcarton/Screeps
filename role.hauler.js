@@ -1,4 +1,5 @@
 var modCommon = require('module.common');
+var roleFeeder = require('role.feeder');
 
 //moves from containers marked by flags to other storage
 //Flags: Drop-Off: where miners leave resouce
@@ -58,41 +59,46 @@ var roleHauler = {
   },
 
   run:function(creep){
-    var dest = null;
-
-    var dpos = null;
-    var dropOffID = creep.memory.dropOff;
-    var dropOff = null;
-
-    if(dropOffID === ""){
-      this.assignDropOff(creep);
+    if(Memory.rooms[creep.room.name].roles.numFeeders <= 0){
+      roleFeeder.run(creep);
     }else{
-      if(dropOffID){
-        dropOff = Game.getObjectById(dropOffID);
-        if(dropOff){
-          dPos = dropOff.pos;
+      var dest = null;
+
+      var dpos = null;
+      var dropOffID = creep.memory.dropOff;
+      var dropOff = null;
+
+      if(dropOffID === ""){
+        this.assignDropOff(creep);
+      }else{
+        if(dropOffID){
+          dropOff = Game.getObjectById(dropOffID);
+          if(dropOff){
+            dPos = dropOff.pos;
+          }else{
+            this.assignDropOff(creep);
+            return;
+          }
+        }
+      }
+
+      if(creep.carry.energy < creep.carryCapacity){
+        dest = this.findCloseDeliver(creep);
+        if(dest && creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          modCommon.move(creep,dest.pos);
         }else{
-          this.assignDropOff(creep);
-          return;
+          creep.memory.path = null;
+        }
+      }else{
+        if(creep.withdraw(dropOff, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          modCommon.move(creep,dPos);
+        }else{
+          creep.memory.path = null;
         }
       }
     }
-
-    if(creep.carry.energy < creep.carryCapacity){
-      dest = this.findCloseDeliver(creep);
-      if(dest && creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        modCommon.move(creep,dest.pos);
-      }else{
-        creep.memory.path = null;
-      }
-    }else{
-      if(creep.withdraw(dropOff, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        modCommon.move(creep,dPos);
-      }else{
-        creep.memory.path = null;
-      }
-    }
   }
+
 };
 
 module.exports = roleHauler;
