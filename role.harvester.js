@@ -4,7 +4,7 @@ var modCommon = require('module.common');
 var roleHarvester = {
 
   assignSource:function(creep){
-    var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => flag.name.substring(0,1)==="S" && flag.name !== "Storage");
+    var flags = _.filter(creep.room.find(FIND_FLAGS), (flag) => flag.name.substring(0,1)==="S" && flag.name !== "Storage" && flag.name.substring(0,5) !== "Spawn");
     var roomName = creep.room.name;
     var maxHarvesters = 0;
     for(var fName in flags){
