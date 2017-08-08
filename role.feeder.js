@@ -22,12 +22,12 @@ var roleFeeder = {
       dropOffArr = creep.room.lookForAt(LOOK_STRUCTURES, dropOffFlag);
       dropOff = _.filter(dropOffArr, (object) => object.structureType == STRUCTURE_CONTAINER )[0];
     }
-    if(!dropOff){
+    if(!dropOff && dropOffFlag){
       var construct = creep.room.lookForAt(LOOK_CONSTRUCTION_SITES,dropOffFlag);
       if(construct.length === 0){
         dropOffFlag.memory.marked = false;
       }
-    }else{
+    }else if(dropOff){
       if(_.sum(dropOff.store) >= creep.carryCapacity){
         return dropOff;
       }else{
