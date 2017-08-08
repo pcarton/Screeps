@@ -26,10 +26,7 @@ var roleUpgrader = {
 
       if(creep.memory.working && !(conserve && creep.room.controller.ticksToDowngrade>4200)) {
         this.upgrade(creep);
-      }
-      else if(creep.memory.working){
-        roleHauler.run(creep);
-      }else{
+      }else if(!creep.memory.working){
         modCommon.getEn(creep);
       }
   }
