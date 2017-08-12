@@ -133,8 +133,8 @@ var modCommon = {
 
   findToFortify: function(room){
     // use  '|| object.structureType ===STRUCTURE_RAMPART' ?
-    var fortArr = room.find(FIND_MY_STRUCTURES, {filter: function(object){
-      return (object.structureType ===STRUCTURE_WALL || object.structureType === STRUCTURE_RAMPART) && (object.hits < 100000);
+    var fortArr = room.find(FIND_STRUCTURES, {filter: function(object){
+      return (object.structureType === STRUCTURE_WALL || object.structureType === STRUCTURE_RAMPART) && (object.hits < 100000);
     }});
 
     return fortArr;
