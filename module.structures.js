@@ -24,9 +24,9 @@ var roleStructures = {
       }else{
         //TODO check if same target is in memory of another tower first
         var damagedStructs;
-        if(Memory.fortify){
+        if(Memory.rooms[tower.room.name].fortify){
           damagedStructs= modCommon.findToFixArr(tower.room);
-          if(damagedStructs.length == 0 && Memory.fortify){
+          if(damagedStructs.length == 0){
             damagedStructs = modCommon.findToFortify(tower.room);
           }
         }else{
