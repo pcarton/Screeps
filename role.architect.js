@@ -24,16 +24,16 @@ var roleArchitect = {
       case 5:
         return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link" || structureType === "Storage") && !marked;
       case 6:
-        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal") || mineralContainerBool && !marked;
+        return (wallBool || structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4" || containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal" || mineralContainerBool) && !marked;
       case 7:
         var extentionsBool = (structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4");
-        return (wallBool || extentionsBool|| containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal") || mineralContainerBool  && !marked;
+        return (wallBool || extentionsBool|| containerBool || structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal" || mineralContainerBool)  && !marked;
       case 8:
         var extensionsBool =  structureType === "Extensions1" || structureType === "Extensions2" || structureType === "Extensions3" || structureType === "Extensions4";
 
         var towerBool = structureType === "Tower1" || structureType === "Tower2" || structureType === "Tower3" || structureType === "Tower4";
 
-        return (wallBool || extensionsBool || containerBool || towerBool || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal") || mineralContainerBool  && !marked;
+        return (wallBool || extensionsBool || containerBool || towerBool || structureType.substring(0,4)==="Link" || structureType === "Storage" || structureType === "Extractor" || structureType === "Terminal" || mineralContainerBool)  && !marked;
 
       default:
         return false;
