@@ -151,7 +151,7 @@ var bodyObj = {
             return haulerBody;
           case 6:
           case 7:
-            return hauler6Body;
+            return haulerBody;
         }
       }else if(role === 'miner'){
         return minerBody;
@@ -164,7 +164,7 @@ var bodyObj = {
             return feederBody;
           case 6:
           case 7:
-            return feeder6Body;
+            return feederBody;
         }
       }else if(role === 'soldier'){
         return soliderBody;
