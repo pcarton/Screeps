@@ -121,7 +121,7 @@ var modSpawning = {
       return false;
     }else{
       var tier = this.calcTier(roomName);
-      var LTMin = roles.numGeo < 1;
+      var LTMin = roles.numGeo < roles.maxGeo;
 
       var extractor = _.filter(Game.rooms[roomName].find(FIND_STRUCTURES), (structure) => structure.structureType === STRUCTURE_EXTRACTOR).length >0;
       var minerals = _.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length> 0;
