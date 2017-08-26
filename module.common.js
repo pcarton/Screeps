@@ -20,7 +20,16 @@ var modCommon = {
 
   },
 
-  getCreepsByJob: function(job, room){return [];}, //TODO
+  getCreepsByJob: function(job, roomName){
+    var result = [];
+    for(var cName in Game.creeps){
+        var c = Game.creeps[cName];
+        if(c.memory.role === job && c.memory.room === roomName){
+          result.append(c);
+        }
+    }
+    return result;
+  }, //TODO
 
   distTo: function(creep, pos){
     var x = creep.pos.x - pos.x;

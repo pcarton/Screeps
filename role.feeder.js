@@ -37,6 +37,7 @@ var roleFeeder = {
   },
 
   findCloseDeliver(creep){
+    var otherFeeders = modCommon.getCreepsByJob('feeder',creep.room);
     var p1 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => {
                 return ((structure.structureType == STRUCTURE_EXTENSION ||
