@@ -19,7 +19,6 @@ var roleGeoMiner = {
         creep.memory.mineral = gID;
       }
     }
-    Memory.rooms[roomName].roles.maxGeo = minerals.length;
   },
 
   assignDropOff:function(creep){
