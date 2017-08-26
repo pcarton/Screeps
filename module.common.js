@@ -20,6 +20,8 @@ var modCommon = {
 
   },
 
+  getCreepsByJob: function(job, room){return [];}, //TODO
+
   distTo: function(creep, pos){
     var x = creep.pos.x - pos.x;
     var y = creep.pos.y - pos.y;
