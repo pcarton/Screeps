@@ -38,15 +38,19 @@ var roleFeeder = {
 
   findCloseDeliver(creep){
     var otherFeeders = modCommon.getCreepsByJob('feeder',creep.room);
+    var otherDests = [];
+    for(var cName in otherFeeders){
+      otherDests.push(otherFeeders[cName].memory.deliver);
+    }
     var p1 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => {
                 return ((structure.structureType == STRUCTURE_EXTENSION ||
-                        structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
+                        structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity) && (otherDests.indexOf(structure.id) == -1);
             }
     });
     var p2 = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => {
-              return (structure.structureType == STRUCTURE_TOWER && structure.energy < (structure.energyCapacity-100));
+              return (structure.structureType == STRUCTURE_TOWER && structure.energy < (structure.energyCapacity-100)) && (otherDests.indexOf(structure.id) == -1);
             }
           });
     var p3Flag = creep.pos.findClosestByRange(FIND_FLAGS, {
@@ -60,8 +64,10 @@ var roleFeeder = {
     }
     if(p1){
       deliver = p1;
+      creep.memory.deliver = deliver;
     }else if(p2){
       deliver = p2;
+      creep.memory.deliver = deliver;
     }else if(p3 && p3.store[RESOURCE_ENERGY] < p3.storeCapacity){
       deliver = p3;
     }else{

@@ -25,11 +25,11 @@ var modCommon = {
     for(var cName in Game.creeps){
         var c = Game.creeps[cName];
         if(c.memory.role === job && c.memory.room === roomName){
-          result.append(c);
+          result.push(c);
         }
     }
     return result;
-  }, //TODO
+  },
 
   distTo: function(creep, pos){
     var x = creep.pos.x - pos.x;
