@@ -64,12 +64,13 @@ var roleFeeder = {
     }
     if(p1){
       deliver = p1;
-      creep.memory.deliver = deliver;
+      creep.memory.deliver = deliver.id;
     }else if(p2){
       deliver = p2;
-      creep.memory.deliver = deliver;
+      creep.memory.deliver = deliver.id;
     }else if(p3 && p3.store[RESOURCE_ENERGY] < p3.storeCapacity){
       deliver = p3;
+      creep.memory.deliver = deliver.id;
     }else{
       deliver = "Nowhere to Go";
     }
