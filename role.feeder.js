@@ -37,7 +37,7 @@ var roleFeeder = {
   },
 
   findCloseDeliver(creep){
-    var otherFeeders = modCommon.getCreepsByJob('feeder',creep.room);
+    var otherFeeders = modCommon.getCreepsByJob('feeder',creep.memory.room);
     var otherDests = [];
     for(var cName in otherFeeders){
       otherDests.push(otherFeeders[cName].memory.deliver);
@@ -94,13 +94,18 @@ var roleFeeder = {
       }
     }
     else if(creep.carry.energy > 0){
-      dest = this.findCloseDeliver(creep);
+      if(creep.memory.deliver){
+        dest = Game.getObjectById(creep.memory.deliver);
+      }else{
+        dest = this.findCloseDeliver(creep);
+      }
       if(dest === "Nowhere to Go"){
         roleUpgrader.upgrade(creep);
       }else if(creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dest.pos);
       }else{
         creep.memory.path = null;
+        creep.memory.deliver = null;
       }
     }else{
       var dropped = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
