@@ -66,7 +66,7 @@ var roleGeoMiner = {
       }
     }
 
-    if(mineral.amount === 0 || _.sum(creep.carry) == creep.carryCapacity){
+    if(mineral.mineralAmount === 0 || _.sum(creep.carry) == creep.carryCapacity){
       if(creep.transfer(dropOff, resourceType) === ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dPos);
       }else{
@@ -77,10 +77,10 @@ var roleGeoMiner = {
         modCommon.move(creep,sPos);
       }
     }
-    if(mineral.amount ===0 && _.sum(creep.carry) >0){
-      var spawner = Game.rooms[roomName].findClosestByRange(FIND_STRUCTURES, {
+    if(mineral.mineralAmount === 0 && _.sum(creep.carry) <=0){
+      var spawner = creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: (structure) => {
-          return (structure.structureType === STRUCTURE_SPAWN && !structure.spawning);
+          return (structure.structureType === STRUCTURE_SPAWN);
         }
       });
       if(spawner.recycleCreep(creep) === ERR_NOT_IN_RANGE){
@@ -89,6 +89,6 @@ var roleGeoMiner = {
     }
   }
 
-};
+  };
 
-module.exports = roleGeoMiner;
+  module.exports = roleGeoMiner;
