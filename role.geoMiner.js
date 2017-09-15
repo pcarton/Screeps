@@ -77,6 +77,16 @@ var roleGeoMiner = {
         modCommon.move(creep,sPos);
       }
     }
+    if(mineral.amount ===0 && _.sum(creep.carry) >0){
+      var spawner = Game.rooms[roomName].findClosestByRange(FIND_STRUCTURES, {
+        filter: (structure) => {
+          return (structure.structureType === STRUCTURE_SPAWN && !structure.spawning);
+        }
+      });
+      if(spawner.recycleCreep(creep) === ERR_NOT_IN_RANGE){
+        modCommon.move(creep,spawner);
+      }
+    }
   }
 
 };
