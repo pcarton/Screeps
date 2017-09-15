@@ -235,21 +235,21 @@ var modCommon = {
   whatCarry:function(creep){
     var creepCarry = creep.carry;
     for(var type in creepCarry){
-      if(creepCarry[type]>0){
+      if(creepCarry[type]>0 && type !== RESOURCE_ENERGY){
         return type;
       }
     }
-    return null;
+    return RESOURCE_ENERGY;
   },
 
   whatStore:function(struct){
     var structStore = struct.store;
     for(var type in structStore){
-      if(structStore[type]>0){
+      if(structStore[type]>0 && type !== RESOURCE_ENERGY){
         return type;
       }
     }
-    return null;
+    return RESOURCE_ENERGY;
   },
 
   getResourceCount:function(storeObj, resourceType){
