@@ -1,5 +1,5 @@
 var modCommon = require('module.common');
-var modCommon = require('module.constants');
+var modConstants = require('module.constants');
 //TODO only check for a new order every so ofter, preferably on low CPU ticks
 var roleMerchant = {
 
