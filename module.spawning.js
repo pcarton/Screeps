@@ -430,6 +430,9 @@ var modSpawning = {
         }
       });
       for(var spawnNum in spawners){
+        if(queue.length <= 0){
+          break;
+        }
         var spawn = spawners[spawnNum];
         var toSpawn = queue.shift();
         if(toSpawn !== undefined && spawn.canCreateCreep(toSpawn.body,toSpawn.name) === OK){
