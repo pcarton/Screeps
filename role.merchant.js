@@ -78,7 +78,10 @@ var roleMerchant = {
     //TODO trace this code to find infinite fill bug
     var trade = Memory.rooms[creep.room.name].trade;
 
-    var amountInTerm = terminal.store[creep.memory.toLoad.resourceType];
+    var amountInTerm = 0;
+    if(order){
+        amountInTerm =  terminal.store[order.resourceType];
+    }
     if(amountInTerm === undefined || amountInTerm === null){
       amountInTerm = 0;
     }
@@ -113,8 +116,6 @@ var roleMerchant = {
               creep.memory.toLoad.amount = creep.memory.toLoad.amount - amountInCreep;
             }
           }
-          //get the resource / put in terminal
-          //decrement amount when inserted into terminal
         }else if(amountInTerm >= order.remainingAmount){
           var cost = Game.market.calcTransactionCost(order.remainingAmount, order.roomName,creep.room.name);
           if(cost <= enInTerm){
