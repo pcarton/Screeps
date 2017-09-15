@@ -77,8 +77,16 @@ var roleMerchant = {
     //If the order exists
     //TODO trace this code to find infinite fill bug
     var trade = Memory.rooms[creep.room.name].trade;
-    var amountInTerm = modCommon.getResourceCount(terminal.store, creep.memory.toLoad.resourceType);
-    var amountInCreep = modCommon.getResourceCount(creep.carry,creep.memory.toLoad.resourceType);
+
+    var amountInTerm = terminal.store[creep.memory.toLoad.resourceType];
+    if(amountInTerm === undefined || amountInTerm === null){
+      amountInTerm = 0;
+    }
+
+    var amountInCreep = creep.carry[creep.memory.toLoad.resourceType];
+    if(amountInCreep === undefined || amountInCreep === null){
+      amountInCreep = 0;
+    }
     var enInTerm = terminal.store.energy;
     if(trade){
       //If there is a trade in memory, execute it
