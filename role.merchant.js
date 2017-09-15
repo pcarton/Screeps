@@ -1,8 +1,11 @@
 var modCommon = require('module.common');
+var modCommon = require('module.constants');
 //TODO only check for a new order every so ofter, preferably on low CPU ticks
 var roleMerchant = {
 
   init:function(creep){
+    this.assignTerminal(creep);
+    this.assignStorage(creep);
     creep.memory.toLoad = {};
     creep.memory.toLoad.amount = 0;
     creep.memory.toLoad.resourceType = RESOURCE_ENERGY;
@@ -33,12 +36,13 @@ var roleMerchant = {
     var storageID = creep.memory.storage;
     var resourceType = this.getResourceType(storageID);
     var ordersAll = Game.market.getAllOrders();
-    var orders = _.filter(ordersAll, (order) => (order.type === ORDER_BUY) && (order.resourceType === resourceType) && (Game.map.getRoomLinearDistance(order.roomName, thisRoom, true) <= 30) );
+    var orders = _.filter(ordersAll, (order) => (order.type === ORDER_BUY) && (order.resourceType === resourceType) && (Game.map.getRoomLinearDistance(order.roomName, thisRoom, true) <= modConstants.maxRoomTradeDist) );
     var sortedOrders = _.sortBy(orders,['price','id','resourceType']);
     if(sortedOrders && sortedOrders.length){
       var order = sortedOrders[0];
       creep.memory.orderID = order.id;
       creep.memory.toLoad.resourceType = order.resourceType;
+      creep.memory.toLoad.amount = order.remainingAmount;
     }else{
       creep.memory.orderID = "";
     }
@@ -78,88 +82,58 @@ var roleMerchant = {
     if(!creep.memory.orderID || creep.memory.orderID === ""){
       this.getOrder(creep);
     }
+    orderID = creep.memory.orderID;
     try{
-      orderID = creep.memory.orderID;
       order = Game.market.getOrderById(orderID);
     }catch(err){
       console.log(err.name + "\n" + err.message);
+      creep.memory.orderID = "";
     }
 
 
     //If the order exists
     //TODO trace this code to find infinite fill bug
-    if(order){
-
-      //Check that we do not overfill the terminal
-      if(order.remainingAmount<toLoad){
-        toLoad = order.remainingAmount;
+    var trade = Memory.rooms[creep.roomName].trade;
+    var amountInTerm = modCommon.getResourceCount(terminal.store, creep.memory.toLoad.resourceType);
+    var enInTerm = terminal.store.energy;
+    if(trade){
+      //If there is a trade in memory, execute it
+      if(terminal.cooldown === 0){
+        var tradeResult = Game.market.deal(trade.orderId, trade.amount, trade.roomName);
+        if(tradeResult != 0){
+          //find new order that fits current requirements
+        }
       }
-
-
-      //Get the type of resource we need to handle
-      if(toLoad === 0 && modCommon.getResourceCount(terminal.store, resourceType) <= 1000){
-        toLoad = 1000;
-      }
-      
-      var resourceType = creep.memory.toLoad.resourceType;
-
-      //If there are still resources to load
-      if(toLoad>0 || modCommon.getResourceCount(storage.store, resourceType) === 0){
-        if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) == resourceType){
-          //put the resource in the terminal and decrease toLoad
-          var tryTransfer = creep.transfer(terminal, resourceType);
-          if( tryTransfer == ERR_NOT_IN_RANGE) {
-            modCommon.move(creep,terminal.pos);
-          }
-          else if( tryTransfer === OK){
-            toLoad = toLoad - creep.carryCapacity;
-          }
-        }else if(_.sum(creep.carry) > 0 && modCommon.whatCarry(creep) !== resourceType){
-          //Store what it is carrying in storage
-          if(creep.transfer(storage, modCommon.whatCarry(creep)) == ERR_NOT_IN_RANGE) {
-            modCommon.move(creep,storage.pos);
-          }
-        }else{
-          //get resource from storage
-          if(creep.withdraw(storage, resourceType) == ERR_NOT_IN_RANGE) {
-            modCommon.move(creep,storage.pos);
+    }else if(order){
+      //If we are not ready to trade, fill the terminal with the curent order
+      if(_.sum(terminal.store)<terminal.storeCapacity){
+        if(creep.memory.toLoad.amount > 0){
+          //get the resource / put in terminal
+          //decrement amount when inserted into terminal
+        }else if(amountInTerm >= order.remainingAmount){
+          var cost = Game.market.calcTransactionCost(order.remainingAmount, order.roomName,creep.room.name);
+          if(cost <= enInTerm){
+            trade = {};
+            trade.orderId = orderID;
+            trade.amount = order.remainingAmount;
+            trade.roomName = creep.room.name;
+          }else{
+            creep.memory.toLoad.amount = cost - enInTerm;
+            creep.memory.toLoad.resourceType = RESOURCE_ENERGY;
           }
         }
-      //If the resources have been loaded
       }else{
-        var amountToTrade = Math.min(modCommon.getResourceCount(terminal.store, resourceType), order.remainingAmount); //the amount of resource to trade
-        var energyInTerminal = modCommon.getResourceCount(terminal.store, RESOURCE_ENERGY); //amount of energy in the terminal
-        var energyCost = Game.market.calcTransactionCost(amountToTrade, creep.room.name, order.roomName);
-
-        if(energyCost<=energyInTerminal){
-          //if enough energy to do transaction, do it
-          var dealSuccess = Game.market.deal(orderID,amountToTrade,creep.room.name);
-          if(dealSuccess == OK){
-            if(order.remainingAmount === 0){
-              this.getOrder(creep);
-            }
-            toLoad = 1000;
-          }else{
-            console.log("Error "+ dealSuccess +" on deal.");
-          }
-        }else{
-          //else fill with energy
-          if(creep.carry.energy>0){
-            if(creep.transfer(terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-              modCommon.move(creep,terminal.pos);
-            }
-          }else{
-            if(creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-              modCommon.move(creep,storage.pos);
-            }
-          }
-        }
+        trade = {};
+        trade.orderId = orderID;
+        trade.amount = amountInTerm;
+        trade.roomName = creep.room.name;
       }
-
     }else{
+      //if no trade or order, get an order to work on
       this.getOrder(creep);
     }
-    creep.memory.toLoad.amount = toLoad;
+    Memory.rooms[creep.roomName].trade = trade;
+
   }
 
 };
