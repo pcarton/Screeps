@@ -129,7 +129,7 @@ var roleMerchant = {
       //if no trade or order, get an order to work on
       this.getOrder(creep);
     }
-    Memory.rooms[creep.roomName].trade = trade;
+    Memory.rooms[creep.room.name].trade = trade;
 
   }
 
