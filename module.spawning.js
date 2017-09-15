@@ -140,7 +140,7 @@ var modSpawning = {
       var tier = this.calcTier(roomName);
       var storage = Game.rooms[roomName].storage;
       var terminal = Game.rooms[roomName].terminal;
-      var LTMin = roles.numMerchant < 1;
+      var LTMin = roles.numMerchant < roles.maxMerchant;
 
       var minerals = (_.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
 
@@ -150,8 +150,7 @@ var modSpawning = {
 
       var toSell = inStore || inTerm;
 
-      //return !minerals && toSell && (tier >= 4) && LTMin;
-      return false;
+      return !minerals && toSell && (tier >= 4) && LTMin;
     }
   },
 
