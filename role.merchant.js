@@ -100,6 +100,8 @@ var roleMerchant = {
         }else{
           Memory.rooms[creep.room.name].trade = null;
         }
+        creep.memory.toLoad = {};
+        creep.memory.order = "";
       }
     }else if(order){
       //If we are not ready to trade, fill the terminal with the curent order
