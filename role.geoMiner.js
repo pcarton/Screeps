@@ -66,7 +66,7 @@ var roleGeoMiner = {
       }
     }
 
-    if(_.sum(creep.carry) == creep.carryCapacity){
+    if(mineral.amount === 0 || _.sum(creep.carry) == creep.carryCapacity){
       if(creep.transfer(dropOff, resourceType) === ERR_NOT_IN_RANGE) {
         modCommon.move(creep,dPos);
       }else{
