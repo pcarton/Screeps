@@ -20,6 +20,7 @@ var modConstants = {
   maxPathCPU: 0.5 ,
   nearDeath:50, //ticks until death
   tier3To4Buffer:5000,
+  maxRoomTradeDist: 30,
 
 };
 
