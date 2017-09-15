@@ -95,8 +95,10 @@ var roleMerchant = {
       //If there is a trade in memory, execute it
       if(terminal.cooldown === 0){
         var tradeResult = Game.market.deal(trade.orderId, trade.amount, trade.roomName);
-        if(tradeResult != 0){
+        if(tradeResult != OK){
           //find new order that fits current requirements
+        }else{
+          Memory.rooms[creep.room.name].trade = null;
         }
       }
     }else if(order){
