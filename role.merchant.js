@@ -54,30 +54,13 @@ var roleMerchant = {
       this.init(creep);
     }
     //Make sure the creep has all necessary ids
-    var terminal;
-    var storage;
+    var terminal = creep.room.terminal;
+    var storage = creep.room.storage;
     var orderID;
     var order;
     var toLoad = creep.memory.toLoad.amount;
 
     //Get the objects from their IDs
-    if(!creep.memory.terminal || creep.memory.terminal === ""){
-      this.assignTerminal(creep);
-    }
-    try{
-      terminal = Game.getObjectById(creep.memory.terminal);
-    }catch(err){
-      console.log(err.name + "\n" + err.message);
-    }
-
-    if(!creep.memory.storage || creep.memory.storage === ""){
-      this.assignStorage(creep);
-    }
-    try{
-      storage = Game.getObjectById(creep.memory.storage);
-    }catch(err){
-      console.log(err.name + "\n" + err.message);
-    }
 
     if(!creep.memory.orderID || creep.memory.orderID === ""){
       this.getOrder(creep);
