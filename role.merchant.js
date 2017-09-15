@@ -108,7 +108,7 @@ var roleMerchant = {
           }else{
             var putResult = creep.transfer(terminal,creep.memory.toLoad.resourceType, amountInCreep);
             if(putResult === ERR_NOT_IN_RANGE){
-              modCommon.move(creep,storage);
+              modCommon.move(creep,terminal);
             }else if(putResult === OK){
               creep.memory.toLoad.amount = creep.memory.toLoad.amount - amountInCreep;
             }
