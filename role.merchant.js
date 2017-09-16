@@ -103,7 +103,7 @@ var roleMerchant = {
       amountInCreep = 0;
     }
     var enInTerm = terminal.store.energy;
-    if(trade){
+    if(trade && trade.orderID && trade.amount && trade.roomName){
       //If there is a trade in memory, execute it
       if(terminal.cooldown === 0){
         var tradeResult = Game.market.deal(trade.orderId, trade.amount, trade.roomName);
