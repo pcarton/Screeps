@@ -35,6 +35,9 @@ var roleMerchant = {
     var thisRoom = creep.room.name;
     var resourceType = modCommon.whatStore(creep.room.storage);
     if(resourceType === RESOURCE_ENERGY){
+      resourceType = modCommon.whatStore(creep.room.terminal);
+    }
+    if(resourceType === RESOURCE_ENERGY){
       creep.memory.orderID = "";
       creep.memory.searchCooldown = modConstants.searchCooldown;
       return;
