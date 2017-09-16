@@ -41,7 +41,7 @@ var roleMerchant = {
       var order = sortedOrders[0];
       creep.memory.orderID = order.id;
       creep.memory.toLoad.resourceType = order.resourceType;
-      creep.memory.toLoad.amount = order.remainingAmount;
+      creep.memory.toLoad.amount = order.remainingAmount - creep.room.terminal.store[order.resourceType];
     }else{
       creep.memory.orderID = "";
       creep.memory.searchCooldown = modConstants.searchCooldown;
