@@ -37,7 +37,7 @@ var roleMerchant = {
     var ordersAll = Game.market.getAllOrders();
     var orders = _.filter(ordersAll, (order) => (order.type === ORDER_BUY) && (order.resourceType === resourceType) && (Game.map.getRoomLinearDistance(order.roomName, thisRoom, true) <= modConstants.maxRoomTradeDist) );
     var sortedOrders = _.sortBy(orders,['price','id','resourceType']);
-    if(sortedOrders && sortedOrders.length){
+    if(sortedOrders && sortedOrders.length >=0 ){
       var order = sortedOrders[0];
       creep.memory.orderID = order.id;
       creep.memory.toLoad.resourceType = order.resourceType;
@@ -102,7 +102,7 @@ var roleMerchant = {
         if(tradeResult != OK){
           //find new order that fits current requirements
         }else{
-          Memory.rooms[creep.room.name].trade = null;
+          Memory.rooms[creep.room.name].trade = {};
         }
         creep.memory.toLoad = {};
         creep.memory.orderID = "";
