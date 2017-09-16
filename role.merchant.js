@@ -30,11 +30,7 @@ var roleMerchant = {
 
   getOrder:function(creep){
     var thisRoom = creep.room.name;
-    if(creep.memory.storage === ""){
-      this.assignStorage(creep);
-    }
-    var storageID = creep.memory.storage;
-    var resourceType = this.getResourceType(storageID);
+    var resourceType = modCommon.whatStore(creep.room.storage);
     var ordersAll = Game.market.getAllOrders();
     var orders = _.filter(ordersAll, (order) => (order.type === ORDER_BUY) && (order.resourceType === resourceType) && (Game.map.getRoomLinearDistance(order.roomName, thisRoom, true) <= modConstants.maxRoomTradeDist) );
     var sortedOrders = _.sortBy(orders,['price','id','resourceType']);
