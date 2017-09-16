@@ -115,6 +115,8 @@ var roleMerchant = {
             var getResult = creep.withdraw(storage,creep.memory.toLoad.resourceType);
             if(getResult === ERR_NOT_IN_RANGE){
               modCommon.move(creep,storage);
+            }if(getResult === ERR_NOT_ENOUGH_RESOURCES){
+              creep.memory.toLoad.amount = 0;
             }
           }else{
             var putResult = creep.transfer(terminal,creep.memory.toLoad.resourceType, amountInCreep);
@@ -133,6 +135,17 @@ var roleMerchant = {
             trade.roomName = creep.room.name;
           }else{
             creep.memory.toLoad.amount = cost - enInTerm;
+            creep.memory.toLoad.resourceType = RESOURCE_ENERGY;
+          }
+        }else if(amountInTerm > 0){
+          var cost2 = Game.market.calcTransactionCost(amountInTerm, order.roomName,creep.room.name);
+          if(cost2 <= enInTerm){
+            trade = {};
+            trade.orderId = orderID;
+            trade.amount = order.amountInTerm;
+            trade.roomName = creep.room.name;
+          }else{
+            creep.memory.toLoad.amount = cost2 - enInTerm;
             creep.memory.toLoad.resourceType = RESOURCE_ENERGY;
           }
         }
