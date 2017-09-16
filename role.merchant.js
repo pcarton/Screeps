@@ -150,7 +150,7 @@ var roleMerchant = {
           if(cost2 <= enInTerm){
             trade = {};
             trade.orderId = orderID;
-            trade.amount = order.amountInTerm;
+            trade.amount = amountInTerm;
             trade.roomName = creep.room.name;
           }else{
             creep.memory.toLoad.amount = cost2 - enInTerm;
