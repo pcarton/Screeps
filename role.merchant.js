@@ -29,6 +29,9 @@ var roleMerchant = {
   },
 
   getOrder:function(creep){
+    if (creep.memory.searchCooldown > 0 ){
+      return;
+    }
     var thisRoom = creep.room.name;
     var resourceType = modCommon.whatStore(creep.room.storage);
     var ordersAll = Game.market.getAllOrders();
@@ -41,6 +44,7 @@ var roleMerchant = {
       creep.memory.toLoad.amount = order.remainingAmount;
     }else{
       creep.memory.orderID = "";
+      creep.memory.searchCooldown = modConstants.searchCooldown;
     }
 
   },
@@ -55,6 +59,10 @@ var roleMerchant = {
     var orderID;
     var order;
     var toLoad = creep.memory.toLoad.amount;
+
+    if (creep.memory.searchCooldown > 0 ){
+      creep.memory.searchCooldown = creep.memory.searchCooldown - 1;
+    }
 
     //Get the objects from their IDs
 

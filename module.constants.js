@@ -21,6 +21,7 @@ var modConstants = {
   nearDeath:50, //ticks until death
   tier3To4Buffer:5000,
   maxRoomTradeDist: 30,
+  searchCooldown: 100,
 
 };
 
