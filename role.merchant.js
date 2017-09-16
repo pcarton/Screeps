@@ -102,7 +102,7 @@ var roleMerchant = {
         if(tradeResult != OK){
           //find new order that fits current requirements
         }else{
-          Memory.rooms[creep.room.name].trade = {};
+          trade = {};
         }
         creep.memory.toLoad = {};
         creep.memory.orderID = "";
