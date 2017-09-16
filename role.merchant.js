@@ -34,6 +34,11 @@ var roleMerchant = {
     }
     var thisRoom = creep.room.name;
     var resourceType = modCommon.whatStore(creep.room.storage);
+    if(resourceType === RESOURCE_ENERGY){
+      creep.memory.orderID = "";
+      creep.memory.searchCooldown = modConstants.searchCooldown;
+      return;
+    }
     var ordersAll = Game.market.getAllOrders();
     var orders = _.filter(ordersAll, (order) => (order.type === ORDER_BUY) && (order.resourceType === resourceType) && (Game.map.getRoomLinearDistance(order.roomName, thisRoom, true) <= modConstants.maxRoomTradeDist) );
     var sortedOrders = _.sortBy(orders,['price','id','resourceType']);
