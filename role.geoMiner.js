@@ -65,26 +65,27 @@ var roleGeoMiner = {
         dPos = dropOff.pos;
       }
     }
-
-    if(mineral.mineralAmount === 0 || _.sum(creep.carry) == creep.carryCapacity){
-      if(creep.transfer(dropOff, resourceType) === ERR_NOT_IN_RANGE) {
-        modCommon.move(creep,dPos);
-      }else{
-        creep.memory.path = null;
-      }
-    }else if(dropOff && _.sum(dropOff.store) <= dropOff.storeCapacity - creep.carryCapacity){
-      if(creep.harvest(mineral) === ERR_NOT_IN_RANGE) {
-        modCommon.move(creep,sPos);
-      }
-    }
-    if(mineral.mineralAmount === 0 && _.sum(creep.carry) <=0){
-      var spawner = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-        filter: (structure) => {
-          return (structure.structureType === STRUCTURE_SPAWN);
+    if(mineral){
+      if(mineral.mineralAmount === 0 || _.sum(creep.carry) == creep.carryCapacity){
+        if(creep.transfer(dropOff, resourceType) === ERR_NOT_IN_RANGE) {
+          modCommon.move(creep,dPos);
+        }else{
+          creep.memory.path = null;
         }
-      });
-      if(spawner.recycleCreep(creep) === ERR_NOT_IN_RANGE){
-        modCommon.move(creep,spawner);
+      }else if(dropOff && _.sum(dropOff.store) <= dropOff.storeCapacity - creep.carryCapacity){
+        if(creep.harvest(mineral) === ERR_NOT_IN_RANGE) {
+          modCommon.move(creep,sPos);
+        }
+      }
+      if(mineral.mineralAmount === 0 && _.sum(creep.carry) <=0){
+        var spawner = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+          filter: (structure) => {
+            return (structure.structureType === STRUCTURE_SPAWN);
+          }
+        });
+        if(spawner.recycleCreep(creep) === ERR_NOT_IN_RANGE){
+          modCommon.move(creep,spawner);
+        }
       }
     }
   }
