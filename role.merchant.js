@@ -136,6 +136,7 @@ var roleMerchant = {
               modCommon.move(creep,terminal);
             }else if(putResult === OK){
               creep.memory.toLoad.amount = creep.memory.toLoad.amount - amountInCreep;
+              creep.say("Need to Load "+creep.memory.toLoad.amount+" more "+creep.memory.toLoad.resourceType);
             }
           }
         }else if(amountInTerm >= order.remainingAmount){
