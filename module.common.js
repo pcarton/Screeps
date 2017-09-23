@@ -154,7 +154,7 @@ var modCommon = {
   //Function to run away and hide
   retreat: function(creep){
     this.move(creep, creep.room.controller.pos);
-    creep.say("HELP ME!");
+    creep.say("Help Me!");
   },
 
   //Function to move useing a stored path
