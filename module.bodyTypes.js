@@ -155,9 +155,10 @@ var bodyObj = {
             return miniHaul;
           case 4:
           case 5:
+            return haulerBody;
           case 6:
           case 7:
-            return haulerBody;
+            return hauler6Body;
         }
       }else if(role === 'miner'){
         return minerBody;
