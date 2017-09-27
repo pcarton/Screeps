@@ -144,9 +144,11 @@ var modSpawning = {
 
       var minerals = (_.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
 
-      var inStore = storage && modCommon.whatStore(storage) != RESOURCE_ENERGY;
+      var resourceTypeStore = modCommon.whatStore(storage);
+      var inStore = storage && resourceTypeStore != RESOURCE_ENERGY && modCommon.getResourceCount(storage.store,resourceTypeStore) >= 100;
 
-      var inTerm = terminal && modCommon.whatStore(terminal) != RESOURCE_ENERGY;
+      var resourceTypeTerm = modCommon.whatStore(terminal);
+      var inTerm = terminal && resourceTypeTerm != RESOURCE_ENERGY && modCommon.getResourceCount(storage.store,resourceTypeTerm) >= 100;
 
       var toSell = inStore || inTerm;
 
