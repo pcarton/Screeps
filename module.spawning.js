@@ -148,7 +148,7 @@ var modSpawning = {
       var inStore = storage && resourceTypeStore != RESOURCE_ENERGY && modCommon.getResourceCount(storage.store,resourceTypeStore) >= 100;
 
       var resourceTypeTerm = modCommon.whatStore(terminal);
-      var inTerm = terminal && resourceTypeTerm != RESOURCE_ENERGY && modCommon.getResourceCount(storage.store,resourceTypeTerm) >= 100;
+      var inTerm = terminal && resourceTypeTerm != RESOURCE_ENERGY && modCommon.getResourceCount(terminal.store,resourceTypeTerm) >= 100;
 
       var toSell = inStore || inTerm;
 
