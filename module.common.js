@@ -179,7 +179,11 @@ var modCommon = {
       var creepPath = creep.memory.path;
       var reCalc = creep.memory.reCalc;
       if(!creepPath || creep.memory.dest != posStr || posStr === null || reCalc){
-          opts.ignoreCreeps = false;
+          if(reCalc){
+            opts.ignoreCreeps = false;
+          }else {
+            opts.ignoreCreeps = true;
+          }
           opts.serialize = true;
           if(pos.roomName == creep.room.name){
             opts.maxOps = 1000;
