@@ -131,6 +131,7 @@ var modSpawning = {
   },
 
   needMerchant:function(roomName){
+    var rawMinerals = [RESOURCE_HYDROGEN, RESOURCE_OXYGEN, RESOURCE_UTRIUM, RESOURCE_LEMERGIUM, RESOURCE_KEANIUM, RESOURCE_ZYNTHIUM, RESOURCE_CATALYST, RESOURCE_GHODIUM];
     var roles = Memory.rooms[roomName].roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
 
@@ -145,10 +146,21 @@ var modSpawning = {
       var minerals = (_.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
 
       var resourceTypeStore = modCommon.whatStore(storage);
-      var inStore = storage && resourceTypeStore != RESOURCE_ENERGY && modCommon.getResourceCount(storage.store,resourceTypeStore) >= 100;
+      var inStore = false;
+      if(rawMinerals.indexOf(resourceTypeStore)<0){
+        inStore = false;
+      }else{
+        inStore = storage && resourceTypeStore != RESOURCE_ENERGY && modCommon.getResourceCount(storage.store,resourceTypeStore) >= 100;
+      }
+
 
       var resourceTypeTerm = modCommon.whatStore(terminal);
-      var inTerm = terminal && resourceTypeTerm != RESOURCE_ENERGY && modCommon.getResourceCount(terminal.store,resourceTypeTerm) >= 100;
+      var inTerm = false;
+      if(rawMinerals.indexOf(resourceTypeTerm)<0){
+        inTerm = false;
+      }else{
+        inTerm = terminal && resourceTypeTerm != RESOURCE_ENERGY && modCommon.getResourceCount(terminal.store,resourceTypeTerm) >= 100;
+      }
 
       var toSell = inStore || inTerm;
 
