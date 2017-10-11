@@ -29,15 +29,16 @@ var roleMerchant = {
   },
 
   getOrder:function(creep){
+    var rawMinerals = [RESOURCE_HYDROGEN, RESOURCE_OXYGEN, RESOURCE_UTRIUM, RESOURCE_LEMERGIUM, RESOURCE_KEANIUM, RESOURCE_ZYNTHIUM, RESOURCE_CATALYST, RESOURCE_GHODIUM];
     if (creep.memory.searchCooldown > 0 ){
       return;
     }
     var thisRoom = creep.room.name;
     var resourceType = modCommon.whatStore(creep.room.storage);
-    if(resourceType === RESOURCE_ENERGY){
+    if(rawMinerals.indexOf(resourceType)<0){
       resourceType = modCommon.whatStore(creep.room.terminal);
     }
-    if(resourceType === RESOURCE_ENERGY){
+    if(rawMinerals.indexOf(resourceType)<0){
       creep.memory.orderID = "";
       creep.memory.searchCooldown = modConstants.searchCooldown;
       return;
