@@ -123,7 +123,7 @@ var modMemory = {
       toLoad.resource = RESOURCE_ENERGY;
       memoryObj.toLoad = toLoad;
     }
-    else if(creepTpe === "settler"){
+    else if(creepType === "settler"){
       memoryObj.role = 'settler';
     }
 
