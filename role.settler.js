@@ -2,7 +2,7 @@ var modCommon = require('module.common');
 var roleSettler = {
 
   run: function(creep){
-    var goto = creep.memory.toSettle;
+    var goto = creep.memory.manualDest;
     //If not in the right room yet
     if(goto && creep.pos != goto){
       modCommon.move(creep,goto);
