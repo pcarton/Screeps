@@ -9,7 +9,7 @@ var roleSettler = {
     }else if(goto){ //if at the rally
       goto = null;
     }else{ //if in right room and arrived at rally
-      var contoller = creep.room.controller;
+      var controller = creep.room.controller;
       var success = creep.claimController(controller);
       if(success === ERR_NOT_IN_RANGE){
         modCommon.move(creep, controller.pos);
