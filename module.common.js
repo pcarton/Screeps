@@ -188,7 +188,7 @@ var modCommon = {
           if(pos.roomName == creep.room.name){
             opts.maxOps = 1000;
           }else{
-            opts.maxOps = 2000;
+            opts.maxOps = 9000;
           }
           creep.memory.path = creep.pos.findPathTo(pos, opts);
           creep.memory.dest = posStr;
