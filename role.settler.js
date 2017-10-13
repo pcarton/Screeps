@@ -1,3 +1,4 @@
+var modCommon = require('module.common');
 var roleSettler = {
 
   run: function(creep){
