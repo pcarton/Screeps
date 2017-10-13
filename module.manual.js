@@ -4,7 +4,7 @@ var modUtil = require('module.utility');
 var modManual ={
   spawn:function(type, tier, roomName, pos){
     var memoryObj = modMemory.getInitalCreepMem(type);
-    memoryObj.dest = pos;
+    memoryObj.manualDest = pos;
     memoryObj.room = roomName;
 
     var obj = {
