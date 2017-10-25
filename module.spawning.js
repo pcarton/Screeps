@@ -11,11 +11,12 @@ var modSpawning = {
   needHarvester:function(roomName){
     var roles = Memory.rooms[roomName].roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
+    var storageFilled = Game.rooms[roomName].storage && Game.rooms[roomName].storage.store.energy>1000;
 
     var LTMin = roles.numHarvesters < roles.maxHarvesters;
     var tier = this.calcTier(roomName);
 
-    return (LTMin || notEnoughHarvest) && tier<=3;
+    return (LTMin || (notEnoughHarvest && !storageFilled)) && tier<=3;
   },
 
   needUpgrader:function(roomName){
@@ -103,8 +104,9 @@ var modSpawning = {
   needFeeder:function(roomName){
     var roles = Memory.rooms[roomName].roles;
     var notEnoughHarvest = (roles.numHarvesters <= 0) && (roles.numMiners <= 0);
+    var storageFilled = Game.rooms[roomName].storage && Game.rooms[roomName].storage.store.energy>1000;
 
-    if(notEnoughHarvest){
+    if(notEnoughHarvest && !storageFilled){
       return false;
     }else{
       var tier = this.calcTier(roomName);
@@ -301,6 +303,9 @@ var modSpawning = {
   },
   enqueueFeeder:function(roomName){
     var tier = this.calcTier(roomName);
+    if(Game.rooms[roomName].energyAvailable<=300){
+      tier = 1;
+    }
     var memoryObjF = modMemory.getInitalCreepMem("feeder");
     memoryObjF.room = roomName;
 
