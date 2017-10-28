@@ -247,6 +247,9 @@ var modCommon = {
   },
 
   whatStore:function(struct){
+    if(!struct){
+      return null;
+    }
     var structStore = struct.store;
     for(var type in structStore){
       if(structStore[type]>0 && type !== RESOURCE_ENERGY){
