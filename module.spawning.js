@@ -283,7 +283,7 @@ var modSpawning = {
       memory:memoryObjM
     };
     obj.body = bodyObj.getBody('miner',tier);
-    Memory.rooms[roomName].spawnQ.unshift(obj);
+    Memory.rooms[roomName].spawnQ.push(obj);
     modUtil.incrementCreepNum("miner",roomName);
   },
   enqueueHauler:function(roomName){
