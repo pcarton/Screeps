@@ -159,55 +159,56 @@ var modCommon = {
 
   //Function to move useing a stored path
   move:function(creep,pos){
-    if(creep.pos.x === 0){
-      creep.move(RIGHT);
-    }else if(creep.pos.x === 49){
-      creep.move(LEFT);
-    }else if(creep.pos.y === 49){
-      creep.move(TOP);
-    }else if(creep.pos.y === 0){
-      creep.move(BOTTOM);
-    }else{
-      var opts = {};
-      //opts.ignore = Game.rooms[pos.roomName].find(FIND_MY_CONSTRUCTION_SITES);
-      var posStr = null;
-      if(pos.roomName === undefined || pos.x === undefined || pos.y === undefined){
-        posStr = null;
-      }else{
-        posStr = pos.roomName+":"+pos.x+","+pos.y;
+    if(creep.pos.roomName === pos.roomName){
+      if(creep.pos.x === 0){
+        return creep.move(RIGHT);
+      }else if(creep.pos.x === 49){
+        return creep.move(LEFT);
+      }else if(creep.pos.y === 49){
+        return creep.move(TOP);
+      }else if(creep.pos.y === 0){
+        return creep.move(BOTTOM);
       }
-      var creepPath = creep.memory.path;
-      var reCalc = creep.memory.reCalc;
-      if(!creepPath || creep.memory.dest != posStr || posStr === null || reCalc){
-          if(reCalc){
-            opts.ignoreCreeps = false;
-          }else {
-            opts.ignoreCreeps = true;
-          }
-          opts.serialize = true;
-          if(pos.roomName == creep.room.name){
-            opts.maxOps = 1000;
-          }else{
-            opts.maxOps = 9000;
-          }
-          creep.memory.path = creep.pos.findPathTo(pos, opts);
-          creep.memory.dest = posStr;
-          creep.memory.reCalc = false;
+    }
+    var opts = {};
+    //opts.ignore = Game.rooms[pos.roomName].find(FIND_MY_CONSTRUCTION_SITES);
+    var posStr = null;
+    if(pos.roomName === undefined || pos.x === undefined || pos.y === undefined){
+      posStr = null;
+    }else{
+      posStr = pos.roomName+":"+pos.x+","+pos.y;
+    }
+    var creepPath = creep.memory.path;
+    var reCalc = creep.memory.reCalc;
+    if(!creepPath || creep.memory.dest != posStr || posStr === null || reCalc){
+        if(reCalc){
+          opts.ignoreCreeps = false;
+        }else {
+          opts.ignoreCreeps = true;
+        }
+        opts.serialize = true;
+        if(pos.roomName == creep.room.name){
+          opts.maxOps = 1000;
+        }else{
+          opts.maxOps = 9000;
+        }
+        creep.memory.path = creep.pos.findPathTo(pos, opts);
+        creep.memory.dest = posStr;
+        creep.memory.reCalc = false;
+    }
+    creep.memory.lastPos = creep.pos;
+    var result = creep.moveByPath(creep.memory.path);
+    if(result != OK && result != ERR_TIRED){
+      creep.memory.path = null;
+      //console.log("Move error: "+result);
+    }else if(result === OK){
+      if((creep.memory.lastPos === creep.pos) && (creep.fatigue === 0)){
+        creep.memory.reCalc = true;
       }
       creep.memory.lastPos = creep.pos;
-      var result = creep.moveByPath(creep.memory.path);
-      if(result != OK && result != ERR_TIRED){
-        creep.memory.path = null;
-        //console.log("Move error: "+result);
-      }else if(result === OK){
-        if((creep.memory.lastPos === creep.pos) && (creep.fatigue === 0)){
-          creep.memory.reCalc = true;
-        }
-        creep.memory.lastPos = creep.pos;
-      }
-
-      return result;
     }
+
+    return result;
   },
 
   playerAttack:function(allCreepList){
