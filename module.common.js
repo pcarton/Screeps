@@ -181,7 +181,7 @@ var modCommon = {
     var creepPath = creep.memory.path;
     var reCalc = creep.memory.reCalc;
     if(!creepPath || creep.memory.dest != posStr || posStr === null || reCalc){
-        if(creep.role === 'feeder' || !reCalc){
+        if(creep.memory.role === 'feeder' || !reCalc){
           opts.ignoreCreeps = true;
         }else {
           opts.ignoreCreeps = false;
