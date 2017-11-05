@@ -154,7 +154,7 @@ module.exports.loop = function () {
       var linkMemObj = Memory.rooms[roomName].links[linkID];
       var linkObj = Game.getObjectById(linkID);
       if(linkMemObj.load && linkObj.energy == linkObj.energyCapacity){
-        var notLoads = _.filter(links, (obj) => obj.id != linkID && obj.energy < obj.energyCapacity);
+        var notLoads = _.filter(links, (obj) => obj.id != linkID && obj.energy <= 100 );
         if(notLoads.length && linkObj.cooldown === 0){
           linkObj.transferEnergy(notLoads[0]);
         }
