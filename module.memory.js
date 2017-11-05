@@ -63,7 +63,7 @@ var modMemory = {
     var roomName = link.room.name;
     var linkID = link.id;
     Memory.rooms[roomName].links[link.id]={};
-    isFlagged = _.filter(link.room.lookAt(link.pos),(obj) => obj.type == LOOK_FLAG && obj[LOOK_FLAG].name == "Load").length >0;
+    isFlagged = _.filter(link.room.lookAt(link.pos),(obj) => obj.type == LOOK_FLAGS && obj[LOOK_FLAGS].name == "Load").length >0;
     if(isFlagged){
       Memory.rooms[roomName].links[link.id].load = true;
     }else{
