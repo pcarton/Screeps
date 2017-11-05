@@ -45,6 +45,7 @@ module.exports.loop = function () {
     var allStructs = room.find(FIND_MY_STRUCTURES);
     var allConstruct = room.find(FIND_MY_CONSTRUCTION_SITES);
     var towers = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_TOWER);
+    var links = _.filter(allStructs, (struct) => struct.structureType === STRUCTURE_LINK);
 
     if(allStructs.length <=0 && allConstruct.length<=0){
       //Find the nearest room to this new one and spawn an assist builder and upgrader test
@@ -70,6 +71,13 @@ module.exports.loop = function () {
         modMemory.initTower(towers[tower]);
       }
     }
+
+    for(var link in links){
+      if(!Memory.rooms[roomName].links[link.id]){
+        modMemory.initLink(links[link]);
+      }
+    }
+
 
     //Clear dead creeps from memory
     clearDead();
@@ -140,6 +148,17 @@ module.exports.loop = function () {
         Memory.rooms[roomName].towers[towerId].mode = "repair";
       }
       modStructures.runTower(towerObj,allCreepList);
+    }
+
+    for(var linkID in Memory.rooms[roomName].links){
+      var linkMemObj = Memory.rooms[roomName].links[linkID];
+      var linkObj = Game.getObjectById(linkID);
+      if(linkMemObj.load && linkObj.energy == linkObj.energyCapacity){
+        var notLoads = _.filter(links, (obj) => obj.id != linkID && obj.energy < obj.energyCapacity);
+        if(notLoads.length && linkObj.cooldown === 0){
+          linkObj.transferEnergy(notLoads[0]);
+        }
+      }
     }
 
     if(enemyPresent && newEnemy)

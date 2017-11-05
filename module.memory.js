@@ -39,6 +39,7 @@ var modMemory = {
       conservation: false,
       fortify: false,
       towers:{},
+      links:{},
       sourceIDs:[],
       signMsg:"",
       //TODO extend the creep prototype and add signing based on this memory value
@@ -57,6 +58,17 @@ var modMemory = {
       target:null,
       mode:"attack"
     };
+  },
+  initLink:function(link){
+    var roomName = link.room.name;
+    var linkID = link.id;
+    Memory.rooms[roomName].links[link.id]={};
+    isFlagged = _.filter(link.room.lookAt(link.pos),(obj) => obj.type == LOOK_FLAG && obj[LOOK_FLAG].name == "Load").length >0;
+    if(isFlagged){
+      Memory.rooms[roomName].links[link.id].load = true;
+    }else{
+      Memory.rooms[roomName].links[link.id].load = false;
+    }
   },
   getSpawnQ:function(roomName){
     return Memory.rooms[roomName].spawnQ;

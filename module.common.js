@@ -66,7 +66,7 @@ var modCommon = {
     }
     //Next priority is the closest container or storage
     var storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-      filter: (object)=>((object.structureType === STRUCTURE_CONTAINER) || (object.structureType === STRUCTURE_STORAGE)) && (object.store[RESOURCE_ENERGY] > creep.carryCapacity)
+      filter: (object)=>(((object.structureType === STRUCTURE_CONTAINER) || (object.structureType === STRUCTURE_STORAGE)) && (object.store[RESOURCE_ENERGY] >= creep.carryCapacity)) || (object.structureType === STRUCTURE_LINK && object.energy > creep.carryCapacity)
     });
     if(storage!==null){
       var getEnergy = creep.withdraw(storage, RESOURCE_ENERGY, creep.carryCapacity-creep.carry);
