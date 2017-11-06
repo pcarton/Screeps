@@ -56,10 +56,11 @@ var roleFeeder = {
     var p3Flag = creep.pos.findClosestByRange(FIND_FLAGS, {
         filter: (flag) => flag.name.substring(0,7)=="Deliver" || flag.name.substring(0,4)=="Load"
     });
-    var p3 = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,p3Flag), (struct)=> (struct.structureType === STRUCTURE_CONTAINER && struct.store[RESOURCE_ENERGY] < struct.storeCapacity) || (struct.structureType === STRUCTURE_LINK && struct.energy<struct.energyCapacity))[0];
+    var p3 = _.filter(creep.room.lookForAt(LOOK_STRUCTURES,p3Flag), (struct)=> (struct.structureType === STRUCTURE_CONTAINER || struct.structureType === STRUCTURE_LINK));
+    var p3Low = _.filter(p3, (struct) => (struct.structureType === STRUCTURE_CONTAINER && struct.store[RESOURCE_ENERGY]< struct.storeCapacity) || (struct.structureType === STRUCTURE_LINK && struct.energy < struct.energyCapacity))[0];
     var construct = creep.room.lookForAt(LOOK_CONSTRUCTION_SITES,p3Flag);
     var deliver = null;
-    if(p3Flag && !p3 && construct.length === 0){
+    if(p3Flag && p3.length===0 && construct.length === 0){
       p3Flag.memory.marked = false;
     }
     if(p1){
@@ -68,8 +69,8 @@ var roleFeeder = {
     }else if(p2){
       deliver = p2;
       creep.memory.deliver = deliver.id;
-    }else if(p3){
-      deliver = p3;
+    }else if(p3Low){
+      deliver = p3Low;
       creep.memory.deliver = deliver.id;
     }else{
       deliver = "Nowhere to Go";
