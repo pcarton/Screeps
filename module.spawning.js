@@ -144,29 +144,24 @@ var modSpawning = {
       var storage = Game.rooms[roomName].storage;
       var terminal = Game.rooms[roomName].terminal;
       var LTMin = roles.numMerchant < roles.maxMerchant;
+      var minerals = _.filter(Game.rooms[roomName].find(FIND_MINERALS))[0];
 
-      var minerals = (_.filter(Game.rooms[roomName].find(FIND_MINERALS), (mineral) => mineral.mineralAmount > 0).length) > 0;
-
-      var resourceTypeStore = modCommon.whatStore(storage);
+      var resourceType = minerals.mineralType;
+      var mineralsLeft = minerals.mineralAmount !== 0;
       var inStore = false;
-      if(rawMinerals.indexOf(resourceTypeStore)<0){
-        inStore = false;
-      }else{
-        inStore = storage && resourceTypeStore != RESOURCE_ENERGY && modCommon.getResourceCount(storage.store,resourceTypeStore) >= 100;
-      }
+      inStore = storage && modCommon.getResourceCount(storage.store,resourceType) >= 100;
 
 
-      var resourceTypeTerm = modCommon.whatStore(terminal);
       var inTerm = false;
       if(rawMinerals.indexOf(resourceTypeTerm)<0){
         inTerm = false;
       }else{
-        inTerm = terminal && resourceTypeTerm != RESOURCE_ENERGY && modCommon.getResourceCount(terminal.store,resourceTypeTerm) >= 100;
+        inTerm = terminal && modCommon.getResourceCount(terminal.store,resourceType) >= 100;
       }
 
       var toSell = inStore || inTerm;
 
-      return !minerals && toSell && (tier >= 4) && LTMin;
+      return !mineralsLeft && toSell && (tier >= 4) && LTMin;
     }
   },
 
