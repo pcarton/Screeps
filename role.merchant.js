@@ -34,7 +34,7 @@ var roleMerchant = {
       return;
     }
     var thisRoom = creep.room.name;
-    var resourceType = modCommon.whatStore(creep.room.storage);
+    var resourceType = Game.rooms[roomName].find(FIND_MINERALS)[0].mineralType;
     if(rawMinerals.indexOf(resourceType)<0){
       resourceType = modCommon.whatStore(creep.room.terminal);
     }

@@ -144,7 +144,7 @@ var modSpawning = {
       var storage = Game.rooms[roomName].storage;
       var terminal = Game.rooms[roomName].terminal;
       var LTMin = roles.numMerchant < roles.maxMerchant;
-      var minerals = _.filter(Game.rooms[roomName].find(FIND_MINERALS))[0];
+      var minerals = Game.rooms[roomName].find(FIND_MINERALS)[0];
 
       var resourceType = minerals.mineralType;
       var mineralsLeft = minerals.mineralAmount !== 0;
