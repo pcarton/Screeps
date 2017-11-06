@@ -248,12 +248,13 @@ var modCommon = {
   },
 
   whatStore:function(struct){
+    var rawMinerals = [RESOURCE_HYDROGEN, RESOURCE_OXYGEN, RESOURCE_UTRIUM, RESOURCE_LEMERGIUM, RESOURCE_KEANIUM, RESOURCE_ZYNTHIUM, RESOURCE_CATALYST, RESOURCE_GHODIUM];
     if(!struct){
       return null;
     }
     var structStore = struct.store;
     for(var type in structStore){
-      if(structStore[type]>0 && type !== RESOURCE_ENERGY){
+      if(structStore[type]>0 && rawMinerals.indexOf(type)!=-1){
         return type;
       }
     }
