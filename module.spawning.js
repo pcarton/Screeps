@@ -153,11 +153,7 @@ var modSpawning = {
 
 
       var inTerm = false;
-      if(rawMinerals.indexOf(resourceTypeTerm)<0){
-        inTerm = false;
-      }else{
-        inTerm = terminal && modCommon.getResourceCount(terminal.store,resourceType) >= 100;
-      }
+      inTerm = terminal && modCommon.getResourceCount(terminal.store,resourceType) >= 100;
 
       var toSell = inStore || inTerm;
 
