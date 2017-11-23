@@ -15,6 +15,7 @@ var modMemory = {
           maxHarvesters:1,
           numUpgraders:0,
           maxUpgraders:1,
+          maxUpgradersTier:8,
           numBuilders:0,
           maxBuilders:1,
           numRepair:0,

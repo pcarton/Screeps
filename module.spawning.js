@@ -197,7 +197,9 @@ var modSpawning = {
   },
 
   enqueueUpgrader:function(roomName){
-    var tier = this.calcTier(roomName);
+    var tierCalced = this.calcTier(roomName);
+    var maxTier = Memory.rooms[roomName].roles.maxUpgraderTier;
+    var tier = Math.min(tierCalced,maxTier);
     var memoryObjU = modMemory.getInitalCreepMem("upgrader");
     memoryObjU.room = roomName;
 
