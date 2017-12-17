@@ -22,7 +22,7 @@ var modConstants = {
   tier3To4Buffer:5000,
   maxRoomTradeDist: 30,
   searchCooldown: 100,
-
+  minMineralSellType: 0.5,
 };
 
 module.exports = modConstants;

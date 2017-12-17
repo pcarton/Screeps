@@ -44,7 +44,7 @@ var roleMerchant = {
       return;
     }
     var ordersAll = Game.market.getAllOrders();
-    var orders = _.filter(ordersAll, (order) => (order.type === ORDER_BUY) && (order.resourceType === resourceType) && (Game.map.getRoomLinearDistance(order.roomName, thisRoom, true) <= modConstants.maxRoomTradeDist) && (order.remainingAmount >=100));
+    var orders = _.filter(ordersAll, (order) => (order.type === ORDER_BUY) && (order.resourceType === resourceType) && (Game.map.getRoomLinearDistance(order.roomName, thisRoom, true) <= modConstants.maxRoomTradeDist) && (order.remainingAmount >=100) && (order.price >= modConstants.minMineralSellType));
     var sortedOrders = _.sortBy(orders,['price','id','resourceType']);
     if(sortedOrders && sortedOrders.length >0 ){
       var order = sortedOrders[0];
