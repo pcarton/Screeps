@@ -1,14 +1,14 @@
 //Module to define job types and end condition functions
 var modJob = {
 
-    createJob(target,partsRequired,endCondition,action,range,type){
+    createJob(input){
         return {
-            target: target ? target : undefined,
-            partsRequired: partsRequired ? partsRequired : [],
-            endCondition: endConditon && typeof endCondition === "function" ? endCondition : defaultEndCondition,
-            action:  action && typeof acion === "function" ? action : defaultAction,
-            range: range ? range : 1,
-            type: type ? type : "default"
+            target: input.target ? input.target : undefined,
+            partsRequired: input.partsRequired ? input.partsRequired : [],
+            endCondition: input.endConditon && typeof input.endCondition === "function" ? input.endCondition : defaultEndCondition,
+            action:  input.action && typeof input.acion === "function" ? input.action : defaultAction,
+            range: input.range ? input.range : 1,
+            type: input.type ? input.type : "default"
         }
     },
 
@@ -27,7 +27,13 @@ var modJob = {
     },
 
     getHarvestJob(source){
-        return this.createJob(source,[WORK,MOVE],null,harvestAction,"harvest")
+        input = {
+            target: source,
+            partsRequired: [WORK,MOVE],
+            action: harvestAction,
+            type: "harvest"
+        }
+        return this.createJob(input)
     }
 
 };
