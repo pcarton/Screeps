@@ -1,12 +1,13 @@
 //Module to define job types and end condition functions
 var modJob = {
 
-    createJob(target,partsRequired,endCondition,action,type){
+    createJob(target,partsRequired,endCondition,action,range,type){
         return {
             target: target ? target : undefined,
             partsRequired: partsRequired ? partsRequired : [],
             endCondition: endConditon && typeof endCondition === "function" ? endCondition : defaultEndCondition,
             action:  action && typeof acion === "function" ? action : defaultAction,
+            range: range ? range : 1,
             type: type ? type : "default"
         }
     },

@@ -3,7 +3,7 @@ var modUtil = {
   runCreep: function(creep){
     var job = creep.memory.job;
     if(job){
-      if(creep.pos.inRangeTo(job.target,1){
+      if(creep.pos.inRangeTo(job.target,job.range){
         job.action(creep, target)
       }else{
         creep.moveTo(target)
