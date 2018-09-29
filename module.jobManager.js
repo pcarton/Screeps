@@ -3,7 +3,7 @@ var JobManager = {
         if(!job.partsRequired.every(val => creep.body.includes(val))){
             creep.memory.job = null
           }else{
-            if(creep.pos.inRangeTo(job.target,job.range){
+            if(creep.pos.inRangeTo(job.target,job.range)){
               job.action(creep, target)
             }else{
               creep.moveTo(target)
