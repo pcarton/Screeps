@@ -19,6 +19,7 @@ var modJob = {
     harvestAction(creep, target){
         if(creep && target){
             creep.harvest(target)
+            creep.say("⛏️");
         }
     },
 
