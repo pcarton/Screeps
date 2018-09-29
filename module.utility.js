@@ -15,45 +15,15 @@ var roleSettler = require('role.settler');
 
 var modUtil = {
   runCreep: function(creep){
-    if(creep.memory.role == 'harvester') {
-      roleHarvester.run(creep);
-    }
-    else if(creep.memory.role == 'upgrader') {
-      roleUpgrader.run(creep);
-    }
-    else if(creep.memory.role == 'builder'){
-      roleBuilder.run(creep);
-    }
-    else if(creep.memory.role == 'repair'){
-      roleRepair.run(creep);
-    }
-    else if(creep.memory.role == 'architect'){
-      roleArchitect.run(creep);
-    }
-    else if(creep.memory.role == 'miner'){
-      roleMiner.run(creep);
-    }
-    else if(creep.memory.role == 'hauler'){
-      if(creep.room.storage){
-        roleHauler.run(creep);
-      }else {
-        roleJuniorHauler.run(creep);
+    var job = creep.memory.job;
+    if(job){
+      if(creep.pos - job.target.pos <= 1){
+        job.action(creep, target)
+      }else{
+        creep.moveTo(target)
       }
     }
-    else if(creep.memory.role == 'feeder'){
-      roleFeeder.run(creep);
-    }
-    else if(creep.memory.role == 'geo'){
-      roleGeoMiner.run(creep);
-    }
-    else if(creep.memory.role == 'geoH'){
-      roleGeoHauler.run(creep);
-    }
-    else if(creep.memory.role == 'merchant'){
-      roleMerchant.run(creep);
-    }else if(creep.memory.role == 'settler'){
-      roleSettler.run(creep);
-    }
+   
   },
 
   //Decrementes the number of that creep in the memory storage

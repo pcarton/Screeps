@@ -1,20 +1,33 @@
 //Module to define job types and end condition functions
 var modJob = {
-    jobTemplate = {
-        pos: undefined,
-        partsRequired: [],
-        endCondition: defaultEndCondition,
-        action: defaultAction,
-        type: "default"
+
+    createJob(target,partsRequired,endCondition,action,type){
+        return {
+            target: target ? target : undefined,
+            partsRequired: partsRequired ? partsRequired : [],
+            endCondition: endConditon && typeof endCondition === "function" ? endCondition : defaultEndCondition,
+            action:  action && typeof acion === "function" ? action : defaultAction,
+            type: type ? type : "default"
+        }
     },
 
-    defaultAction: function(creep){
+    defaultAction(creep, target){
         creep.say("Default ▶️")
     },
 
-    defaultEndCondition: function(){
-        return false; //Never ends
+    harvestAction(creep, target){
+        if(creep && target){
+            creep.harvest(target)
+        }
     },
+
+    defaultEndCondition(){
+        return false //Never ends
+    },
+
+    getHarvestJob(source){
+        return this.createJob(source,[WORK,MOVE],null,harvestAction,"harvest")
+    }
 
 };
 
