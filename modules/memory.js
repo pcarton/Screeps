@@ -1,4 +1,4 @@
-var modMemory = {
+var memoryHandler = {
 
   init(){
     Memory.rooms = {};
@@ -20,9 +20,9 @@ var modMemory = {
   },
 
   storeJob(creep, job){
-    creep.memory.job = job
+    creep.memory.job = job;
   }
 
 };
 
-module.exports = modMemory;
+module.exports = memoryHandler;
