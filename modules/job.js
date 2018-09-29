@@ -9,33 +9,16 @@ var modJob = {
             action:  input.action && typeof input.acion === "function" ? input.action : defaultAction,
             range: input.range ? input.range : 1,
             type: input.type ? input.type : "default"
-        }
+        };
     },
 
     defaultAction(creep, target){
-        creep.say("Default ▶️")
+        creep.say("Default ▶️");
     },
-
-    harvestAction(creep, target){
-        if(creep && target){
-            creep.harvest(target)
-            creep.say("⛏️");
-        }
-    },
-
+    
     defaultEndCondition(creep){
-        return false //Never ends
+        return false; //Never ends
     },
-
-    getHarvestJob(source){
-        input = {
-            target: source,
-            partsRequired: [WORK,MOVE],
-            action: harvestAction,
-            type: "harvest"
-        }
-        return this.createJob(input)
-    }
 
 };
 
