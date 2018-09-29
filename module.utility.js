@@ -1,4 +1,4 @@
-var jobManager = require('./jobManager.js');
+var jobManager = require('./module.jobManager.js');
 var utilityModule = {
 
   runCreep: function(creep){
