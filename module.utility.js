@@ -22,6 +22,9 @@ var modUtil = {
       }else{
         creep.moveTo(target)
       }
+      if(job.endCondition(creep)){
+        creep.memory.job = null
+      }
     }
    
   },

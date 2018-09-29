@@ -21,7 +21,7 @@ var modJob = {
         }
     },
 
-    defaultEndCondition(){
+    defaultEndCondition(creep){
         return false //Never ends
     },
 
