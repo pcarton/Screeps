@@ -13,7 +13,7 @@ var modJob = {
     },
 
     defaultAction(creep, target){
-        creep.say("Default ▶️");
+        creep.say("💤");
     },
     
     defaultEndCondition(creep){

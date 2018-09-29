@@ -1,4 +1,4 @@
-var modJob = require('../job.js');
+var modJob = require('./job.js');
 
 var harvester = {  
     harvestAction(creep, target){
