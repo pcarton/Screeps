@@ -1,4 +1,5 @@
-    
+var modJob = require('../job.js');
+
 var harvester = {  
     harvestAction(creep, target){
         if(creep && target){
@@ -10,11 +11,11 @@ var harvester = {
     getHarvestJob(source){
         input = {
             target: source,
-            partsRequired: [WORK,MOVE],
+            partsRequired: [WORK,MOVE,CARRY],
             action: harvestAction,
             type: "harvest"
         };
-        return this.createJob(input);
+        return modJob.createJob(input);
     }
 
 };
