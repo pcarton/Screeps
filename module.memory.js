@@ -19,9 +19,17 @@ var memoryHandler = {
     Memory.rooms[roomName].initialized = true;
   },
 
-  storeJob(creep, job){
+  storeCreepsJob(creep, job){
     creep.memory.job = job;
-  }
+  },
+
+  enqueueJob(roomName,job,priority){
+    Memory.rooms[roomName].jobQ.push(job);
+  },
+
+  getJobQueue(roomName){
+    return Memory.rooms[roomName].jobQ;
+  },
 
 };
 
