@@ -12,9 +12,9 @@ var memoryHandler = {
     Memory.rooms[roomName] = {
       spawnQ: [],
       jobQ: [],
-      sourceIDs:[],
-      signMsg:"",
-      initialized:false, //Set to true when init is run
+      sourceIDs: [],
+      signMsg: "",
+      initialized: false, //Set to true when init is run
     };
     Memory.rooms[roomName].initialized = true;
   },

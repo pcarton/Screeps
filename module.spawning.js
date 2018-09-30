@@ -1,4 +1,4 @@
-var memoryModule = require("./module.memory.js");
+var memoryModule = require('module.memory');
 
 var modSpawning = {
 
@@ -9,7 +9,7 @@ var modSpawning = {
         description:"Generic Creep",
         body: this.tierOneGenericBody,
         name: undefined,
-        memory:{
+        memory: {
             job: null,
         }
       };
