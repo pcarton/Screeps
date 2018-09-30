@@ -31,6 +31,13 @@ var memoryHandler = {
     return Memory.rooms[roomName].jobQ;
   },
 
+  enqueueCreep(roomName,creepObj){
+    Memory.rooms[roomName].spawnQ.push(creepObj);
+  },
+
+  getSpawnQueue(roomName){
+    return Memory.rooms[roomName].spawnQ;
+  },
 };
 
 module.exports = memoryHandler;
