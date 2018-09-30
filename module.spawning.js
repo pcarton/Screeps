@@ -2,7 +2,7 @@ var memoryModule = require('module.memory');
 
 var modSpawning = {
 
-    tierOneGenericBody = [WORK,MOVE,MOVE,CARRY,CARRY],
+    tierOneGenericBody: [WORK,MOVE,MOVE,CARRY,CARRY],
 
     enqueueGeneric(roomName, tier){
       var genericCreep = {
@@ -41,5 +41,5 @@ var modSpawning = {
       }
     }
   };
-  
+
 module.exports = modSpawning;
