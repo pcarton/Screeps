@@ -11,7 +11,7 @@ module.exports.loop = function () {
     for (const roomName in Game.rooms){
         spawnModule.spawn(roomName);
         
-        const allCreeps = Game.rooms[roomName].find(FIND_MY_CREEPS);
+        const allCreeps = Game.creeps;
         const thisRoomCreeps = _.filter(allCreeps, (creep) => (creep.room.name === roomName));
         const currentSpawnQueue = memoryModule.getSpawnQueue(roomName);
 
