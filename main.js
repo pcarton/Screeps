@@ -19,7 +19,7 @@ module.exports.loop = function () {
         }
 
         for(var name in Game.creeps) {
-            creep = Game.creeps[name];
+            var creep = Game.creeps[name];
             //TODO
         }
     }

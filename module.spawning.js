@@ -41,6 +41,5 @@ var modSpawning = {
       }
     }
   };
-modSpawning.maxCreeps = 20;
-
+  
 module.exports = modSpawning;
