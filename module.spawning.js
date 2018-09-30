@@ -6,7 +6,7 @@ var modSpawning = {
 
     enqueueGeneric(roomName, tier){
       var genericCreep = {
-        description:"Generic Creep",
+        description: "Generic Creep",
         body: this.tierOneGenericBody,
         name: undefined,
         memory: {

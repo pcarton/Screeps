@@ -11,11 +11,11 @@ module.exports.loop = function () {
     for (const roomName in Game.rooms){
         spawnModule.spawn(roomName);
         
-        const allCreeps = Game.creeps;
+        const allCreeps = Game.rooms[roomName].find(FIND_MY_CREEPS);
         const thisRoomCreeps = _.filter(allCreeps, (creep) => (creep.room.name === roomName));
 
-        if(thisRoomCreeps < 5){
-            spawnModule.enqueueGeneric();
+        if(thisRoomCreeps.length < 5){
+            spawnModule.enqueueGeneric(roomName);
         }
 
         for(var name in Game.creeps) {
