@@ -13,8 +13,9 @@ module.exports.loop = function () {
         
         const allCreeps = Game.rooms[roomName].find(FIND_MY_CREEPS);
         const thisRoomCreeps = _.filter(allCreeps, (creep) => (creep.room.name === roomName));
+        const currentSpawnQueue = memoryModule.getSpawnQueue(roomName);
 
-        if(thisRoomCreeps.length < 5){
+        if(thisRoomCreeps.length + currentSpawnQueue.length < 5){
             spawnModule.enqueueGeneric(roomName);
         }
 
