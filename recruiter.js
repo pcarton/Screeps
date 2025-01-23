@@ -15,7 +15,7 @@ var recruiter = {
     },
 
     shouldSpawn: function(totalCreeps) {
-        if (totalCreeps < 1) {
+        if (totalCreeps <= 2) {
             return true;
         }
     },
@@ -24,7 +24,7 @@ var recruiter = {
         if(this.shouldSpawn(totalCreeps)) {
             const maxEnergy = 300;
             const body = this.getBody(maxEnergy);
-            const name = "foo";
+            const name = Math.random().toString(20).substring(2, 10);
             spawner.spawnCreep( body, name );
         }
     }
