@@ -9,6 +9,7 @@ module.exports.loop = function () {
 
     for(var spawner in Game.spawns) {
         var spawn = Game.spawns[spawner];
-        recruiter.spawnNext(spawn);
+        var totalCreeps = Game.creeps.length;
+        recruiter.spawnNext(spawn,totalCreeps);
     }
 }

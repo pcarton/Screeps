@@ -14,13 +14,18 @@ var recruiter = {
         return this.getDefaultBody(maxEnergy);
     },
 
-    shouldSpawn: function() {},
+    shouldSpawn: function(totalCreeps) {
+        if (totalCreeps < 1) {
+            return true;
+        }
+    },
 
-    spawnNext: function(spawner) {
-        if(this.shouldSpawn()) {
+    spawnNext: function(spawner, totalCreeps) {
+        if(this.shouldSpawn(totalCreeps)) {
             const maxEnergy = 300;
             const body = this.getBody(maxEnergy);
             const name = "foo";
+            spawner.spawnCreep( body, name );
         }
     }
 
