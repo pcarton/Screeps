@@ -15,7 +15,7 @@ var task = {
         var harvest = {
             "type": "harvest",
             "targetId": targetId,
-            "dropOffId": dropOffId ? dropOffId : Game.getObjectById(sourceId).pos.findClosestByPath(FIND_MY_SPAWNS).id
+            "dropOffId": dropOffId ? dropOffId : Game.getObjectById(targetId).pos.findClosestByPath(FIND_MY_SPAWNS).id
         };
         Memory.tasks[roomName].push(harvest);
     },
@@ -26,6 +26,14 @@ var task = {
             "energySourceId": sourceId,
         };
         Memory.tasks[roomName].push(construct);
+    },
+    queueHaulTask: function(roomName,targetId,sourceId) {
+        var haul = {
+            "type": "haul",
+            "targetId": targetId,
+            "energySourceId": sourceId,
+        };
+        Memory.tasks[roomName].push(haul);
     },
     assignTask: function(creep) {
         var room = creep.room

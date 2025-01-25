@@ -24,11 +24,13 @@ var peon = {
             return null;
         }
         if(creep.store.getFreeCapacity() > 0) {
+            creep.say("⛏︎");
             if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(source);
             }
         }
         else {
+            creep.say("📦");
             if(creep.transfer(dropOff, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(dropOff);
             }

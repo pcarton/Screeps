@@ -2,6 +2,8 @@
 // Identify how many miners can be at each source and save that in memory
 // Attach live creeps to sources when harvesting
 
+var common = require('common');
+
 var init = {
     initTasks: function(room) {
         if(!Memory.tasks){
@@ -22,9 +24,22 @@ var init = {
         //Need to add calculations for max harvesters per source and max upgraders
         if(!Memory.rooms){
             Memory.rooms = {};
-            Memory.rooms[room] = {}
+            Memory.rooms[room] = {};
         }else {
-            Memory.room[room] = {}
+            Memory.rooms[room] = {};
+        }
+
+        Memory.rooms[room].sources = [];
+
+        var sources = Game.rooms[room].find(FIND_SOURCES);
+        for( var sourceIndex in sources) {
+            var sourceId = sources[sourceIndex].id
+            var sourceMem = {
+                "id": sourceId,
+                "dropOff": null, //to be used once a container is placed near the source
+                "maxHarvester": common.getAccessibleHarvestLocations(sourceId),
+            };
+            Memory.rooms[room].sources.push(sourceMem);
         }
     },
 
