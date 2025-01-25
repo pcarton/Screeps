@@ -19,6 +19,7 @@ var init = {
     },
 
     initRoom: function(room) {
+        //Need to add calculations for max harvesters per source and max upgraders
         if(!Memory.rooms){
             Memory.rooms = {};
             Memory.rooms[room] = {}

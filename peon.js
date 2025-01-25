@@ -18,7 +18,7 @@ var peon = {
             return null;
         }
         var source = Game.getObjectById(creeptask.targetId);
-        var spawn = Game.getObjectById(creeptask.spawnId);
+        var dropOff = Game.getObjectById(creeptask.dropOffId);
         if (source == null) {
             creep.say("❓");
             return null;
@@ -29,13 +29,92 @@ var peon = {
             }
         }
         else {
-            if(creep.transfer(spawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(spawn);
+            if(creep.transfer(dropOff, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(dropOff);
             }
         }
     },
 
-    upgrade: function(creep) {},
+    upgrade: function(creep) {
+        var creeptask = task.getCreepTask(creep);
+        if (creeptask.type !== "upgrade") {
+            creep.say("❓");
+            return null;
+        }
+        var controller = Game.getObjectById(creeptask.targetId);
+        var energySource = Game.getObjectById(creeptask.energySourceId);
+        if (energySource == null) {
+            creep.say("❓");
+            return null;
+        }
+        if(creep.store.getUsedCapacity() == 0) {
+            if(energySource instanceof Source){
+                creep.say("⛏︎");
+                if(creep.harvest(energySource) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(energySource);
+                }
+            }
+            else {
+                creep.say("📤");
+                if(creep.withdraw(energySource, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(energySource);
+                }
+            }
+        }
+        else if(creep.saying == "⛏︎" && creep.store.getFreeCapacity() > 0) {
+            creep.say("⛏︎");
+            if(creep.harvest(energySource) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(energySource);
+            }
+        }
+        else {
+            creep.say("⬆");
+            if(creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(controller);
+            }
+        }
+    },
+
+    construct: function(creep) {
+        var creeptask = task.getCreepTask(creep);
+        if (creeptask.type !== "construct") {
+            creep.say("❓");
+            return null;
+        }
+        var targetBuild = Game.getObjectById(creeptask.targetId);
+        var energySource = Game.getObjectById(creeptask.energySourceId);
+        if (energySource == null || targetBuild == null) {
+            creep.say("❓");
+            return null;
+        }
+        if(creep.store.getUsedCapacity() == 0) {
+            if(energySource instanceof Source){
+                creep.say("⛏︎");
+                if(creep.harvest(energySource) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(energySource);
+                }
+            }
+            else {
+                creep.say("📤");
+                if(creep.withdraw(energySource, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(energySource);
+                }
+            }
+        }
+        else if(creep.saying == "⛏︎" && creep.store.getFreeCapacity() > 0) {
+            creep.say("⛏︎");
+            if(creep.harvest(energySource) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(energySource);
+            }
+        }
+        else {
+            creep.say("🔧");
+            if(creep.build(targetBuild) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(targetBuild);
+            }
+        }
+
+    },
 
     run: function(creep){
         if(!task.getCreepTask(creep)) {
@@ -44,6 +123,12 @@ var peon = {
         switch(task.getCreepTask(creep).type) {
             case "harvest":
                 this.harvest(creep);
+                break;
+            case "upgrade":
+                this.upgrade(creep);
+                break;
+            case "construct":
+                this.construct(creep);
                 break;
             default:
               this.default(creep);

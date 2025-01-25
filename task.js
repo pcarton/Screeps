@@ -3,22 +3,30 @@
 // https://docs.screeps.com/api/#RawMemory
 
 var task = {
-    queueUpgradeTask: function(roomName) {
+    queueUpgradeTask: function(roomName,sourceId) {
         var upgradeTask = {
             "type": "upgrade",
             "targetId": Game.rooms[roomName].controller.id,
+            "energySourceId": sourceId
         };
         Memory.tasks[roomName].push(upgradeTask);
     },
-    queueHarvestTask: function(roomName, sourceId) {
+    queueHarvestTask: function(roomName, sourceId, dropOffId) {
         var harvest = {
             "type": "harvest",
             "targetId": sourceId,
-            "spawnId": Game.getObjectById(sourceId).pos.findClosestByPath(FIND_MY_SPAWNS).id
+            "dropOffId": dropOffId ? dropOffId : Game.getObjectById(sourceId).pos.findClosestByPath(FIND_MY_SPAWNS).id
         };
         Memory.tasks[roomName].push(harvest);
     },
-
+    queueConstructTask: function(roomName,targetSiteId,sourceId) {
+        var construct = {
+            "type": "construct",
+            "targetId": targetSiteId,
+            "energySourceId": sourceId,
+        };
+        Memory.tasks[roomName].push(construct);
+    },
     assignTask: function(creep) {
         var room = creep.room
         if(Memory.tasks[room.name].length > 0) {
