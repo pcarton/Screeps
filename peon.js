@@ -109,8 +109,20 @@ var peon = {
         }
         else {
             creep.say("🔧");
-            if(creep.build(targetBuild) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(targetBuild);
+            var buildResult = creep.build(targetBuild);
+            switch (buildResult){
+                case ERR_NOT_IN_RANGE:
+                    creep.moveTo(targetBuild);
+                    break;
+                case ERR_INVALID_TARGET:
+                    task.resetCreepTask(creep);
+                    creep.say("❓");
+                    break;
+                case OK:
+                    break;
+                default:
+                    creep.say("❓");
+                    break;
             }
         }
 

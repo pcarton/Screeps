@@ -11,10 +11,10 @@ var task = {
         };
         Memory.tasks[roomName].push(upgradeTask);
     },
-    queueHarvestTask: function(roomName, sourceId, dropOffId) {
+    queueHarvestTask: function(roomName, targetId, dropOffId) {
         var harvest = {
             "type": "harvest",
-            "targetId": sourceId,
+            "targetId": targetId,
             "dropOffId": dropOffId ? dropOffId : Game.getObjectById(sourceId).pos.findClosestByPath(FIND_MY_SPAWNS).id
         };
         Memory.tasks[roomName].push(harvest);
@@ -44,8 +44,16 @@ var task = {
         return this.assignTask(creep);
     },
 
+    resetCreepTask: function(creep){
+        Memory.creeps[creep.name].task = null;
+    },
+
     getNextTask: function(roomName) {
         return Memory.tasks[roomName].shift();
+    },
+
+    noTasks: function(roomName) {
+        return Memory.tasks[roomName].length == 0;
     },
 
 };

@@ -23,7 +23,12 @@ var overlord = {
         // get screeps with memory for their task indicating upgrade
         // get enqueued tasks for this room for upgrading
         // if upgrading screeps + enqueued tasks <= available upgrade locations
-    }
+    },
+
+    needConstructing: function(roomName) {
+        // See how many construction sites exist
+        // See how many creeps are working on construction
+    },
 };
 
 module.exports = overlord;
