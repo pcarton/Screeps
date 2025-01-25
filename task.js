@@ -78,10 +78,16 @@ var task = {
             return creep.room.name == roomName;
         });
         var assignedCreeps = _.filter(roomCreeps, function (creep) {
-            var creepTask = this.getCreepTask(creep);
+            var creepTask = Memory.creeps[creep.name].task;
             return creepTask && creepTask.type == type;
         }, this);
-        return assignedCreeps;
+        var assignedTasks = [];
+        for(var creepIndex in assignedCreeps) {
+            var creepName = assignedCreeps[creepIndex].name;
+            var creepTask = Memory.creeps[creepName].task
+            assignedTasks.push(creepTask);
+        }
+        return assignedTasks;
     },
 
     getUnassignedCreeps: function(roomName) {
@@ -90,7 +96,7 @@ var task = {
             return creep.room.name == roomName;
         });
         var unAssignedCreeps = _.filter(roomCreeps, function (creep) {
-            var creepTask = this.getCreepTask(creep);
+            var creepTask = Memory.creeps[creep.name].task;
             return creepTask == null;
         }, this);
         return unAssignedCreeps;

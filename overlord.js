@@ -46,8 +46,8 @@ var overlord = {
         var activeUpgradeTasks = task.getAssignedTasksOfType(roomName,"upgrade");
         var unAssignedCreeps = task.getUnassignedCreeps(roomName);
         var energyPickupLocations = common.getEnergyPickupLocations(roomName);
-        if (unAssignedCreeps.length > 0 ){
-            var sourceId = findClosestByPath(energyPickupLocations).id;
+        if (unAssignedCreeps.length > 0 || activeUpgradeTasks.length + enquedUpgradeTasks.length == 0){
+            var sourceId = Game.rooms[roomName].controller.pos.findClosestByPath(energyPickupLocations).id;
             task.queueUpgradeTask(roomName,sourceId);
         }
         // if upgrading screeps + enqueued tasks <= available upgrade locations
@@ -62,15 +62,18 @@ var overlord = {
         var activeConstructionTasks = task.getAssignedTasksOfType(roomName,"construct");
         var activeSites = [];
         var energyPickupLocations = common.getEnergyPickupLocations(roomName);
-        for (var site in constructionSites){
-            for (var queuedTask in enquedConstructTasks) {
-                if (queuedTask.targetId == site.id) {
-                    activeSites.push(site);
+        for (var siteIndex in constructionSites){
+            var targetSite = constructionSites[siteIndex];
+            for (var queuedTaskIndex in enquedConstructTasks) {
+                var queuedTask = enquedConstructTasks[queuedTaskIndex];
+                if (queuedTask.targetId == targetSite.id) {
+                    activeSites.push(targetSite);
                 }
             }
-            for (var activeTask in activeConstructionTasks) {
-                if (activeTask.targetId == site.id) {
-                    activeSites.push(site);
+            for (var activeTaskIndex in activeConstructionTasks) {
+                var activeTask = activeConstructionTasks[activeTaskIndex];
+                if (activeTask.targetId == targetSite.id) {  
+                    activeSites.push(targetSite);
                 }
             }
         }
