@@ -18,8 +18,8 @@ var overlord = {
         //get sources in room and ids
         //get harvestable location count for each
         var sources = Memory.rooms[roomName].sources;
-        var harvestTasks = task.getEnqueuedHarvestTasks(roomName);
-        var activeHarvestTasks = task.getAssignedHarvestTasks(roomName);
+        var harvestTasks = task.getEnqueuedTasksOfType(roomName,"harvest");
+        var activeHarvestTasks = task.getAssignedTasksOfType(roomName,"harvest");
         for (var sourceId in sources){
             for (var task in harvestTasks) {
                 if (task.targetId == sourceId) {
