@@ -10,6 +10,10 @@ var task = require('task');
 var overlord = {
 
     meetNeedsHarvesting: function(roomName) {
+        var room = Game.rooms[roomName];
+        if (room.energyCapacityAvailable <= 300){
+            return; //Dont need harvesters at tier 1, need upgrades and construction
+        }
         //return which source needs a harvester or null if all are full
         //get sources in room and ids
         //get harvestable location count for each
