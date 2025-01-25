@@ -29,18 +29,19 @@ var init = {
             Memory.rooms[room] = {};
         }
 
-        Memory.rooms[room].sources = [];
+        var sourceMemoryMap = {};
 
         var sources = Game.rooms[room].find(FIND_SOURCES);
         for( var sourceIndex in sources) {
             var sourceId = sources[sourceIndex].id
             var sourceMem = {
                 "id": sourceId,
-                "dropOff": null, //to be used once a container is placed near the source
+                "dropOffId": null, //to be used once a container is placed near the source
                 "maxHarvester": common.getAccessibleHarvestLocations(sourceId),
             };
-            Memory.rooms[room].sources.push(sourceMem);
+            sourceMemoryMap[sourceId] = sourceMem;
         }
+        Memory.rooms[room].sources = sourceMemoryMap;
     },
 
     init: function(room) {

@@ -63,6 +63,25 @@ var task = {
     noTasks: function(roomName) {
         return Memory.tasks[roomName].length == 0;
     },
+    
+    getEnqueuedHarvestTasks: function(roomName) {
+        var allEnqueued = Memory.tasks[roomName];
+        var enqueuedHarvestTasks = _.filter(allEnqueued, function (task) {
+            return task.type == "harvest";
+        });
+        return enqueuedHarvestTasks;
+    },
+
+    getAssignedHarvestTasks: function(roomName) {
+        var allCreeps = Game.creeps;
+        var roomCreeps = _.filter(allCreeps, function (creep) {
+            return creep.room.name == roomName;
+        });
+        var assignedHarvestCreeps = _.filter(roomCreeps, function (creep) {
+            return creep.getCreepTask.type == "harvest";
+        });
+        return assignedHarvestCreeps;
+    },
 
 };
 
