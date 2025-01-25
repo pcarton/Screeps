@@ -12,5 +12,18 @@ var common = {
         });
         return accessibleSouroundings.length;
     },
+    getEnergyPickupLocations: function(roomName) {
+        var room = Game.rooms[roomName];
+        var structures = room.find(FIND_MY_STRUCTURES);
+        var energyStorage = _.filter(structures, function (structure) {
+            return ( structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER);
+        });
+        if ( energyStorage.length > 0 ) {
+            return energyStorage;
+        }
+        else {
+            return room.find(FIND_SOURCES);
+        }
+    },
 };
 module.exports = common;

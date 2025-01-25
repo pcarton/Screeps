@@ -6,6 +6,7 @@
 // Upgrade
 // Mine - task that doesnt expire until the creep dies then goes back on the queue. need 1 for each available mining location
 var task = require('task');
+var common = require('common');
 
 var overlord = {
 
@@ -21,8 +22,8 @@ var overlord = {
         var enqueuedharvestTasks = task.getEnqueuedTasksOfType(roomName,"harvest");
         var activeHarvestTasks = task.getAssignedTasksOfType(roomName,"harvest");
         for (var sourceId in sources){
-            for (var task in enqueuedharvestTasks) {
-                if (task.targetId == sourceId) {
+            for (var queuedTask in enqueuedharvestTasks) {
+                if (queuedTask.targetId == sourceId) {
                     sources[sourceId].maxHarvesters =  sources[sourceId].maxHarvesters - 1;
                 }
             }
@@ -44,8 +45,9 @@ var overlord = {
         var enquedUpgradeTasks = task.getEnqueuedTasksOfType(roomName,"upgrade");
         var activeUpgradeTasks = task.getAssignedTasksOfType(roomName,"upgrade");
         var unAssignedCreeps = task.getUnassignedCreeps(roomName);
+        var energyPickupLocations = common.getEnergyPickupLocations(roomName);
         if (unAssignedCreeps.length > 0 ){
-            var sourceId = Game.rooms[roomName].controller.pos.findClosestByPath(FIND_SOURCES_ACTIVE).id
+            var sourceId = findClosestByPath(energyPickupLocations).id;
             task.queueUpgradeTask(roomName,sourceId);
         }
         // if upgrading screeps + enqueued tasks <= available upgrade locations
@@ -54,8 +56,30 @@ var overlord = {
 
     meetNeedsConstructing: function(roomName) {
         // See how many construction sites exist
-        // See how many creeps are working on construction
-        //enqueue any needed tasks
+        var room = Game.rooms[roomName];
+        var constructionSites = room.find(FIND_MY_CONSTRUCTION_SITES);
+        var enquedConstructTasks = task.getEnqueuedTasksOfType(roomName,"construct");
+        var activeConstructionTasks = task.getAssignedTasksOfType(roomName,"construct");
+        var activeSites = [];
+        var energyPickupLocations = common.getEnergyPickupLocations(roomName);
+        for (var site in constructionSites){
+            for (var queuedTask in enquedConstructTasks) {
+                if (queuedTask.targetId == site.id) {
+                    activeSites.push(site);
+                }
+            }
+            for (var activeTask in activeConstructionTasks) {
+                if (activeTask.targetId == site.id) {
+                    activeSites.push(site);
+                }
+            }
+        }
+        var inactiveSites = _.difference(constructionSites, activeSites);
+        for (var inactiveSiteIndex in inactiveSites) {
+            var inactiveSite = inactiveSites[inactiveSiteIndex];
+            var energyPickup = inactiveSite.pos.findClosestByPath(energyPickupLocations);
+            task.queueConstructTask(roomName,inactiveSite.id,energyPickup.id)
+        }
     },
 
     meetNeedsHauling: function(roomName) {
