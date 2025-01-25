@@ -15,9 +15,11 @@ var recruiter = {
     },
 
     shouldSpawn: function(totalCreeps) {
-        if (totalCreeps <= 2) {
-            return true;
+        if (totalCreeps > 5) { //change to some reasonable max 
+            return false;
         }
+
+        return true; //if queued jobs, otherwise false
     },
 
     spawnNext: function(spawner, totalCreeps) {

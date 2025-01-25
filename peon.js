@@ -4,30 +4,49 @@
 
 // Has the following memory needs
 
-var peon = {
+var task = require('task');
 
-    default: function(creep){
+var peon = {
+    default: function(creep) {
+        creep.say("🫤");
+    },
+
+    harvest: function(creep){
+        var creeptask = task.getCreepTask(creep);
+        if (creeptask.type !== "harvest") {
+            creep.say("❓");
+            return null;
+        }
+        var source = Game.getObjectById(creeptask.targetId);
+        var spawn = Game.getObjectById(creeptask.spawnId);
+        if (source == null) {
+            creep.say("❓");
+            return null;
+        }
         if(creep.store.getFreeCapacity() > 0) {
-            var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0]);
+            if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(source);
             }
         }
         else {
-            if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(Game.spawns['Spawn1']);
+            if(creep.transfer(spawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(spawn);
             }
         }
     },
 
-    getTask: function(creep){
-        // Actually get the task if one exists, or return null if it doesn't
-        return null;
-    },
+    upgrade: function(creep) {},
 
     run: function(creep){
-        if(this.getTask(creep) == null){
-            this.default(creep);
+        if(!task.getCreepTask(creep)) {
+            return this.default(creep);
+        }
+        switch(task.getCreepTask(creep).type) {
+            case "harvest":
+                this.harvest(creep);
+                break;
+            default:
+              this.default(creep);
         }
     }
 
