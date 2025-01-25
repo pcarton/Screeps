@@ -18,10 +18,10 @@ var overlord = {
         //get sources in room and ids
         //get harvestable location count for each
         var sources = Memory.rooms[roomName].sources;
-        var harvestTasks = task.getEnqueuedTasksOfType(roomName,"harvest");
+        var enqueuedharvestTasks = task.getEnqueuedTasksOfType(roomName,"harvest");
         var activeHarvestTasks = task.getAssignedTasksOfType(roomName,"harvest");
         for (var sourceId in sources){
-            for (var task in harvestTasks) {
+            for (var task in enqueuedharvestTasks) {
                 if (task.targetId == sourceId) {
                     sources[sourceId].maxHarvesters =  sources[sourceId].maxHarvesters - 1;
                 }
@@ -32,19 +32,22 @@ var overlord = {
                 }
             }
             for (let i = 0; i < sources[sourceId].maxHarvesters; i++) {
-                task.queueHarvestTask(roomName,sourceId, sources[sourceId].dropOffId);
+                task.queueHarvestTask(roomName, sourceId, sources[sourceId].dropOffId);
             }
         }
-
-        //get screeps with memory for their task indicating harvest and that source pos
-        //get enqueued tasks for harvesting each source in the room
-        //enqueue any needed tasks
     },
 
     meetNeedsUpgrading: function(roomName) {
         // get location count available for upgrades
         // get screeps with memory for their task indicating upgrade
         // get enqueued tasks for this room for upgrading
+        var enquedUpgradeTasks = task.getEnqueuedTasksOfType(roomName,"upgrade");
+        var activeUpgradeTasks = task.getAssignedTasksOfType(roomName,"upgrade");
+        var unAssignedCreeps = task.getUnassignedCreeps(roomName);
+        if (unAssignedCreeps.length > 0 ){
+            var sourceId = Game.rooms[roomName].controller.pos.findClosestByPath(FIND_SOURCES_ACTIVE).id
+            task.queueUpgradeTask(roomName,sourceId);
+        }
         // if upgrading screeps + enqueued tasks <= available upgrade locations
         //enqueue any needed tasks
     },

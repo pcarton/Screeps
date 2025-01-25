@@ -78,9 +78,22 @@ var task = {
             return creep.room.name == roomName;
         });
         var assignedCreeps = _.filter(roomCreeps, function (creep) {
-            return creep.getCreepTask.type == type;
-        });
+            var creepTask = this.getCreepTask(creep);
+            return creepTask && creepTask.type == type;
+        }, this);
         return assignedCreeps;
+    },
+
+    getUnassignedCreeps: function(roomName) {
+        var allCreeps = Game.creeps;
+        var roomCreeps = _.filter(allCreeps, function (creep) {
+            return creep.room.name == roomName;
+        });
+        var unAssignedCreeps = _.filter(roomCreeps, function (creep) {
+            var creepTask = this.getCreepTask(creep);
+            return creepTask == null;
+        }, this);
+        return unAssignedCreeps;
     },
 
 };
