@@ -85,7 +85,7 @@ var peon = {
         }
         var targetBuild = Game.getObjectById(creeptask.targetId);
         var energySource = Game.getObjectById(creeptask.energySourceId);
-        if (energySource == null || targetBuild == null) {
+        if (energySource == null) {
             creep.say("❓");
             return null;
         }
@@ -154,6 +154,16 @@ var peon = {
             switch (dropOffResult){
                 case ERR_NOT_IN_RANGE:
                     creep.moveTo(dropOff);
+                    break;
+                case ERR_FULL:
+                    if (creeptask.spawnDuty) {
+                        var structures = creep.room.find(FIND_STRUCTURES);
+                        var newDropOffList = _.filter(structures, function (structure) {
+                            return ( structure.structureType == STRUCTURE_SPAWN || structure.structureType == STRUCTURE_EXTENSION);
+                        });
+                        var closestDropOffId = creep.pos.findClosestByPath(newDropOffList).id
+                        task.updateHaultarget(creep.name,closestDropOffId);
+                    }
                     break;
                 case OK:
                     creep.say("📥");

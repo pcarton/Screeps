@@ -37,7 +37,7 @@ var init = {
             var sourceMem = {
                 "id": sourceId,
                 "dropOffId": null, //to be used once a container is placed near the source
-                "maxHarvester": common.getAccessibleHarvestLocations(sourceId),
+                "maxHarvesters": common.getAccessibleHarvestLocations(sourceId),
             };
             sourceMemoryMap[sourceId] = sourceMem;
         }

@@ -12,9 +12,6 @@ var overlord = {
 
     meetNeedsHarvesting: function(roomName) {
         var room = Game.rooms[roomName];
-        if (room.energyCapacityAvailable <= 300){ //TODO change to if no drop off containers exist?
-            return; //Dont need harvesters at tier 1, need upgrades and construction
-        }
         //return which source needs a harvester or null if all are full
         //get sources in room and ids
         //get harvestable location count for each
@@ -22,18 +19,20 @@ var overlord = {
         var enqueuedharvestTasks = task.getEnqueuedTasksOfType(roomName,"harvest");
         var activeHarvestTasks = task.getAssignedTasksOfType(roomName,"harvest");
         for (var sourceId in sources){
-            for (var queuedTask in enqueuedharvestTasks) {
-                if (queuedTask.targetId == sourceId) {
-                    sources[sourceId].maxHarvesters =  sources[sourceId].maxHarvesters - 1;
+            if (sources[sourceId].dropOffId != null) {
+                for (var queuedTaskIndex in enqueuedharvestTasks) {
+                    if (enqueuedharvestTasks[queuedTaskIndex].targetId == sourceId) {
+                        sources[sourceId].maxHarvesters =  sources[sourceId].maxHarvesters - 1;
+                    }
                 }
-            }
-            for (var activeTask in activeHarvestTasks) {
-                if (activeTask.targetId == sourceId) {
-                    sources[sourceId].maxHarvesters =  sources[sourceId].maxHarvesters - 1;
+                for (var activeTaskIndex in activeHarvestTasks) {
+                    if (activeHarvestTasks[activeTaskIndex].targetId == sourceId) {
+                        sources[sourceId].maxHarvesters =  sources[sourceId].maxHarvesters - 1;
+                    }
                 }
-            }
-            for (let i = 0; i < sources[sourceId].maxHarvesters; i++) {
-                task.queueHarvestTask(roomName, sourceId, sources[sourceId].dropOffId);
+                for (let i = 0; i < sources[sourceId].maxHarvesters; i++) {
+                    task.queueHarvestTask(roomName, sourceId, sources[sourceId].dropOffId);
+                }
             }
         }
     },

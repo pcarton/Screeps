@@ -1,6 +1,7 @@
 var peon = require('peon');
 var recruiter = require('recruiter');
 var init = require('init');
+var upkeep = require('upkeep');
 var overlord = require('overlord');
 
 module.exports.loop = function () {
@@ -15,6 +16,7 @@ module.exports.loop = function () {
         });
         if (Game.time % 50 == 0) {
             overlord.meetNeeds(roomName);
+            upkeep.performUpkeep(roomName);
         }
     }
 

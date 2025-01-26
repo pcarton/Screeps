@@ -32,8 +32,12 @@ var task = {
             "type": "haul",
             "targetId": targetId,
             "energySourceId": sourceId,
+            "spawnDuty": Game.getObjectById(targetId).structureType == STRUCTURE_SPAWN ? true : false
         };
         Memory.tasks[roomName].push(haul);
+    },
+    updateHaultarget: function(creepName,newTargetId) {
+        Memory.creeps[creepName].task.targetId = newTargetId;
     },
     assignTask: function(creep) {
         var room = creep.room

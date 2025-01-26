@@ -14,7 +14,7 @@ var common = {
     },
     getEnergyPickupLocations: function(roomName) {
         var room = Game.rooms[roomName];
-        var structures = room.find(FIND_MY_STRUCTURES);
+        var structures = room.find(FIND_STRUCTURES);
         var energyStorage = _.filter(structures, function (structure) {
             return ( structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER);
         });

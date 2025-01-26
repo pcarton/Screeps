@@ -27,7 +27,7 @@ var recruiter = {
 
     spawnNext: function(spawner, totalCreeps) {
         if(this.shouldSpawn(spawner.room, totalCreeps)) {
-            const maxEnergy = spawner.room.energyCapacityAvailable;
+            const maxEnergy = totalCreeps == 0 ? 300 : spawner.room.energyCapacityAvailable;
             const body = this.getBody(maxEnergy);
             const name = Math.random().toString(20).substring(2, 10);
             spawner.spawnCreep( body, name );
