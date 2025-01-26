@@ -11,7 +11,6 @@ var common = require('common');
 var overlord = {
 
     meetNeedsHarvesting: function(roomName) {
-        var room = Game.rooms[roomName];
         //return which source needs a harvester or null if all are full
         //get sources in room and ids
         //get harvestable location count for each
