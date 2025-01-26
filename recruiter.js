@@ -12,10 +12,10 @@ var recruiter = {
     },
 
     getBody: function(maxEnergy) {
-        if (maxEnergy <= 300) {
+        if (maxEnergy < 550) {
             return this.getDefaultBody(maxEnergy);
         }
-        if (maxEnergy <= 550){
+        if (maxEnergy >= 550){
             return [WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE];
         }
         return this.getDefaultBody(maxEnergy);

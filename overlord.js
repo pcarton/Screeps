@@ -12,7 +12,7 @@ var overlord = {
 
     meetNeedsHarvesting: function(roomName) {
         var room = Game.rooms[roomName];
-        if (room.energyCapacityAvailable <= 300){
+        if (room.energyCapacityAvailable <= 300){ //TODO change to if no drop off containers exist?
             return; //Dont need harvesters at tier 1, need upgrades and construction
         }
         //return which source needs a harvester or null if all are full
@@ -86,7 +86,7 @@ var overlord = {
     },
 
     meetNeedsHauling: function(roomName) {
-
+        //Make sure at least one container/storage exists first
         //enqueue any needed tasks
     },
 

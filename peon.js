@@ -110,7 +110,7 @@ var peon = {
             }
         }
         else {
-            creep.say("🔧");
+            creep.say("🛠︎");
             var buildResult = creep.build(targetBuild);
             switch (buildResult){
                 case ERR_NOT_IN_RANGE:
@@ -128,6 +128,41 @@ var peon = {
             }
         }
 
+    },
+
+    haul: function(creep) {
+        var creeptask = task.getCreepTask(creep);
+        if (creeptask.type !== "haul") {
+            creep.say("❓");
+            return null;
+        }
+        var dropOff = Game.getObjectById(creeptask.targetId);
+        var pickUp = Game.getObjectById(creeptask.energySourceId);
+        if (pickUp == null || dropOff == null) {
+            creep.say("❓");
+            return null;
+        }
+        if(creep.store.getUsedCapacity() == 0) {
+            creep.say("📤");
+            if(creep.withdraw(pickUp, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(pickUp);
+            }
+        }
+        else {
+            creep.say("📦");
+            var dropOffResult = creep.transfer(dropOff, RESOURCE_ENERGY);
+            switch (dropOffResult){
+                case ERR_NOT_IN_RANGE:
+                    creep.moveTo(dropOff);
+                    break;
+                case OK:
+                    creep.say("📥");
+                    break;
+                default:
+                    creep.say("❓");
+                    break;
+            }
+        }
     },
 
     run: function(creep){
