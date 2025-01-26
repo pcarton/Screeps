@@ -36,8 +36,11 @@ var task = {
         };
         Memory.tasks[roomName].push(haul);
     },
-    updateHaultarget: function(creepName,newTargetId) {
+    updateHaulTarget: function(creepName,newTargetId) {
         Memory.creeps[creepName].task.targetId = newTargetId;
+    },
+    updateConstructSource: function(creepName,newSourceId) {
+        Memory.creeps[creepName].task.energySourceId = newSourceId;
     },
     assignTask: function(creep) {
         var room = creep.room

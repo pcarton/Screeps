@@ -5,6 +5,7 @@
 // Has the following memory needs
 
 var task = require('task');
+var common = require('common');
 
 var peon = {
     default: function(creep) {
@@ -98,8 +99,20 @@ var peon = {
             }
             else {
                 creep.say("📤");
-                if(creep.withdraw(energySource, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(energySource);
+                var withdrawResult = creep.withdraw(energySource, RESOURCE_ENERGY);
+                switch (withdrawResult) {
+                    case ERR_NOT_IN_RANGE:
+                        creep.moveTo(energySource);
+                        break;
+                    case ERR_NOT_ENOUGH_RESOURCES:
+                        var sources = common.getEnergyPickupLocations(creep.room.name);
+                        var newSource = creep.pos.findClosestByPath(sources);
+                        task.updateConstructSource(creep.name,newSource.id);
+                    case OK:
+                        break;
+                    default:
+                        creep.say("❓");
+                        break;
                 }
             }
         }
@@ -144,8 +157,20 @@ var peon = {
         }
         if(creep.store.getUsedCapacity() == 0) {
             creep.say("📤");
-            if(creep.withdraw(pickUp, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(pickUp);
+            var withdrawResult = creep.withdraw(pickUp, RESOURCE_ENERGY);
+            switch (withdrawResult) {
+                case ERR_NOT_IN_RANGE:
+                    creep.moveTo(pickUp);
+                    break;
+                case ERR_NOT_ENOUGH_RESOURCES:
+                    var sources = common.getEnergyPickupLocations(creep.room.name);
+                    var newSource = creep.pos.findClosestByPath(sources);
+                    task.updateConstructSource(creep.name,newSource.id);
+                case OK:
+                    break;
+                default:
+                    creep.say("❓");
+                    break;
             }
         }
         else {
@@ -163,7 +188,7 @@ var peon = {
                         });
                         if(newDropOffList.length > 0) {
                             var closestDropOffId = creep.pos.findClosestByPath(newDropOffList).id
-                            task.updateHaultarget(creep.name,closestDropOffId);
+                            task.updateHaulTarget(creep.name,closestDropOffId);
                         }
                     }
                     break;

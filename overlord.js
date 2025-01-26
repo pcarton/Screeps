@@ -84,30 +84,51 @@ var overlord = {
     },
 
     meetNeedsHauling: function(roomName) {
+        var room = Game.rooms[roomName];
+        var controller = room.controller;
         //Make sure at least one container/storage exists first
         var energyPickupLocations = common.getEnergyPickupLocations(roomName);
-        if (!(energyPickupLocations && energyPickupLocations.length >0 && !(energyPickupLocations[0] instanceof Source))){
+        if (!(energyPickupLocations && energyPickupLocations.length > 0 && !(energyPickupLocations[0] instanceof Source))){
             return;
         }
         var enquedHaulTasks = task.getEnqueuedTasksOfType(roomName,"haul");
         var activeHaulTasks = task.getAssignedTasksOfType(roomName,"haul");
-        var isActiveSpawnDuty = false
+        var controllerSouroundings = room.lookAtArea(controller.pos.y - 3, controller.pos.x - 3, controller.pos.y + 3, controller.pos.x + 3, true);
+        var controllerContainers = _.filter(controllerSouroundings, function (object) {
+            return (object.type = "structure" && object.structure.structureType == STRUCTURE_CONTAINER);
+        });
+        var controllerContainer = null;
+        if (controllerContainers && controllerContainers.length > 0) {
+            controllerContainer = controllerContainers[0];
+        }
+        var isActiveSpawnDuty = false;
+        var isActiveUgradeHauler = false;
         //for each source, need to do one hauler to storage if it exists
         //if storage, need one hauler from that to upgrade container
         for(var queuedTaskIndex in enquedHaulTasks){
             if(enquedHaulTasks[queuedTaskIndex].spawnDuty){
                 isActiveSpawnDuty = true;
             }
+            else if (controllerContainer && enquedHaulTasks[queuedTaskIndex].targetId == controllerContainer.id) {
+                isActiveUgradeHauler = true;
+            } 
         }
         for(var activeTaskIndex in activeHaulTasks){
             if(activeHaulTasks[activeTaskIndex].spawnDuty){
                 isActiveSpawnDuty = true;
             }
+            else if (controllerContainer && activeHaulTasks[activeTaskIndex].targetId == controllerContainer.id) {
+                isActiveUgradeHauler = true;
+            } 
         }
         if(!isActiveSpawnDuty) {
             var spawn = Game.rooms[roomName].find(FIND_MY_SPAWNS)[0];
             var energyPickup = spawn.pos.findClosestByPath(energyPickupLocations);
             task.queueHaulTask(roomName,spawn.id,energyPickup.id);
+        }
+        if(controllerContainer && !isActiveUgradeHauler) {
+            var energyPickup = controllerContainer.pos.findClosestByPath(energyPickupLocations);
+            task.queueHaulTask(roomName,controllerContainer.id,energyPickup.id);
         }
     },
 

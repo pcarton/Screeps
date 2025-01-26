@@ -16,7 +16,7 @@ var common = {
         var room = Game.rooms[roomName];
         var structures = room.find(FIND_STRUCTURES);
         var energyStorage = _.filter(structures, function (structure) {
-            return ( structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER);
+            return (( structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER) && (structure.energyAvailable > 0));
         }); //need to also remove any containers used for harvest drop off once storage exists
         if ( energyStorage.length > 0 ) {
             return energyStorage;
