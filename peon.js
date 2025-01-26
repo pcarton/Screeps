@@ -118,7 +118,7 @@ var peon = {
                     break;
                 case ERR_INVALID_TARGET:
                     task.resetCreepTask(creep);
-                    creep.say("❓");
+                    creep.say("☑︎");
                     break;
                 case OK:
                     break;
@@ -159,10 +159,12 @@ var peon = {
                     if (creeptask.spawnDuty) {
                         var structures = creep.room.find(FIND_STRUCTURES);
                         var newDropOffList = _.filter(structures, function (structure) {
-                            return ( structure.structureType == STRUCTURE_SPAWN || structure.structureType == STRUCTURE_EXTENSION);
+                            return ( structure.structureType == STRUCTURE_SPAWN || structure.structureType == STRUCTURE_EXTENSION) && (structure.energy < structure.energyCapacity);
                         });
-                        var closestDropOffId = creep.pos.findClosestByPath(newDropOffList).id
-                        task.updateHaultarget(creep.name,closestDropOffId);
+                        if(newDropOffList.length > 0) {
+                            var closestDropOffId = creep.pos.findClosestByPath(newDropOffList).id
+                            task.updateHaultarget(creep.name,closestDropOffId);
+                        }
                     }
                     break;
                 case OK:
@@ -188,6 +190,9 @@ var peon = {
                 break;
             case "construct":
                 this.construct(creep);
+                break;
+            case "haul":
+                this.haul(creep);
                 break;
             default:
               this.default(creep);

@@ -15,7 +15,7 @@ var overlord = {
         //return which source needs a harvester or null if all are full
         //get sources in room and ids
         //get harvestable location count for each
-        var sources = Memory.rooms[roomName].sources;
+        var sources = JSON.parse(JSON.stringify(Memory.rooms[roomName].sources));
         var enqueuedharvestTasks = task.getEnqueuedTasksOfType(roomName,"harvest");
         var activeHarvestTasks = task.getAssignedTasksOfType(roomName,"harvest");
         for (var sourceId in sources){
@@ -86,15 +86,38 @@ var overlord = {
 
     meetNeedsHauling: function(roomName) {
         //Make sure at least one container/storage exists first
-        //enqueue any needed tasks
+        var energyPickupLocations = common.getEnergyPickupLocations(roomName);
+        if (!(energyPickupLocations && energyPickupLocations.length >0 && !(energyPickupLocations[0] instanceof Source))){
+            return;
+        }
+        var enquedHaulTasks = task.getEnqueuedTasksOfType(roomName,"haul");
+        var activeHaulTasks = task.getAssignedTasksOfType(roomName,"haul");
+        var isActiveSpawnDuty = false
+        //for each source, need to do one hauler to storage if it exists
+        //if storage, need one hauler from that to upgrade container
+        for(var queuedTaskIndex in enquedHaulTasks){
+            if(enquedHaulTasks[queuedTaskIndex].spawnDuty){
+                isActiveSpawnDuty = true;
+            }
+        }
+        for(var activeTaskIndex in activeHaulTasks){
+            if(activeHaulTasks[activeTaskIndex].spawnDuty){
+                isActiveSpawnDuty = true;
+            }
+        }
+        if(!isActiveSpawnDuty) {
+            var spawn = Game.rooms[roomName].find(FIND_MY_SPAWNS)[0];
+            var energyPickup = spawn.pos.findClosestByPath(energyPickupLocations);
+            task.queueHaulTask(roomName,spawn.id,energyPickup.id);
+        }
     },
 
     meetNeeds: function(roomName) {
         console.log("Evaluating tasks needed");
         this.meetNeedsHarvesting(roomName);
+        this.meetNeedsHauling(roomName);
         this.meetNeedsUpgrading(roomName);
         this.meetNeedsConstructing(roomName);
-        this.meetNeedsHauling(roomName);
     }
 };
 

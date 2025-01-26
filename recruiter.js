@@ -22,7 +22,7 @@ var recruiter = {
     },
 
     shouldSpawn: function(room, totalCreeps) {
-      return (totalCreeps == 0 || !task.noTasks(room.name) && totalCreeps <= 10)
+      return (totalCreeps == 0 || !task.noTasks(room.name) && totalCreeps <= 30)
     },
 
     spawnNext: function(spawner, totalCreeps) {

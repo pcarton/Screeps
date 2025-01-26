@@ -10,14 +10,14 @@ var common = {
         var accessibleSouroundings = _.filter(sorroundings, function (o) {
             return ( o.type == "terrain" && o.terrain != "wall");
         });
-        return accessibleSouroundings.length;
+        return accessibleSouroundings.length >= 3 ? 3 : accessibleSouroundings.length ;
     },
     getEnergyPickupLocations: function(roomName) {
         var room = Game.rooms[roomName];
         var structures = room.find(FIND_STRUCTURES);
         var energyStorage = _.filter(structures, function (structure) {
             return ( structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER);
-        });
+        }); //need to also remove any containers used for harvest drop off once storage exists
         if ( energyStorage.length > 0 ) {
             return energyStorage;
         }
