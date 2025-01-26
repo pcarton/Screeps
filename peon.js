@@ -192,6 +192,9 @@ var peon = {
                         }
                     }
                     break;
+                case ERR_INVALID_TARGET:
+                     task.resetCreepTask(creep);
+                     break;
                 case OK:
                     creep.say("📥");
                     break;
