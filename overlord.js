@@ -134,8 +134,8 @@ var overlord = {
 
     meetNeeds: function(roomName) {
         console.log("Evaluating tasks needed");
-        this.meetNeedsHarvesting(roomName);
         this.meetNeedsHauling(roomName);
+        this.meetNeedsHarvesting(roomName);
         this.meetNeedsUpgrading(roomName);
         this.meetNeedsConstructing(roomName);
     }
