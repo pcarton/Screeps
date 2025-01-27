@@ -90,7 +90,7 @@ var peon = {
             creep.say("❓");
             return null;
         }
-        if(creep.store.getUsedCapacity() == 0) {
+        if(creep.store.getUsedCapacity() == 0) { // Moves this logic to a common getEnergy function for non-harvesters
             if(energySource instanceof Source){
                 creep.say("⛏︎");
                 if(creep.harvest(energySource) == ERR_NOT_IN_RANGE) {
@@ -116,7 +116,7 @@ var peon = {
                 }
             }
         }
-        else if(creep.saying == "⛏︎" && creep.store.getFreeCapacity() > 0) {
+        else if(creep.saying == "⛏︎" && creep.store.getFreeCapacity() > 0) { // Moves this logic to a common getEnergy function for non-harvesters
             creep.say("⛏︎");
             if(creep.harvest(energySource) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(energySource);
