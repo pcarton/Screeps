@@ -113,7 +113,9 @@ var peon = {
                     case ERR_NOT_ENOUGH_RESOURCES:
                         var sources = common.getEnergyPickupLocations(creep.room.name);
                         var newSource = creep.pos.findClosestByPath(sources);
-                        task.updateConstructSource(creep.name,newSource.id);
+                        if(newSource) {
+                            task.updateConstructSource(creep.name,newSource.id);
+                        }
                     case OK:
                         break;
                     default:
@@ -171,7 +173,15 @@ var peon = {
                 case ERR_NOT_ENOUGH_RESOURCES:
                     var sources = common.getEnergyPickupLocations(creep.room.name);
                     var newSource = creep.pos.findClosestByPath(sources);
-                    task.updateConstructSource(creep.name,newSource.id);
+                    if(newSource) {
+                        task.updateConstructSource(creep.name,newSource.id);
+                    }
+                case ERR_INVALID_TARGET:
+                    var sources = common.getEnergyPickupLocations(creep.room.name);
+                    var newSource = creep.pos.findClosestByPath(sources);
+                    if(newSource) {
+                        task.updateConstructSource(creep.name,newSource.id);
+                    }
                 case OK:
                     break;
                 default:
