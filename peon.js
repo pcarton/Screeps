@@ -92,6 +92,12 @@ var peon = {
         }
         if(creep.store.getUsedCapacity() == 0) { // Moves this logic to a common getEnergy function for non-harvesters
             if(energySource instanceof Source){
+                var energyPickupLocations = common.getEnergyPickupLocations(creep.room.name);
+                if ((energyPickupLocations && energyPickupLocations.length > 0 && !(energyPickupLocations[0] instanceof Source))){
+                    var sources = common.getEnergyPickupLocations(creep.room.name);
+                    var newSource = creep.pos.findClosestByPath(sources);
+                    task.updateConstructSource(creep.name,newSource.id);
+                }
                 creep.say("⛏︎");
                 if(creep.harvest(energySource) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(energySource);
