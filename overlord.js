@@ -95,11 +95,11 @@ var overlord = {
         var activeHaulTasks = task.getAssignedTasksOfType(roomName,"haul");
         var controllerSouroundings = room.lookAtArea(controller.pos.y - 3, controller.pos.x - 3, controller.pos.y + 3, controller.pos.x + 3, true);
         var controllerContainers = _.filter(controllerSouroundings, function (object) {
-            return (object.type = "structure" && object.structure && object.structure.structureType == STRUCTURE_CONTAINER);
+            return (object.type == "structure" && object.structure && object.structure.structureType == STRUCTURE_CONTAINER);
         });
         var controllerContainer = null;
         if (controllerContainers && controllerContainers.length > 0) {
-            controllerContainer = controllerContainers[0];
+            controllerContainer = Game.getObjectById(controllerContainers[0].structure.id);
         }
         var isActiveSpawnDuty = false;
         var isActiveUgradeHauler = false;
