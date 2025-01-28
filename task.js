@@ -17,7 +17,7 @@ var task = {
             "targetId": targetId,
             "dropOffId": dropOffId ? dropOffId : Game.getObjectById(targetId).pos.findClosestByPath(FIND_MY_SPAWNS).id
         };
-        Memory.tasks[roomName].push(harvest);
+        Memory.tasks[roomName].unshift(harvest);
     },
     queueConstructTask: function(roomName,targetSiteId,sourceId) {
         var construct = {
@@ -28,13 +28,18 @@ var task = {
         Memory.tasks[roomName].push(construct);
     },
     queueHaulTask: function(roomName,targetId,sourceId) {
+        var spawnDuty = Game.getObjectById(targetId).structureType == STRUCTURE_SPAWN;
         var haul = {
             "type": "haul",
             "targetId": targetId,
             "energySourceId": sourceId,
-            "spawnDuty": Game.getObjectById(targetId).structureType == STRUCTURE_SPAWN ? true : false
+            "spawnDuty": spawnDuty
         };
-        Memory.tasks[roomName].push(haul);
+        if(spawnDuty) {
+            Memory.tasks[roomName].unshift(haul);
+        } else {
+            Memory.tasks[roomName].push(haul);
+        }
     },
     updateHaulTarget: function(creepName,newTargetId) {
         Memory.creeps[creepName].task.targetId = newTargetId;

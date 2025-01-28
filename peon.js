@@ -157,6 +157,9 @@ var peon = {
             creep.say("❓");
             return null;
         }
+        if(creep.ticksToLive == 200) {
+            task.queueHaulTask(creep.room.name,creeptask.targetId,creeptask.energySourceId);
+        }
         var dropOff = Game.getObjectById(creeptask.targetId);
         var pickUp = Game.getObjectById(creeptask.energySourceId);
         if (pickUp == null || dropOff == null) {
