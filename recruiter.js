@@ -11,12 +11,12 @@ var recruiter = {
         return [WORK, CARRY, MOVE];
     },
 
-    getBody: function(maxEnergy) {
-        if (maxEnergy < 550) {
+    getBody: function(maxEnergy,totalCreeps) {
+        if (totalCreeps == 0 || maxEnergy < 550) {
             return this.getDefaultBody(maxEnergy);
         }
-        if (maxEnergy >= 550){
-            return [WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE];
+        else if (maxEnergy >= 550){
+            return [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE];
         }
         return this.getDefaultBody(maxEnergy);
     },
@@ -27,8 +27,8 @@ var recruiter = {
 
     spawnNext: function(spawner, totalCreeps) {
         if(this.shouldSpawn(spawner.room, totalCreeps)) {
-            const maxEnergy = totalCreeps == 0 ? 300 : spawner.room.energyCapacityAvailable;
-            const body = this.getBody(maxEnergy);
+            const maxEnergy = spawner.room.energyCapacityAvailable;
+            const body = this.getBody(maxEnergy, totalCreeps);
             const name = Math.random().toString(20).substring(2, 10);
             spawner.spawnCreep( body, name );
         }
